@@ -1,4 +1,4 @@
-$header-padding: 15px;
+$header-padding: 25px;
 
 .app-header {
     @include flexrow;
@@ -9,13 +9,15 @@ $header-padding: 15px;
     
     .title {
         @include flexcol;
+        font-size: 20px;
         margin-right: 20px;
-        padding: $header-padding;
+        min-height: 100%;
+        padding: 0px $header-padding;
         align-items: center;
         justify-content: center;
         color: $brand-blue-7;
         font-family: $title-font-family;
-        font-weight: 700;
+        font-weight: 200;
         text-transform: uppercase;
     }
     .links {
@@ -37,8 +39,9 @@ $header-padding: 15px;
     .user-info {
         @include flexrow;
         padding: 0px 2*$header-padding;
-        justify-content: center;
+        //justify-content: center;
         align-items: center;
+        //background: $brand-blue-1;
         .avatar {
             width: 30px; 
             height: 30px;
