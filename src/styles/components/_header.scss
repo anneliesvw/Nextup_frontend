@@ -1,0 +1,50 @@
+$header-padding: 15px;
+
+.app-header {
+    @include flexrow;
+    @include defaultshadow;
+    width: 100%;
+    background: white;
+    border-bottom:  1px solid $brand-gray-1;
+    
+    .title {
+        @include flexcol;
+        margin-right: 20px;
+        padding: $header-padding;
+        align-items: center;
+        justify-content: center;
+        color: $brand-blue-7;
+        font-family: $title-font-family;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    .links {
+        flex: 1;
+        ol {
+            margin-bottom: 0px;
+            margin-top: 0px;
+            padding: 0px;
+            min-height: 100%;
+        }
+        li {
+            display: inline-block;
+            padding: $header-padding;
+            &.active-link {
+                border-bottom: 3px solid $brand-blue-7;
+            }
+        }
+    }
+    .user-info {
+        @include flexrow;
+        padding: 0px 2*$header-padding;
+        justify-content: center;
+        align-items: center;
+        .avatar {
+            width: 30px; 
+            height: 30px;
+            margin-right: 10px;
+            background: $brand-blue-2;
+        }
+    }
+    
+}
