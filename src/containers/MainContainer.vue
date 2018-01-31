@@ -6,15 +6,11 @@
 </template>
 
 <script>
-  import Activity from '../components/activities/Activity.vue';
+import Activity from '../components/activities/Activity.vue';
 
-  export default {
-    components: {
-      Activity,
-    },
-  };
+export default {
+  components: {
+    Activity,
+  },
+};
 </script>
-
-
-
-

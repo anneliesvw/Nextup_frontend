@@ -6,8 +6,8 @@ import './styles/index.scss';
 
 /* eslint-disable */
 const app = new Vue({
-	router,
-	store,
-	el: '#app',
-	render: h => h(App),
+  router,
+  store,
+  el: '#app',
+  render: h => h(App),
 });
