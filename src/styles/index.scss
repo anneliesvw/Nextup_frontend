@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Barlow:100,200,300,400,500|Open+Sans:100,200,300,400');
+@import url('https://fonts.googleapis.com/css?family=Barlow:100,200,300,400,500|Montserrat:100,200,300,400');
 
 
 // Utils
 @import "utils/variables";
-@import "utils/globals";
 @import "utils/mixins";
-
+@import "utils/globals";
 
 // Layout
 
 
 // Components
 @import "components/header";
+@import "components/activities/activity";
