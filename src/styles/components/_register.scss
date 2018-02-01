@@ -27,25 +27,19 @@
 		right: 0;
 		bottom: 0;
 		left: 0;
-		background: -webkit-linear-gradient(to right, #49a09d, #5f2c82);
-		background: linear-gradient(to right, #49a09d, #5f2c82);
-		opacity: 0.9;
+		background: -webkit-linear-gradient(
+			45deg,
+			rgba(73, 160, 157, 1),
+			rgba(95, 44, 130, 0.9)
+		);
+		background: linear-gradient(
+			45deg,
+			rgba(73, 160, 157, 1),
+			rgba(95, 44, 130, 0.9)
+		);
+		//opacity: 0.9;
 	}
 }
-
-/* .circle-logo {
-	position: absolute;
-	top: -50px;
-	left: calc(50% - 50px);
-	border-radius: 50%;
-	border: 3px solid $brand-gray-1;
-	max-width: 100px;
-	height: 100px;
-	overflow: hidden;
-	img {
-		height: 100px;
-	}
-} */
 
 .form-button {
 	@include flexrow;
@@ -57,4 +51,13 @@
 	font-size: 2em;
 	padding: 1em;
 	font-family: $title-font-family;
+}
+
+.el-tabs__nav-wrap::after {
+	width: 0% !important;
+}
+
+.el-tabs__nav-scroll {
+	display: flex;
+	justify-content: center;
 }
