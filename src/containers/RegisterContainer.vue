@@ -12,7 +12,7 @@
                 <el-input></el-input>
               </el-form-item>
               <el-form-item label="Password" class="form-item">
-                <el-input></el-input>
+                <el-input type="password"></el-input>
               </el-form-item>
               <el-form-item class="form-button">
                 <el-button type="primary">Login</el-button>
@@ -32,10 +32,10 @@
                 <el-input></el-input>
               </el-form-item>
               <el-form-item label="Password" class="form-item">
-                <el-input></el-input>
+                <el-input type="password"></el-input>
               </el-form-item>
               <el-form-item label="Confirm Password" class="form-item">
-                <el-input></el-input>
+                <el-input type="password"></el-input>
               </el-form-item>
               <el-form-item class="form-button">
                 <el-button type="primary">Register</el-button>
