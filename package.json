@@ -1,11 +1,12 @@
 {
-  "name": "domotica_examenproject",
-  "description": "A Vue.js project",
+  "name": "nextup_frontend",
+  "description": "A FeVue project",
   "version": "1.0.0",
   "author": "Mahen Vermeulen <mahenvermeulen@msn.com>",
   "license": "MIT",
   "private": true,
   "scripts": {
+    "start": "npm run dev",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
