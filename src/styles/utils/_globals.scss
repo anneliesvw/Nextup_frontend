@@ -20,5 +20,6 @@ body {
 }
 
 .site-wrapper {
+	@include flexcol;
 	padding: 0;
 }
