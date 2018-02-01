@@ -3,16 +3,15 @@
     <div class="center-content">
       <div class="register-form">
         <el-tabs value="first">
-          <el-tab-pane label="Sign in" name="first">
+          <el-tab-pane class="tab-content" label="Sign in" name="first">
+            <div class="register-text">
+              Login, new events ahead!
+            </div>
             <el-form label-position="top">
-              <el-form-item class="form-item">
-                <span slot="label">
-                  <i class="far fa-user fa-lg"></i> Username</span>
+              <el-form-item label="Username" class="form-item">
                 <el-input></el-input>
               </el-form-item>
-              <el-form-item class="form-item">
-                <span slot="label">
-                  <i class="far fa-paper-plane fa-lg"></i> Password</span>
+              <el-form-item label="Password" class="form-item">
                 <el-input></el-input>
               </el-form-item>
               <el-form-item class="form-button">
@@ -21,29 +20,21 @@
             </el-form>
           </el-tab-pane>
 
-          <el-tab-pane label="Join us" name="second">
+          <el-tab-pane class="tab-content" label="Join us" name="second">
             <div class="register-text">
               Start planning today!
             </div>
             <el-form label-position="top">
-              <el-form-item class="form-item">
-                <span slot="label">
-                  <i class="far fa-envelope fa-lg"></i> E-mail</span>
+              <el-form-item label="E-mail" class="form-item">
                 <el-input></el-input>
               </el-form-item>
-              <el-form-item class="form-item">
-                <span slot="label">
-                  <i class="far fa-user fa-lg"></i> Username</span>
+              <el-form-item label="Username" class="form-item">
                 <el-input></el-input>
               </el-form-item>
-              <el-form-item class="form-item">
-                <span slot="label">
-                  <i class="far fa-paper-plane fa-lg"></i> Password</span>
+              <el-form-item label="Password" class="form-item">
                 <el-input></el-input>
               </el-form-item>
-              <el-form-item class="form-item">
-                <span slot="label">
-                  <i class="far fa-paper-plane fa-lg"></i> Confirm Password</span>
+              <el-form-item label="Confirm Password" class="form-item">
                 <el-input></el-input>
               </el-form-item>
               <el-form-item class="form-button">
