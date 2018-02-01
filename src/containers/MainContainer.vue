@@ -5,7 +5,6 @@
       <Activity v-for="item in 10" :key="item"></Activity>
     </div>
   </div>
-
 </template>
 
 <script>
