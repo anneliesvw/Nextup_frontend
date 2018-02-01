@@ -39,9 +39,7 @@ $header-padding: 25px;
     .user-info {
         @include flexrow;
         padding: 0px 2*$header-padding;
-        //justify-content: center;
         align-items: center;
-        //background: $brand-blue-1;
         .avatar {
             width: 30px; 
             height: 30px;
