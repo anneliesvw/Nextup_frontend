@@ -22,6 +22,10 @@
       text-align: center;
       @include flexrow;
       justify-content: space-between;
+      transition: 1s ease border-bottom;
+      &:hover {
+        border-bottom: solid 2px $brand-blue-7;
+      }
     }
   }
 }
