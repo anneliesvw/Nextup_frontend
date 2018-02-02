@@ -15,7 +15,7 @@
                 <el-input v-model="loginInfo.password" type="password"></el-input>
               </el-form-item>
               <el-form-item class="form-button">
-                <el-button type="primary" @click="tryLogin()">Login</el-button>
+                <el-button type="primary" @click="onLogin()">Login</el-button>
               </el-form-item>
             </el-form>
           </el-tab-pane>
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-  import AuthService from '../services/authservice';
+  import LoginEvents from '../events/loginevents';
 
   export default {
     name: 'RegisterContainer',
@@ -67,16 +67,8 @@
         this.selectedTab = event;
         window.console.log(this.selectedTab);
       },
-      tryLogin() {
-        // TODO: proper in ne service steken.
-        AuthService.tryLogin(
-          (d) => {
-            localStorage.setItem('NEXTUP_TOKEN', d.data.access_token);
-          },
-          (e) => {
-            window.console.log('failed to login.', e);
-          },
-        );
+      onLogin() {
+        LoginEvents.bus.$emit(LoginEvents.TRY_LOGIN, this.loginInfo);
       },
     },
   };

@@ -7,7 +7,9 @@
 </template>
 
 <script>
+  import LoginEvents from './events/loginevents';
   import Navigation from './components/header/Navigation.vue';
+  import AuthService from './services/authservice';
 
   export default {
     data() {
@@ -18,13 +20,41 @@
     components: {
       Navigation,
     },
+    methods: {
+      tryLogin(loginInfo) {
+        window.console.log(loginInfo);
+        AuthService.tryLogin(
+          loginInfo.username,
+          loginInfo.password,
+          (d) => {
+            localStorage.setItem('NEXTUP_TOKEN', d.data.access_token);
+            this.$router.push('/');
+            this.loggedIn = true;
+          },
+          (e) => {
+            window.console.log('failed to login.', e);
+          },
+        );
+      },
+      checkToken() {
+        const token = localStorage.getItem('NEXTUP_TOKEN');
+        window.console.log(token);
+        if (token != null) {
+          this.loggedIn = true;
+        } else {
+          this.$router.push('Register');
+        }
+      },
+    },
     beforeCreate() {
-      const token = localStorage.getItem('NEXTUP_TOKEN');
-      if (token != null) {
-        this.loggedIn = true;
-      } else {
-        this.$router.push('Register');
-      }
+      // this.checkToken();
+    },
+    mounted() {
+      this.checkToken();
+      LoginEvents.bus.$on(LoginEvents.TRY_LOGIN, this.tryLogin);
+    },
+    beforeDestroy() {
+      LoginEvents.bus.$off(LoginEvents.TRY_LOGIN, this.tryLogin);
     },
   };
 </script>
