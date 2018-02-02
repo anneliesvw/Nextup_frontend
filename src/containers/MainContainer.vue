@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Navigation></Navigation>
     <div class="main-container">
       <Sidebar></Sidebar>
       <div class="content-container">
@@ -11,15 +10,13 @@
 </template>
 
 <script>
-import Activity from '../components/activities/Activity.vue';
-import Navigation from '../components/header/Navigation.vue';
-import Sidebar from '../components/sidebar/Sidebar.vue';
+  import Activity from '../components/activities/Activity.vue';
+  import Sidebar from '../components/sidebar/Sidebar.vue';
 
-export default {
-  components: {
-    Activity,
-    Navigation,
-    Sidebar,
-  },
-};
+  export default {
+    components: {
+      Activity,
+      Sidebar,
+    },
+  };
 </script>
