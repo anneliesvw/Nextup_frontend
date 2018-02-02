@@ -9,13 +9,13 @@
             </div>
             <el-form label-position="top">
               <el-form-item label="Username" class="form-item">
-                <el-input></el-input>
+                <el-input v-model="loginInfo.username"></el-input>
               </el-form-item>
               <el-form-item label="Password" class="form-item">
-                <el-input type="password"></el-input>
+                <el-input v-model="loginInfo.password" type="password"></el-input>
               </el-form-item>
               <el-form-item class="form-button">
-                <el-button type="primary">Login</el-button>
+                <el-button type="primary" @click="tryLogin()">Login</el-button>
               </el-form-item>
             </el-form>
           </el-tab-pane>
@@ -49,10 +49,16 @@
 </template>
 
 <script>
+  import AuthService from '../services/authservice';
+
   export default {
     name: 'RegisterContainer',
     data() {
       return {
+        loginInfo: {
+          username: '',
+          password: '',
+        },
         selectedTab: 'login',
       };
     },
@@ -60,6 +66,17 @@
       changeTab(event) {
         this.selectedTab = event;
         window.console.log(this.selectedTab);
+      },
+      tryLogin() {
+        // TODO: proper in ne service steken.
+        AuthService.tryLogin(
+          (d) => {
+            localStorage.setItem('NEXTUP_TOKEN', d.data.access_token);
+          },
+          (e) => {
+            window.console.log('failed to login.', e);
+          },
+        );
       },
     },
   };
