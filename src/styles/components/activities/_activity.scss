@@ -1,48 +1,45 @@
 .activity-wrapper {
-    min-width: 33%;
-    padding: 12px;
+  min-width: 33%;
+  padding: 12px;
 }
 .activity-container {
-    @include flexcol;
-    @include defaultshadow;
-    border-radius: 4px;
-    border: 1px solid $brand-gray-1;
-    //min-width: 33%;
-    .activity-graphic {
-        background-image: url("http://i0.kym-cdn.com/entries/icons/original/000/001/030/DButt.jpg");
-        width: 100%;
-        height: 200px;
-        background-size: cover;
-        background-position: center;
+  @include flexcol;
+  @include defaultshadow;
+  border-radius: 4px;
+  border: 1px solid $brand-gray-1;
+  //min-width: 33%;
+  .activity-graphic {
+    background-image: url('http://i0.kym-cdn.com/entries/icons/original/000/001/030/DButt.jpg');
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+  }
+  .activity-bottom {
+    padding: 12px;
+    @include flexrow;
+    .activity-toggle {
+      @include flexcol;
+      justify-content: center;
+      input {
+        width: 20px;
+        height: 20px;
+      }
     }
-    .activity-bottom {
-        padding: 12px;
-        @include flexrow;
-        .activity-toggle {
-            @include flexcol;
-            justify-content: center;
-            input {
-                width: 20px;
-                height: 20px;
-            }
-        }
-        .activity-details {
-            flex: 1;
-            @include flexcol;
-            align-items: flex-end;
-            .activity-owner {
-                font-size: 18px;
-                margin-bottom: 5px;
-                font-family: $title-font-family;
-            }
-            .activity-date {
-                font-family: $title-font-family;
-                color: $brand-gray-6;
-                font-weight: 200;
-                
-            }
-        }
-    
+    .activity-details {
+      flex: 1;
+      @include flexcol;
+      align-items: flex-end;
+      .activity-owner {
+        font-size: 18px;
+        margin-bottom: 5px;
+        font-family: $title-font-family;
+      }
+      .activity-date {
+        font-family: $title-font-family;
+        color: $brand-gray-6;
+        font-weight: 200;
+      }
     }
-
+  }
 }

@@ -7,12 +7,12 @@
 
 // Layout
 
-@import 'components/sidebar/_sidebar';
 // Components
 @import 'components/header';
 @import 'components/activities/activity';
 @import 'components/register';
 @import 'components/forms';
+@import 'components/sidebar/sidebar';
 
 // Containers
 @import 'containers/main-container';

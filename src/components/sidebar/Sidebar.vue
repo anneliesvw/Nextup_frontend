@@ -1,10 +1,11 @@
 <template>
 	<div class="app-sidebar">
 		<div class="groups">
+			<div class="groups-header">Groups</div>
 			<ol>
 				<li v-for="group in groups" :key="group">
 					<span>{{ group }}</span> 
-					<el-checkbox></el-checkbox>
+					<el-checkbox checked="true"></el-checkbox>
 				</li>
 			</ol>
 		</div>
@@ -16,7 +17,7 @@ export default {
   data() {
     return {
       // todo via backend
-      groups: ['group1', 'group2', 'group3'],
+      groups: ['Group1', 'Group2', 'Group3'],
     };
   },
 };
