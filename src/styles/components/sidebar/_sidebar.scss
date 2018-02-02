@@ -1,0 +1,27 @@
+.app-sidebar {
+  padding: 15px;
+}
+.groups-header {
+  font-size: 1.2em;
+  padding-top: 20px;
+  align-self: center;
+  text-transform: uppercase;
+}
+.groups {
+  @include flexcol;
+  align-items: stretch;
+  width: 100%;
+  ol {
+    list-style: none;
+    padding: 0;
+    li {
+      min-width: 90%;
+      border-bottom: solid 1px $brand-gray-1;
+      padding: 20px 10px;
+      width: 100%;
+      text-align: center;
+      @include flexrow;
+      justify-content: space-between;
+    }
+  }
+}
