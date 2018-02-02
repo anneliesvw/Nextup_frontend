@@ -1,19 +1,25 @@
-html, body {
-    padding: 0px;
-    margin: 0px;
+html,
+body {
+	padding: 0px;
+	margin: 0px;
 }
 
 * {
-    font-family: $base-font-family;
-    box-sizing: border-box;
+	font-family: $base-font-family;
+	box-sizing: border-box;
 }
 
 .content-container {
-    @include flexrow;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    min-width: 100%;
+	@include flexrow;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	min-width: 100%;
+}
+
+.site-wrapper {
+	@include flexcol;
+	padding: 0;
 }
