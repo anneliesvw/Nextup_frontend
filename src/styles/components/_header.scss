@@ -1,51 +1,51 @@
 $header-padding: 25px;
 
 .app-header {
-    @include flexrow;
-    @include defaultshadow;
-    width: 100%;
-    background: white;
-    border-bottom:  1px solid $brand-gray-1;
-    
-    .title {
-        @include flexcol;
-        font-size: 20px;
-        margin-right: 20px;
-        min-height: 100%;
-        padding: 0px $header-padding;
-        align-items: center;
-        justify-content: center;
-        color: $brand-blue-7;
-        font-family: $title-font-family;
-        font-weight: 200;
-        text-transform: uppercase;
-    }
-    .links {
-        flex: 1;
-        ol {
-            margin-bottom: 0px;
-            margin-top: 0px;
-            padding: 0px;
-            min-height: 100%;
-        }
-        li {
-            display: inline-block;
-            padding: $header-padding;
-            &.active-link {
-                border-bottom: 3px solid $brand-blue-7;
-            }
-        }
-    }
-    .user-info {
-        @include flexrow;
-        padding: 0px 2*$header-padding;
-        align-items: center;
-        .avatar {
-            width: 30px; 
-            height: 30px;
-            margin-right: 10px;
-            background: $brand-blue-2;
-        }
-    }
-    
+	@include flexrow;
+	@include defaultshadow;
+	width: 100%;
+	background: white;
+	border-bottom: 1px solid $brand-gray-1;
+
+	.title {
+		@include flexcol;
+		font-size: 20px;
+		margin-right: 20px;
+		min-height: 100%;
+		padding: 0px $header-padding;
+		align-items: center;
+		justify-content: center;
+		color: $brand-blue-7;
+		font-family: $title-font-family;
+		font-weight: 200;
+		text-transform: uppercase;
+	}
+	.links {
+		flex: 1;
+		ol {
+			margin-bottom: 0px;
+			margin-top: 0px;
+			padding: 0px;
+			min-height: 100%;
+		}
+		li {
+			display: inline-block;
+			padding: $header-padding;
+			&.active-link {
+				border-bottom: 3px solid $brand-blue-7;
+			}
+		}
+	}
+	.user-info {
+		@include flexrow;
+		padding: 0px 2*$header-padding;
+		align-items: center;
+		cursor: pointer;
+		.avatar {
+			width: 30px;
+			height: 30px;
+			margin-right: 10px;
+			background: $brand-blue-2;
+		}
+	}
 }
