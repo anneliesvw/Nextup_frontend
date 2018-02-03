@@ -1,0 +1,36 @@
+.chat-wrapper {
+  @include flexcol;
+  align-items: center;
+  border-color: $brand-gray-2;
+  border-width: 1px 0 1px 1px;
+  border-style: solid;
+  border-radius: 3px;
+  max-height: 70vh;
+  margin-top: 20px;
+}
+.chat-element {
+  text-align: center;
+  font-size: 0.7em;
+  @include flexcol;
+  align-items: center;
+}
+.chat-bubble {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: $brand-gray-5;
+  @include flexrow;
+  justify-content: center;
+  align-items: center;
+  border: solid 4px $brand-blue-8;
+  overflow: hidden;
+  margin: 10px 10px 0 10px;
+}
+.new-chat {
+  @include flexcol;
+  align-items: center;
+  margin-top: 20px;
+  input {
+    width: 90%;
+  }
+}
