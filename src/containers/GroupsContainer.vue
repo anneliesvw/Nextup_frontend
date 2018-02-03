@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="main-container">
-      <Sidebar></Sidebar>
+    <div class="groups-container">
+      <!--Sidebar></Sidebar-->
       <div class="content-container">
         <div class="group-wrapper">
           <div class="group-add">
-            <i class="fas fa-plus-circle"></i>
+            <i class="fas fa-plus"></i>
             <span>Create group</span>
           </div>
         </div>

@@ -15,7 +15,7 @@ import AuthService from './services/authservice';
 export default {
   data() {
     return {
-      loggedIn: true,
+      loggedIn: false,
     };
   },
   components: {
@@ -28,13 +28,13 @@ export default {
       AuthService.tryLogin(
         loginInfo.username,
         loginInfo.password,
-        (d) => {
+        d => {
           localStorage.setItem('NEXTUP_TOKEN', d.data.access_token);
           this.$router.push('/');
           this.loggedIn = true;
           this.setLoginAttempt('success');
         },
-        (e) => {
+        e => {
           this.setLoginAttempt('failed');
           window.console.log('failed to login.', e);
         },
