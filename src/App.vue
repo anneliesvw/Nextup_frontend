@@ -14,7 +14,7 @@
   export default {
     data() {
       return {
-        loggedIn: false,
+        loggedIn: true,
       };
     },
     components: {
@@ -50,7 +50,7 @@
       // this.checkToken();
     },
     mounted() {
-      this.checkToken();
+      // this.checkToken();
       LoginEvents.bus.$on(LoginEvents.TRY_LOGIN, this.tryLogin);
     },
     beforeDestroy() {
