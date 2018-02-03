@@ -5,21 +5,19 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    // dummyvalue: 0,
+    loginAttempt: '',
   },
   getters: {
-    // dummyGetter: state => {
-    //   return 0;
-    // }
+    getLoginAttempt: state => state.loginAttempt,
   },
   mutations: {
-    // dummyMutation: (state, payload) => {
-    //   state.dummyvalue++;
-    // }
+    setLoginAttempt: (state, payload) => {
+      state.loginAttempt = payload;
+    },
   },
   actions: {
-    // dummyAction: ({ commit }, payload) => {
-    //   commit('dummyMutation', payload);
-    // }
+    setLoginAttempt: ({ commit }, payload) => {
+      commit('setLoginAttempt', payload);
+    },
   },
 });
