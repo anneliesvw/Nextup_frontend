@@ -9,11 +9,13 @@
             </div>
             <el-form label-position="top">
               <el-form-item label="Username" class="form-item">
-                <el-input v-model="loginInfo.username"></el-input>
+                <el-input v-model="loginInfo.username" @change="setLoginAttempt('')"></el-input>
               </el-form-item>
               <el-form-item label="Password" class="form-item">
-                <el-input v-model="loginInfo.password" type="password"></el-input>
+                <el-input v-model="loginInfo.password" type="password" @change="setLoginAttempt('')"></el-input>
               </el-form-item>
+              <el-alert v-if="getLoginAttempt" title="Wrong password" type="error">
+              </el-alert>
               <el-form-item class="form-button">
                 <el-button type="primary" @click="onLogin()">Login</el-button>
               </el-form-item>
@@ -49,27 +51,32 @@
 </template>
 
 <script>
-  import LoginEvents from '../events/loginevents';
+import { mapActions, mapGetters } from 'vuex';
+import LoginEvents from '../events/loginevents';
 
-  export default {
-    name: 'RegisterContainer',
-    data() {
-      return {
-        loginInfo: {
-          username: '',
-          password: '',
-        },
-        selectedTab: 'login',
-      };
-    },
-    methods: {
-      changeTab(event) {
-        this.selectedTab = event;
-        window.console.log(this.selectedTab);
+export default {
+  name: 'RegisterContainer',
+  data() {
+    return {
+      loginInfo: {
+        username: '',
+        password: '',
       },
-      onLogin() {
-        LoginEvents.bus.$emit(LoginEvents.TRY_LOGIN, this.loginInfo);
-      },
+      selectedTab: 'login',
+    };
+  },
+  computed: {
+    ...mapGetters(['getLoginAttempt']),
+  },
+  methods: {
+    ...mapActions(['setLoginAttempt']),
+    changeTab(event) {
+      this.selectedTab = event;
+      window.console.log(this.selectedTab);
     },
-  };
+    onLogin() {
+      LoginEvents.bus.$emit(LoginEvents.TRY_LOGIN, this.loginInfo);
+    },
+  },
+};
 </script>

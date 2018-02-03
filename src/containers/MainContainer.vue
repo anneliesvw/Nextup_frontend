@@ -10,13 +10,13 @@
 </template>
 
 <script>
-  import Activity from '../components/activities/Activity.vue';
-  import Sidebar from '../components/sidebar/Sidebar.vue';
+import Activity from '../components/activities/Activity.vue';
+import Sidebar from '../components/sidebar/Sidebar.vue';
 
-  export default {
-    components: {
-      Activity,
-      Sidebar,
-    },
-  };
+export default {
+  components: {
+    Activity,
+    Sidebar,
+  },
+};
 </script>
