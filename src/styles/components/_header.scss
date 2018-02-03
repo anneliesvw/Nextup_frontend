@@ -1,6 +1,7 @@
 $header-padding: 25px;
 
 .app-header {
+	//position: fixed;
 	@include flexrow;
 	@include defaultshadow;
 	width: 100%;
@@ -17,7 +18,7 @@ $header-padding: 25px;
 		justify-content: center;
 		color: $brand-blue-7;
 		font-family: $title-font-family;
-		font-weight: 200;
+		font-weight: 400;
 		text-transform: uppercase;
 	}
 	.links {
