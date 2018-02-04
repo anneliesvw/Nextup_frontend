@@ -12,8 +12,8 @@
 
 <script>
 import Activity from '../components/activities/Activity.vue';
-import Sidebar from '../components/sidebar/Sidebar.vue';
-import ChatMenu from '../components/sidebar/ChatMenu.vue';
+import Sidebar from '../components/sidebars/Sidebar.vue';
+import ChatMenu from '../components/sidebars/ChatMenu.vue';
 
 export default {
   components: {
