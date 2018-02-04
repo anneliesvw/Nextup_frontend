@@ -14,3 +14,9 @@
 @mixin defaultshadow {
     box-shadow: 0px 0px 10px $base-shadow-color;
 }
+
+@mixin brand-blue-gradient {
+    background-color: $brand-blue-8; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, $brand-blue-7, $brand-blue-8); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, $brand-blue-7, $brand-blue-8);
+}

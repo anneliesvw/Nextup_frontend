@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Main from '../containers/MainContainer.vue';
-import Register from '../containers/RegisterContainer.vue';
+import Register from '../containers/users/RegisterContainer.vue';
 import Groups from '../containers/GroupsContainer.vue';
+import Users from '../containers/users/UsersContainer.vue';
+import ConfirmEmail from '../containers/users/ConfirmEmail.vue';
 
 Vue.use(Router);
 
@@ -22,6 +24,16 @@ export default new Router({
       path: '/mygroups',
       name: 'MyGroups',
       component: Groups,
+    },
+    {
+      path: '/users/:component',
+      name: 'Users',
+      component: Users,
+    },
+    {
+      path: '/confirmEmail/:token',
+      name: 'ConfirmEmail',
+      component: ConfirmEmail,
     },
   ],
 });
