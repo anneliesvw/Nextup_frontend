@@ -35,8 +35,8 @@ export default {
           this.setLoginAttempt('success');
         },
         e => {
-          window.console.log('failed to login.', e);
           this.setLoginAttempt('failed');
+          window.console.log('failed to login.', e);
         },
       );
     },
@@ -53,12 +53,12 @@ export default {
   beforeCreate() {
     // this.checkToken();
   },
+  beforeDestroy() {
+    LoginEvents.bus.$off(LoginEvents.TRY_LOGIN, this.tryLogin);
+  },
   mounted() {
     this.checkToken();
     LoginEvents.bus.$on(LoginEvents.TRY_LOGIN, this.tryLogin);
-  },
-  beforeDestroy() {
-    LoginEvents.bus.$off(LoginEvents.TRY_LOGIN, this.tryLogin);
   },
 };
 </script>
