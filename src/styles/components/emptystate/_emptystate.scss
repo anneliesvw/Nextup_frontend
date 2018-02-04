@@ -1,0 +1,20 @@
+.emptystate {
+  @include flexcol;
+  justify-content: center;
+  align-items: center;
+}
+
+.emptystate-sm {
+  height: 100%;
+  width: 100%;
+}
+
+.emptystate-md {
+  height: 100%;
+  width: 100%;
+}
+
+.emptystate-lg {
+  height: 100%;
+  width: 100%;
+}
