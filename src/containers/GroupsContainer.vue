@@ -12,10 +12,10 @@
         <Group v-for="item in 5" :key="item"></Group>
       </div> -->
       <empty-state 
-        :size="large"
-        :icon="key"
-        :title="test"
-        :text="qmlskdjfmqskjfmjdkmlf">
+        :size="'large'"
+        :icon="'key'"
+        :title="'test'"
+        :text="'qmlskdjfmqskjfmjdkmlf'">
         </empty-state>
     </div>
   </div>
