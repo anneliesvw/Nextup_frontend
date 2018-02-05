@@ -1,0 +1,102 @@
+.chat-wrapper {
+  @include defaultshadow;
+  @include flexcol;
+  align-items: center;
+  padding: 15px;
+  background: white;
+}
+.chat-element {
+  @include flexcol;
+  align-items: center;
+  text-align: center;
+  font-size: 0.7em;
+  position: relative;
+  .notification {
+    @include flexrow;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 43px;
+    left: 43px;
+    background-color: $brand-red-4;
+    border: solid 2px $brand-red-5;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    font-weight: bold;
+  }
+  .chat-window {
+    @include defaultshadow;
+    position: absolute;
+    top: 0;
+    left: -265px;
+    width: 250px;
+    height: 300px;
+    border: solid 2px $brand-blue-7;
+    background-color: white;
+    .messages {
+      @include flexcol;
+      height: 89%;
+      overflow-y: scroll;
+      .message {
+        border-radius: 8px;
+        padding: 8px;
+        margin: 5px;
+        max-width: 60%;
+        word-wrap: break-word;
+      }
+      .message-received {
+        align-self: flex-start;
+        background-color: $brand-blue-7;
+        color: white;
+      }
+      .message-sent {
+        align-self: flex-end;
+        background-color: $brand-gray-1;
+      }
+    }
+    .message-box {
+      @include flexrow;
+      justify-content: center;
+      height: 11%;
+      position: relative;
+      border-top: solid 1px $brand-gray-6;
+      .message-input {
+        width: 87%;
+        height: 100%;
+        padding: 0;
+        border: none;
+      }
+    }
+  }
+  .chat-arrow {
+    position: absolute;
+    top: 10px;
+    left: -15px;
+    width: 0;
+    height: 0;
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    border-left: 20px solid $brand-blue-7;
+    border-radius: 3px;
+  }
+}
+.chat-bubble {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: $brand-gray-5;
+  @include flexrow;
+  justify-content: center;
+  align-items: center;
+  border: solid 4px $brand-blue-7;
+  overflow: hidden;
+  margin: 10px 10px 0 10px;
+  cursor: pointer;
+}
+.new-chat {
+  background-color: $brand-gray-1;
+  i {
+    color: $brand-blue-7;
+  }
+}

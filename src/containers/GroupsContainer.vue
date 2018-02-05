@@ -17,7 +17,7 @@
 
 <script>
 import Group from '../components/groups/Group.vue';
-import Sidebar from '../components/sidebar/Sidebar.vue';
+import Sidebar from '../components/sidebars/Sidebar.vue';
 
 export default {
   components: {

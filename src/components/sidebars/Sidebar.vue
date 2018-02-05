@@ -5,7 +5,7 @@
 			<ol>
 				<li v-for="group in groups" :key="group">
 					<span>{{ group }}</span> 
-					<el-checkbox checked="true"></el-checkbox>
+					<el-checkbox :checked="true"></el-checkbox>
 				</li>
 			</ol>
 		</div>
