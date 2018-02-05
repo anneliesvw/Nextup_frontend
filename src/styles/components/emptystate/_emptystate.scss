@@ -1,0 +1,80 @@
+.emptystate {
+  @include flexcol;
+  justify-content: center;
+  align-items: center;
+  flex: auto;
+  color: $brand-gray-4;
+}
+
+.emptystate-sm {
+  @include flexcol;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+  .emptystate-icon {
+    // margin-top: 100px;
+    font-size: 4em;
+    margin-bottom: 0.5em;
+  }
+  .emptystate-title {
+    font-family: $title-font-family;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: $brand-gray-8;
+    text-align: center;
+  }
+  .emptystate-text {
+    font-size: 0.6em;
+    color: $brand-gray-8;
+    width: 50%;
+    text-align: center;
+  }
+}
+
+.emptystate-md {
+  @include flexcol;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  .emptystate-icon {
+    font-size: 4em;
+    margin-bottom: 0.5em;
+  }
+  .emptystate-title {
+    font-family: $title-font-family;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: $brand-gray-8;
+    text-align: center;
+  }
+  .emptystate-text {
+    font-size: 0.6em;
+    color: $brand-gray-8;
+    width: 50%;
+    text-align: center;
+  }
+}
+
+.emptystate-lg {
+  @include flexcol;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  .emptystate-icon {
+    font-size: 4em;
+    margin-bottom: 0.5em;
+  }
+  .emptystate-title {
+    font-family: $title-font-family;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: $brand-gray-8;
+    text-align: center;
+  }
+  .emptystate-text {
+    font-size: 0.6em;
+    color: $brand-gray-8;
+    width: 50%;
+    text-align: center;
+  }
+}

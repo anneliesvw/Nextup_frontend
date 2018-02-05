@@ -15,7 +15,7 @@ import AuthService from './services/authservice';
 export default {
   data() {
     return {
-      loggedIn: false,
+      loggedIn: true,
     };
   },
   components: {
@@ -57,7 +57,7 @@ export default {
     LoginEvents.bus.$off(LoginEvents.TRY_LOGIN, this.tryLogin);
   },
   mounted() {
-    this.checkToken();
+    // this.checkToken();
     LoginEvents.bus.$on(LoginEvents.TRY_LOGIN, this.tryLogin);
   },
 };
