@@ -20,7 +20,7 @@
             <el-dropdown-item>Profile Settings </el-dropdown-item>
             <el-dropdown-item>Preferences</el-dropdown-item>
             <el-dropdown-item>Help & Feedback</el-dropdown-item>
-            <el-dropdown-item divided="true">Logout</el-dropdown-item>
+            <el-dropdown-item :divided="true">Logout</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
