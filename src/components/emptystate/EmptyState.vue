@@ -1,9 +1,14 @@
 <template>
-  <div :class="this.sizeState"> 
-    <div class="emptystate-icon"><i :class="`fas fa-${this.icon}`"></i></div>
-    <div class="emptystate-title">{{this.title}}</div>
-    <div class="emptystate-text">{{this.text}}</div>
+  <div class="emptystate">
+    <div :class="this.sizeState">
+      <div class="emptystate-icon">
+        <i :class="`fas fa-${this.icon}`"></i>
+      </div>
+      <div class="emptystate-title">{{this.title}}</div>
+      <div class="emptystate-text">{{this.text}}</div>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -33,7 +38,6 @@ export default {
   computed: {
     sizeState() {
       return {
-        emptystate: true,
         'emptystate-sm': this.size === 'small',
         'emptystate-md': this.size === 'medium',
         'emptystate-lg': this.size === 'large',

@@ -12,10 +12,10 @@
         <Group v-for="item in 5" :key="item"></Group>
       </div> -->
       <empty-state 
-        :size="'large'"
-        :icon="'key'"
-        :title="'test'"
-        :text="'qmlskdjfmqskjfmjdkmlf'">
+        size="large"
+        icon="calendar-times"
+        title="You don't have any activities planned"
+        text="If you attend activities from your groups they will be shown here. You can also import your own agenda to show other activities you have planned. ">
         </empty-state>
     </div>
   </div>
