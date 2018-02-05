@@ -1,0 +1,82 @@
+.register-form {
+	@include flexcol;
+	@include defaultshadow;
+	justify-content: center;
+	align-items: center;
+	border-radius: 4px;
+	border: 1px solid $brand-gray-1;
+	width: 25vw;
+	background-color: white;
+	padding: 1em;
+	position: relative;
+
+	.form-button {
+		@include flexrow;
+		justify-content: center;
+		padding-top: 2em;
+	}
+
+	.register-text {
+		font-size: 2em;
+		padding: 1em;
+		font-family: $title-font-family;
+		text-align: center;
+	}
+
+	.el-tabs__nav-wrap::after {
+		width: 0% !important;
+	}
+
+	.el-tabs__nav-scroll {
+		display: flex;
+		justify-content: center;
+	}
+
+	.tab-content {
+		min-width: 90%;
+	}
+
+	.el-tabs {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		width: 80%;
+	}
+	.el-tabs__item.is-active {
+		color: $brand-blue-8;
+	}
+
+	.el-tabs__active-bar {
+		background: $brand-blue-8;
+	}
+}
+
+.center-content {
+	@include flexrow;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: #5f2c82; /* fallback for old browsers */
+	background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/0c/GoldenGateBridge-001.jpg');
+	background-size: cover;
+	background-position: center;
+	&:before {
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background: -webkit-linear-gradient(
+			45deg,
+			rgba(73, 160, 157, 1),
+			rgba(95, 44, 130, 0.9)
+		);
+		background: linear-gradient(
+			45deg,
+			rgba(73, 160, 157, 1),
+			rgba(95, 44, 130, 0.9)
+		);
+		//opacity: 0.9;
+	}
+}

@@ -3,9 +3,8 @@
       <div class="title">Next Up</div>
       <div class="links">
         <ol>
-          <li>My Activities</li>
+          <li class="active-link">My Activities</li>
           <li>Discover Activities</li>
-          <li class="active-link">My Groups</li>
         </ol>
       </div>
       <div class="user-info">

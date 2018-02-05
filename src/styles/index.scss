@@ -1,17 +1,23 @@
 @import url('https://fonts.googleapis.com/css?family=Barlow:100,200,300,400,500|Montserrat:100,200,300,400');
 
-
 // Utils
-@import "utils/variables";
-@import "utils/mixins";
-@import "utils/globals";
+@import 'utils/variables';
+@import 'utils/mixins';
+@import 'utils/globals';
 
 // Layout
 
-
 // Components
-@import "components/header";
-@import "components/activities/activity";
+@import 'components/buttons';
+@import 'components/header';
+@import 'components/activities/activity';
+@import 'components/register';
+@import 'components/forms';
+@import 'components/sidebar/sidebar';
+@import 'components/groups/group';
+@import 'components/usermessages/simple_usermessage';
+@import 'components/sidebar/chat-menu';
 
-//TODO: verplaats dit naar containers
+// Containers
+@import 'containers/main-container';
 @import "./create-group"

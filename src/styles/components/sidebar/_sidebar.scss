@@ -1,0 +1,36 @@
+.app-sidebar {
+	padding: 15px;
+	@include defaultshadow;
+	background: white;
+}
+.groups-header {
+	font-size: 1.2em;
+	padding-top: 20px;
+	align-self: center;
+	font-weight: 200;
+	//text-transform: uppercase;
+}
+.groups {
+	@include flexcol;
+	align-items: stretch;
+	width: 100%;
+	ol {
+		list-style: none;
+		padding: 0;
+		li {
+			cursor: pointer;
+			min-width: 90%;
+			border-bottom: solid 1px $brand-gray-1;
+			padding: 20px 10px;
+			width: 100%;
+			text-align: center;
+			@include flexrow;
+			justify-content: space-between;
+			transition: 1s ease border-bottom;
+			&:hover {
+				//border-bottom: solid 2px $brand-blue-7;
+				background: lighten($brand-gray-1, 10);
+			}
+		}
+	}
+}
