@@ -2,6 +2,7 @@ import axios from 'axios';
 import base64 from 'base-64';
 
 const TOKEN_ENDPOINT = 'http://localhost:8080/oauth/token';
+const API_ENDPOINT = 'http://localhost:8080/api/users';
 
 const tryLogin = (username, password, onSuccess, onError) => {
   const authOptions = {
@@ -15,6 +16,16 @@ const tryLogin = (username, password, onSuccess, onError) => {
   axios(authOptions).then(onSuccess, onError);
 };
 
+const confirmEmail = (token, onSuccess, onError) => {
+  axios.put(`${API_ENDPOINT}/confirmEmail?token=${token}`).then(onSuccess, onError);
+};
+
+const register = (userInfo, onSuccess, onError) => {
+  axios.post(`${API_ENDPOINT}/register`, userInfo).then(onSuccess, onError);
+};
+
 export default {
   tryLogin,
+  confirmEmail,
+  register,
 };

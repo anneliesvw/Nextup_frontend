@@ -30,7 +30,10 @@
               <el-form-item label="E-mail" class="form-item">
                 <el-input></el-input>
               </el-form-item>
-              <el-form-item label="Username" class="form-item">
+              <el-form-item label="Firstname" class="form-item">
+                <el-input></el-input>
+              </el-form-item>
+              <el-form-item label="Lastname" class="form-item">
                 <el-input></el-input>
               </el-form-item>
               <el-form-item label="Password" class="form-item">
@@ -52,7 +55,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import LoginEvents from '../events/loginevents';
+import LoginEvents from '../../events/loginevents';
 
 export default {
   name: 'RegisterContainer',
