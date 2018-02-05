@@ -16,23 +16,25 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 43px;
-    left: 43px;
-    background-color: $brand-red-4;
-    border: solid 2px $brand-red-5;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
+    top: 44px;
+    left: 44px;
+    background-color: $brand-blue-2;
+    border: solid 0px $brand-blue-3;
+    color: $brand-blue-5;
+    height: 18px;
+    width: 18px;
+    border-radius: 4px;
     font-weight: bold;
   }
   .chat-window {
-    @include defaultshadow;
+    @include mediumshadow;
     position: absolute;
     top: 0;
-    left: -265px;
+    left: -275px;
     width: 250px;
     height: 300px;
-    border: solid 2px $brand-blue-7;
+    border-radius: 4px;
+    //border: solid 1px $brand-blue-3;
     background-color: white;
     .messages {
       @include flexcol;
@@ -60,9 +62,11 @@
       justify-content: center;
       height: 11%;
       position: relative;
-      border-top: solid 1px $brand-gray-6;
+      background: $brand-blue-1;
+      border-top: solid 1px $brand-blue-1;
       .message-input {
         width: 87%;
+        background: $brand-blue-1;
         height: 100%;
         padding: 0;
         border: none;
@@ -71,13 +75,14 @@
   }
   .chat-arrow {
     position: absolute;
-    top: 10px;
-    left: -15px;
+    top: 30px;
+    z-index: 20;
+    left: -26px;
     width: 0;
     height: 0;
-    border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent;
-    border-left: 20px solid $brand-blue-7;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid white;
     border-radius: 3px;
   }
 }
@@ -89,14 +94,23 @@
   @include flexrow;
   justify-content: center;
   align-items: center;
-  border: solid 4px $brand-blue-7;
+  border: solid 1px $brand-blue-3;
   overflow: hidden;
   margin: 10px 10px 0 10px;
   cursor: pointer;
 }
 .new-chat {
-  background-color: $brand-gray-1;
+  border: none;
+  border-radius: 4px;
+  background-color: $brand-blue-2;
   i {
-    color: $brand-blue-7;
+    color: $brand-blue-5;
+  }
+
+  &:hover {
+    background-color: $brand-blue-3;
+    i {
+      color: $brand-blue-6;
+    } 
   }
 }
