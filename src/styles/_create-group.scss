@@ -1,0 +1,113 @@
+.createGroup-dialogDiv {
+  height: 80vh;
+  .el-dialog {
+    margin: 0 !important;
+    max-height: 100%;
+  }
+}
+
+.createGroup-dialog {
+  width: auto;
+  max-width: 800px;
+}
+.createGroup-form {
+  @include flexcol;
+  margin: 20px;
+  max-width: 1000px;
+  .createGroup-graphic {
+    @include flexrow;
+    justify-content: center;
+    align-items: flex-end;
+    background-image: url('http://www.xtremedivers.com/pictures/google_pic1.jpg');
+    border: 1px solid $brand-gray-5;
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    width: 100%;
+    opacity: 0.4;
+    align-items: center;
+    .createGroup-cirkel {
+      background: $brand-gray-1;
+      height: 125px;
+      width: 125px;
+      border-radius: 50%;
+      border: 1px solid $brand-gray-5;
+      @include flexrow;
+      justify-content: center;
+      align-items: center;
+      .camera-icon {
+        font-size: 72px;
+        padding-bottom: 7px;
+      }
+    }
+  }
+  .createGroup-name {
+    .createGroup-left {
+      @include flexrow;
+      margin-top: 20px;
+      .createGroup-input {
+        max-width: 300px;
+      }
+      .createGroup-membercontainer {
+        border-left: 1px solid $brand-gray-1;
+        margin-left: 20px;
+        padding-left: 20px;
+        .createGroup-addMember {
+          @include flexrow;
+          .createGroup-member {
+            margin-bottom: 5px;
+            width: 100%;
+          }
+        }
+        .createGroup-memberdiv {
+          @include flexrow;
+          justify-content: space-between;
+          background-color: $brand-gray-1;
+          padding: 0px 10px;
+          margin: 5px 0px;
+          border-radius: 3pt;
+        }
+      }
+    }
+  }
+
+  .fas:hover {
+    cursor: pointer;
+  }
+  .fas {
+    color: $brand-gray-7;
+    font-size: 20px;
+    margin: 5px;
+  }
+  .createGroup-graphic:hover {
+    opacity: 1;
+    cursor: pointer;
+    transition: opacity 200ms ease-in;
+    -moz-transition: opacity 200ms ease-in;
+    -webkit-transition: opacity 200ms ease-in;
+    -o-transition: opacity 200ms ease-in;
+    .createGroup-cirkel {
+      -webkit-transition: all 200ms ease-in;
+      -webkit-transform: scale(1.2);
+      -ms-transition: all 200ms ease-in;
+      -ms-transform: scale(1.2);
+      -moz-transition: all 200ms ease-in;
+      -moz-transform: scale(1.2);
+      transition: all 200ms ease-in;
+      transform: scale(1.2);
+    }
+  }
+
+  .createGroup-graphic {
+    transition: opacity 200ms ease-out;
+    -moz-transition: opacity 200ms ease-out;
+    -webkit-transition: opacity 200ms ease-out;
+    -o-transition: opacity 200ms ease-out;
+    .createGroup-cirkel {
+      -webkit-transition: all 200ms ease-out;
+      -ms-transition: all 200ms ease-out;
+      -moz-transition: all 200ms ease-out;
+      transition: all 200ms ease-out;
+    }
+  }
+}

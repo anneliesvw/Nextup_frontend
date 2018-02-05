@@ -6,6 +6,7 @@
   },
   "rules": {
     "no-underscore-dangle": [2, { "allow": ["_id"] }],
+    "linebreak-style": "off"
     "no-param-reassign": [2, { "props": false }],
     "arrow-parens": ["error", "as-needed"]
   }
