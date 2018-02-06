@@ -5,17 +5,20 @@
 
 .group-add {
   @include flexcol;
-  background: lighten($brand-gray-1, 12);
+  background: $brand-blue-1;
   border-radius: 4px;
   border-style: dashed;
-  border: 1px dashed $brand-gray-2;
+  border: 1px dashed $brand-blue-2;
   height: 265px;
   justify-content: center;
   align-items: center;
   font-size: 2em;
   cursor: pointer;
   &:hover {
-    background: lighten($brand-gray-1, 7);
+    background: $brand-blue-2;
+    i,span {
+      color: $brand-blue-5;
+    }
   }
   i {
     opacity: 0.8;
@@ -27,6 +30,9 @@
     color: $brand-gray-6;
   }
   span {
+    font-family: $title-font-family;
+    text-transform: uppercase;
+    letter-spacing: 0.9px;
     font-size: 1rem;
   }
 }
