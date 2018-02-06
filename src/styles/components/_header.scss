@@ -18,21 +18,29 @@ $header-padding: 25px;
 		justify-content: center;
 		color: $brand-blue-7;
 		font-family: $title-font-family;
-		font-weight: 400;
+		font-weight: 100;
 		text-transform: uppercase;
+		@include brand-blue-gradient;
+		color: white;
 	}
 	.links {
 		flex: 1;
-		ol {
+		a {
+			text-decoration: none;
+			color: $brand-gray-9;
+			font-weight: 300;
 			margin-bottom: 0px;
 			margin-top: 0px;
 			padding: 0px;
 			min-height: 100%;
-		}
-		li {
 			display: inline-block;
 			padding: $header-padding;
-			&.active-link {
+			&:hover {
+				color: $brand-blue-4;
+			}
+			&.router-link-active {
+				font-weight: 500;
+				color: $brand-blue-7;
 				border-bottom: 3px solid $brand-blue-7;
 			}
 		}
