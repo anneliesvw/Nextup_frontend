@@ -1,0 +1,108 @@
+.createEvent-form {
+  @include flexcol;
+  margin: 20px;
+  max-width: 1000px;
+  .createEvent-graphic {
+    @include flexrow;
+    justify-content: center;
+    align-items: flex-end;
+    background-image: url('https://www.eventbriz.com/wp-content/uploads/2017/09/NOWLIVE.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    width: 100%;
+    opacity: 0.4;
+    align-items: center;
+    .createEvent-circle {
+      background: $brand-gray-1;
+      height: 125px;
+      width: 125px;
+      border-radius: 50%;
+      border: 1px solid $brand-gray-5;
+      @include flexrow;
+      justify-content: center;
+      align-items: center;
+      .camera-icon {
+        font-size: 72px;
+        padding-bottom: 7px;
+      }
+    }
+  }
+  .createEvent-name {
+    .createEvent-left {
+      @include flexcol;
+      margin-top: 20px;
+      .createEvent-input {
+        //max-width: 300px;
+        min-width: 100%;
+        max-width: 100%;
+      }
+      .el-form-item {
+        flex: 1;
+        min-width: 100%;
+      }
+    }
+  }
+
+  .fas:hover {
+    cursor: pointer;
+  }
+  .fas {
+    color: $brand-gray-7;
+    font-size: 20px;
+    margin: 5px;
+  }
+  .createEvent-graphic:hover {
+    opacity: 1;
+    cursor: pointer;
+    transition: opacity 200ms ease-in;
+    -moz-transition: opacity 200ms ease-in;
+    -webkit-transition: opacity 200ms ease-in;
+    -o-transition: opacity 200ms ease-in;
+    .createEvent-circle {
+      -webkit-transition: all 200ms ease-in;
+      -webkit-transform: scale(1.2);
+      -ms-transition: all 200ms ease-in;
+      -ms-transform: scale(1.2);
+      -moz-transition: all 200ms ease-in;
+      -moz-transform: scale(1.2);
+      transition: all 200ms ease-in;
+      transform: scale(1.2);
+    }
+  }
+
+  .createEvent-graphic {
+    transition: opacity 200ms ease-out;
+    -moz-transition: opacity 200ms ease-out;
+    -webkit-transition: opacity 200ms ease-out;
+    -o-transition: opacity 200ms ease-out;
+    .createEvent-circle {
+      -webkit-transition: all 200ms ease-out;
+      -ms-transition: all 200ms ease-out;
+      -moz-transition: all 200ms ease-out;
+      transition: all 200ms ease-out;
+    }
+  }
+
+  .createEvent-date {
+    @include flexrow;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .el-tag + .el-tag {
+    margin-left: 10px;
+  }
+  .button-new-tag {
+    margin-left: 10px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .input-new-tag {
+    width: 90px;
+    margin-left: 10px;
+    vertical-align: bottom;
+  }
+}

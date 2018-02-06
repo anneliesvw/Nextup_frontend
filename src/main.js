@@ -8,6 +8,7 @@ import './styles/index.scss';
 
 Vue.use(ElementUI);
 
+
 /* eslint-disable */
 const app = new Vue({
   router,
