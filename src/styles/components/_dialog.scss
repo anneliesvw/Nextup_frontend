@@ -1,0 +1,26 @@
+.el-dialog {
+    border-radius: 4px;
+}
+.el-dialog__header {
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    @include brand-blue-gradient;
+    @include flexrow;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    //border-top-left-radius: 4px;
+    //border-top-right-radius: 4px;
+    
+    .el-dialog__title {
+        color: white;
+        font-family: $title-font-family;
+        font-weight: 200;
+        text-transform: uppercase;
+    }
+    .el-dialog__headerbtn {
+        i {
+            color: white;
+        }
+    }
+}
