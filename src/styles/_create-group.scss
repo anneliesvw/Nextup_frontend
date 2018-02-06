@@ -7,8 +7,9 @@
     justify-content: center;
     align-items: flex-end;
     background-image: url('http://www.xtremedivers.com/pictures/google_pic1.jpg');
-    background-size: cover;
-    background-position: center;
+    //background-size: cover;
+    //background-position: center;
+    background-color: $brand-blue-5;
     height: 200px;
     width: 100%;
     opacity: 0.4;
