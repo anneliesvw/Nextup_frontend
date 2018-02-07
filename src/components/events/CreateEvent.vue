@@ -1,15 +1,15 @@
 <template>
-  <el-dialog title="Create Event" class="createEvent-dialog" :visible.sync="showCreateEvent">
-    <div class="createEvent-form">
-      <el-form label-position="top" class="createEvent-name">
-        <div class="createEvent-graphic">
-          <div class="createEvent-circle">
+  <el-dialog title="Create Event" :visible.sync="showCreateEvent">
+    <div class="create-event-form">
+      <el-form label-position="top" class="create-event">
+        <div class="create-event-graphic">
+          <div class="create-event-circle">
             <i class="fas fa-camera camera-icon"></i>
           </div>
         </div>
-        <div class="createEvent-left">
+        <div class="create-event-input">
             <el-form-item label="Title">
-              <el-input class="creatEvent-input"></el-input>
+              <el-input placeholder="Enter title here"></el-input>
             </el-form-item>
             <el-form-item label="Accessibility">
               <el-switch v-model="publicValue" active-color="#ff4949" inactive-color="#13ce66" active-text="Private" inactive-text="Public">
@@ -18,9 +18,12 @@
             <el-form-item label="Date">
               <el-date-picker v-model="dateValue" type="datetimerange" start-placeholder="Start Date" end-placeholder="End date" :default-time="['12:00:00']" format="hh-mm dd-mm-yyyy">
               </el-date-picker>                
+            </el-form-item>
+            <el-form-item label="Location">
+              <el-input placeholder=""></el-input>
             </el-form-item>      
             <el-form-item label="Description">
-              <el-input class="createEvent-input" type="textarea" :autosize="{minRows: 4, maxRows: 5}"></el-input>
+              <el-input type="textarea" :autosize="{minRows: 4, maxRows: 5}"></el-input>
             </el-form-item>
             <el-form-item label="Tags">
               <el-tag :key="tag" v-for="tag in dynamicTags" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}
@@ -31,7 +34,15 @@
               </el-button>
             </el-form-item>
             <el-form-item label="Max. participants">
-              <el-input-number v-model="participantsValue" :step="10"></el-input-number>
+              <el-input-number v-model="participantsValue" :step="10" :min="0"></el-input-number>
+            </el-form-item>
+            <el-form-item label="Price">
+              <el-input placeholder="Please input" v-model="price" class="price-input">
+                <el-select v-model="valuta" slot="append" placeholder="Select">
+                  <el-option label="€" value="1"></el-option>
+                  <el-option label="$" value="2"></el-option>
+                </el-select>
+              </el-input>
             </el-form-item>
         </div>
       </el-form>
@@ -49,7 +60,9 @@ export default {
       dynamicTags: [],
       inputVisible: false,
       inputValue: '',
-      participantsValue: 5,
+      participantsValue: 0,
+      price: '',
+      valuta: '',
     };
   },
   computed: {

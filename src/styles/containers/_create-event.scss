@@ -1,8 +1,8 @@
-.createEvent-form {
+.create-event-form {
   @include flexcol;
   margin: 20px;
   max-width: 1000px;
-  .createEvent-graphic {
+  .create-event-graphic {
     @include flexrow;
     justify-content: center;
     align-items: flex-end;
@@ -13,7 +13,7 @@
     width: 100%;
     opacity: 0.4;
     align-items: center;
-    .createEvent-circle {
+    .create-event-circle {
       background: $brand-gray-1;
       height: 125px;
       width: 125px;
@@ -28,15 +28,10 @@
       }
     }
   }
-  .createEvent-name {
-    .createEvent-left {
+  .create-event-name {
+    .create-event-input {
       @include flexcol;
       margin-top: 20px;
-      .createEvent-input {
-        //max-width: 300px;
-        min-width: 100%;
-        max-width: 100%;
-      }
       .el-form-item {
         flex: 1;
         min-width: 100%;
@@ -52,7 +47,7 @@
     font-size: 20px;
     margin: 5px;
   }
-  .createEvent-graphic:hover {
+  .create-event-graphic:hover {
     opacity: 1;
     cursor: pointer;
     transition: opacity 200ms ease-in;
@@ -71,12 +66,12 @@
     }
   }
 
-  .createEvent-graphic {
+  .create-event-graphic {
     transition: opacity 200ms ease-out;
     -moz-transition: opacity 200ms ease-out;
     -webkit-transition: opacity 200ms ease-out;
     -o-transition: opacity 200ms ease-out;
-    .createEvent-circle {
+    .create-event-circle {
       -webkit-transition: all 200ms ease-out;
       -ms-transition: all 200ms ease-out;
       -moz-transition: all 200ms ease-out;
@@ -84,17 +79,17 @@
     }
   }
 
-  .createEvent-date {
+  .create-event-date {
     @include flexrow;
     justify-content: space-between;
     align-items: center;
   }
 
   .el-tag + .el-tag {
-    margin-left: 10px;
+    margin-left: 0.5em;
   }
   .button-new-tag {
-    margin-left: 10px;
+    margin-left: 0.5em;
     height: 32px;
     line-height: 30px;
     padding-top: 0;
@@ -102,7 +97,14 @@
   }
   .input-new-tag {
     width: 90px;
-    margin-left: 10px;
+    margin-left: 0.5em;
     vertical-align: bottom;
+  }
+
+  .price-input {
+    width: 50%;
+    .el-select {
+      width: 8em;
+    }
   }
 }
