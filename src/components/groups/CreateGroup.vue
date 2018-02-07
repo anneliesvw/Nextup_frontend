@@ -75,6 +75,7 @@
               type: 'success',
               duration: 2000,
             });
+            this.$emit('created', res.data);
             this.$emit('close');
           },
           () => {

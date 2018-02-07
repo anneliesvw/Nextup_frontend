@@ -6,6 +6,7 @@
         v-if="dialogVisible"
         :isVisible="true"
         @close="closeDialog"
+        @created="addGroup"
         >
       </CreateGroup>
       <div class="content-container">
@@ -49,6 +50,9 @@ export default {
     },
     closeDialog() {
       this.dialogVisible = false;
+    },
+    addGroup(g) {
+      this.groups.push(g);
     },
   },
   mounted() {

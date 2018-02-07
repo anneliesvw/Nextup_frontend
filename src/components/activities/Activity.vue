@@ -10,7 +10,7 @@
             </div>
             <div class="activity-details">
                 <div class="activity-owner">
-                    Grindr vriendjes
+                    Kroegentocht
                 </div>
                 <div class="activity-date">
                     ZATERDAG 27/07 | 10:00 - 17:00
