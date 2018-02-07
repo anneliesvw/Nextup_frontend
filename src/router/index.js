@@ -5,6 +5,7 @@ import Register from '../containers/users/RegisterContainer.vue';
 import Groups from '../containers/GroupsContainer.vue';
 import Users from '../containers/users/UsersContainer.vue';
 import ConfirmEmail from '../containers/users/ConfirmEmail.vue';
+import GroupDetail from '../containers/GroupDetailContainer.vue';
 import Events from '../containers/EventsContainer.vue';
 
 Vue.use(Router);
@@ -26,6 +27,11 @@ export default new Router({
       path: '/mygroups',
       name: 'MyGroups',
       component: Groups,
+    },
+    {
+      path: '/group/detail',
+      name: 'GroupDetail',
+      component: GroupDetail,
     },
     {
       path: '/users/:component',
