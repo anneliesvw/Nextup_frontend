@@ -11,6 +11,7 @@
 @import 'components/buttons';
 @import 'components/header';
 @import 'components/activities/activity';
+@import 'components/activities/poll';
 @import 'components/register';
 @import 'components/forms';
 @import 'components/sidebar/sidebar';
@@ -22,4 +23,5 @@
 
 // Containers
 @import 'containers/main-container';
-@import "./create-group"
+@import 'containers/_group-detail-container';
+@import './create-group';
