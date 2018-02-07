@@ -6,6 +6,7 @@
         v-if="dialogVisible"
         :isVisible="true"
         @close="closeDialog"
+        @created="addGroup"
         >
       </CreateGroup>
       <div class="content-container">
@@ -15,13 +16,18 @@
             <span>Create group</span>
           </div>
         </div>
-        <Group v-for="item in 5" :key="item"></Group>
+        <Group 
+          v-for="group in groups" 
+          :key="group.groupId"
+          :group="group">
+        </Group>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import GroupsApi from '../services/groupservice';
 import Group from '../components/groups/Group.vue';
 import CreateGroup from '../components/groups/CreateGroup.vue';
 import Sidebar from '../components/sidebars/Sidebar.vue';
@@ -35,6 +41,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      groups: [],
     };
   },
   methods: {
@@ -44,6 +51,21 @@ export default {
     closeDialog() {
       this.dialogVisible = false;
     },
+    addGroup(g) {
+      this.groups.push(g);
+    },
+  },
+  mounted() {
+    // TODO: Loading screen.
+    GroupsApi.getGroups(
+      res => {
+        this.groups = res.data;
+        window.console.log(res);
+      },
+      err => {
+        window.console.log('kleinen error in de groepsapi', err);
+      },
+    );
   },
 };
 </script>

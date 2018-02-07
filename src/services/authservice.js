@@ -1,8 +1,9 @@
 import axios from 'axios';
 import base64 from 'base-64';
 
-const TOKEN_ENDPOINT = 'http://localhost:8080/oauth/token';
-const API_ENDPOINT = 'http://localhost:8080/api/users';
+const API_URL = process.env.API_ENDPOINT;
+const TOKEN_ENDPOINT = `${API_URL}/oauth/token`;
+const API_ENDPOINT = `${API_URL}/api/users`;
 
 const tryLogin = (username, password, onSuccess, onError) => {
   const authOptions = {
