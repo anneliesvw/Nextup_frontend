@@ -6,6 +6,7 @@ import Groups from '../containers/GroupsContainer.vue';
 import Users from '../containers/users/UsersContainer.vue';
 import ConfirmEmail from '../containers/users/ConfirmEmail.vue';
 import GroupDetail from '../containers/GroupDetailContainer.vue';
+import Events from '../containers/EventsContainer.vue';
 
 Vue.use(Router);
 
@@ -41,6 +42,11 @@ export default new Router({
       path: '/confirmEmail/:token',
       name: 'ConfirmEmail',
       component: ConfirmEmail,
+    },
+    {
+      path: '/group/event',
+      name: 'Event',
+      component: Events,
     },
   ],
 });

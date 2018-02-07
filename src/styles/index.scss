@@ -24,4 +24,5 @@
 // Containers
 @import 'containers/main-container';
 @import 'containers/_group-detail-container';
-@import './create-group';
+@import "containers/create-group";
+@import 'containers/create-event';

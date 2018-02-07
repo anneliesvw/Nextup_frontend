@@ -1,0 +1,87 @@
+.create-group-form {
+  @include flexcol;
+  margin: 20px;
+  max-width: 1000px;
+  .create-group-graphic {
+    @include flexrow;
+    justify-content: center;
+    align-items: flex-end;
+    background-image: url('http://www.xtremedivers.com/pictures/google_pic1.jpg');
+    //background-size: cover;
+    //background-position: center;
+    background-color: $brand-blue-5;
+    height: 200px;
+    width: 100%;
+    opacity: 0.4;
+    align-items: center;
+    .create-group-cirkel {
+      background: $brand-gray-1;
+      height: 125px;
+      width: 125px;
+      border-radius: 50%;
+      border: 1px solid $brand-gray-5;
+      @include flexrow;
+      justify-content: center;
+      align-items: center;
+      .camera-icon {
+        font-size: 72px;
+        padding-bottom: 7px;
+      }
+    }
+  }
+  .create-group-name {
+    .createGroup-left {
+      @include flexcol;
+      margin-top: 20px;
+      .create-group-input {
+        //max-width: 300px;
+        min-width: 100%;
+        max-width: 100%;
+      }
+      .el-form-item {
+        flex: 1;
+        min-width: 100%;
+      }
+    }
+  }
+  // TODO: fas aanpassen
+  .fas:hover {
+    cursor: pointer;
+  }
+  .fas {
+    color: $brand-gray-7;
+    font-size: 20px;
+    margin: 5px;
+  }
+  .create-group-graphic:hover {
+    opacity: 1;
+    cursor: pointer;
+    transition: opacity 200ms ease-in;
+    -moz-transition: opacity 200ms ease-in;
+    -webkit-transition: opacity 200ms ease-in;
+    -o-transition: opacity 200ms ease-in;
+    .create-group-cirkel {
+      -webkit-transition: all 200ms ease-in;
+      -webkit-transform: scale(1.2);
+      -ms-transition: all 200ms ease-in;
+      -ms-transform: scale(1.2);
+      -moz-transition: all 200ms ease-in;
+      -moz-transform: scale(1.2);
+      transition: all 200ms ease-in;
+      transform: scale(1.2);
+    }
+  }
+
+  .create-group-graphic {
+    transition: opacity 200ms ease-out;
+    -moz-transition: opacity 200ms ease-out;
+    -webkit-transition: opacity 200ms ease-out;
+    -o-transition: opacity 200ms ease-out;
+    .create-group-cirkel {
+      -webkit-transition: all 200ms ease-out;
+      -ms-transition: all 200ms ease-out;
+      -moz-transition: all 200ms ease-out;
+      transition: all 200ms ease-out;
+    }
+  }
+}

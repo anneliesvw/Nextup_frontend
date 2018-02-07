@@ -1,11 +1,14 @@
 <template>
+<!-- https://www.sitepoint.com/6-incredible-svg-pattern-generators/ -->
   <div class="group-wrapper">
     <div class="group-container">
-      <div class="group-graphic"></div>
+      <div class="group-graphic" :style="randomImage">
+        
+      </div>
       <div class="group-bottom">
         <div class="group-details">
           <div class="group-name">
-            KDG IAO30B
+            {{group.name}}
           </div>
           <div class="group-notifications">
             5
@@ -23,4 +26,21 @@
 </template>
 
 <script>
+// import GeoPattern from 'geopattern';
+import PatternGenerator from '../../services/patterngenerator';
+
+export default {
+  props: ['group'],
+  data() {
+    return {
+    };
+  },
+  computed: {
+    randomImage() {
+      return {
+        backgroundImage: PatternGenerator.generateImage(this.group.name),
+      };
+    },
+  },
+};
 </script>
