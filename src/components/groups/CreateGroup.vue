@@ -1,20 +1,20 @@
 <template>
-  <el-dialog title="Create group" class="createGroup-dialog" 
+  <el-dialog title="Create group" class="create-group-dialog" 
     :visible.sync="dialogVisible">
     <div class="create-group-form">
-      <el-form label-position="top" class="createGroup-name">
-        <div class="createGroup-graphic" :style="backgroundPattern">
-          <div class="createGroup-cirkel">
+      <el-form label-position="top" class="create-group-name">
+        <div class="create-group-graphic" :style="backgroundPattern">
+          <div class="create-group-cirkel">
             <i class="fas fa-camera camera-icon"></i>
           </div>
         </div>
         <div class="create-group-left">
             <el-form-item label="Name">
-              <el-input class="createGroup-input" v-model="groupInfo.name"></el-input>
+              <el-input class="create-group-input" v-model="groupInfo.name"></el-input>
             </el-form-item>
             <el-form-item label="Description">
               <el-input 
-                class="createGroup-input" 
+                class="create-group-input" 
                 type="textarea" 
                 :autosize="{minRows: 4, maxRows: 5}" 
                 v-model="groupInfo.description"></el-input>
@@ -100,6 +100,5 @@
         this.members.splice(index, 1);
       },
     },
-  },
-};
+  };
 </script>
