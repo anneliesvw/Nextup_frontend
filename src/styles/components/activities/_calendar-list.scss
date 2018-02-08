@@ -1,0 +1,43 @@
+$calendar-header-size: 30px;
+
+.max-width {
+  width: 100%;
+}
+
+.calendar-wrapper {
+  @include flexrow;
+}
+
+.days-wrapper {
+  @include flexrow;
+  justify-content: center;
+  min-width: 800px;
+  width: 100%;
+  .day-of-week {
+    padding: 0px;
+    width: 14%;
+
+    .day-header {
+      height: $calendar-header-size;
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+  .day-hour {
+    height: 50px;
+    width: 100%;
+    border: 1px solid $brand-blue-5;
+  }
+  /* .day-quarter-hour {
+    height: 25%;
+    width: 100%;
+    border: 1px solid $brand-blue-2;
+  } */
+}
+.calendar-hours {
+  margin-top: $calendar-header-size;
+  .calendar-hour {
+    height: 50px;
+    text-align: center;
+  }
+}

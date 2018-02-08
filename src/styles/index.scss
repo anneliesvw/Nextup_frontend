@@ -19,7 +19,8 @@
 @import 'components/usermessages/simple_usermessage';
 @import 'components/sidebar/chat-menu';
 @import 'components/dialog';
+@import 'components/activities/calendar-list';
 
 // Containers
 @import 'containers/main-container';
-@import "./create-group"
+@import './create-group';
