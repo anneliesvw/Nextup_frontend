@@ -29,7 +29,7 @@ export default new Router({
       component: Groups,
     },
     {
-      path: '/group/detail',
+      path: '/group/detail/:groupId?',
       name: 'GroupDetail',
       component: GroupDetail,
     },

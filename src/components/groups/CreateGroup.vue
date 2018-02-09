@@ -30,7 +30,6 @@
 </template>
 
 <script>
-  import GroupsApi from '../../services/groupservice';
   import PatternGenerator from '../../services/patterngenerator';
 
   export default {
@@ -65,20 +64,18 @@
     },
     methods: {
       createGroup() {
-        GroupsApi.createGroup(
-          this.groupInfo,
-          res => {
-            window.console.log('Group created', res.data);
+        const payload = {
+          groupInfo: this.groupInfo,
+          onSuccess: res => {
             this.$notify({
               title: 'Group Created',
               message: `Group '${res.data.name}' successfully created.`,
               type: 'success',
               duration: 2000,
             });
-            this.$emit('created', res.data);
             this.$emit('close');
           },
-          () => {
+          onError: () => {
             this.$notify({
               title: 'Unable To Create Group',
               message: 'Unable to create group.',
@@ -87,7 +84,8 @@
             });
             this.$emit('close');
           },
-        );
+        };
+        this.$store.dispatch('addGroup', payload);
       },
       addMember() {
         this.members.push({

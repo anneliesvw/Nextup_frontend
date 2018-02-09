@@ -25,9 +25,20 @@ const createGroup = (groupInfo, onSucces, onError) => {
   ).then(onSucces, onError);
 };
 
+const addUserToGroup = (username, groupId, onSucces, onError) => {
+  axios.post(
+    `${GROUPS_URL}/${groupId}/users`,
+    {
+      username,
+    },
+    getHeader(),
+  ).then(onSucces, onError);
+};
+
 export default {
   getGroups,
   getGroup,
   createGroup,
+  addUserToGroup,
 };
 

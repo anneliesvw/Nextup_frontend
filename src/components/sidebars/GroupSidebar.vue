@@ -7,42 +7,35 @@
       <template v-for="group in groups">
         <div :class="{
           'group-link': true,
-          'group-link-active': group === activeGroup
+          'group-link-active': activeGroup && group.groupId === activeGroup.groupId
         }"
-        :key="group"
+        :key="group.groupId"
         @click="setActiveGroup(group)">
-          {{group}}
+          {{group.name}}
         </div>
       </template>
     </div>
     <div class="group-buttons">
-      <el-button type="primary">Create Group</el-button>
+      <el-button type="primary" @click="() => this.$emit('createClicked')">Create Group</el-button>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    data() {
-      return {
-        activeGroup: '',
-        groups: [
-          'U17 De Klinge',
-          'group2',
-          'group3',
-          'group4',
-          'group5',
-        ],
-      };
+    props: ['activeGroup'],
+    computed: {
+      groups() {
+        return this.$store.getters.getGroups;
+      },
     },
     methods: {
       setActiveGroup(group) {
-        this.activeGroup = group;
+        this.$emit('groupSelected', group);
       },
+    },
+    beforeDestroy() {
+      window.console.log('ciao ze');
     },
   };
 </script>
-
-<style scoped>
-
-</style>

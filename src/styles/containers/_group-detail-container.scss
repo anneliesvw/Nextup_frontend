@@ -1,6 +1,7 @@
 .group-detail-container {
   position: relative;
   .sidebar-wrapper {
+    padding-top: 20px;
     background: white;
   }
   .group-info-panel {
@@ -36,6 +37,13 @@
     @include flexrow;
     flex-wrap: wrap;
   }
+  .no-group-selected {
+    @include flexcol;
+    background: white;
+    align-items: center;
+    justify-content: center;
+  }
+
 
   .info-panel-wrapper {
     min-width: 100%;
