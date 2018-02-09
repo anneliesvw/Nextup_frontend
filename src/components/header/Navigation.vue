@@ -3,8 +3,8 @@
       <div class="title">Next Up</div>
       <div class="links">
         <router-link :to="{name: 'Default'}" exact>My Activities</router-link>
-        <router-link to="MyGroups">My Groups</router-link>
-        <router-link to="Activities">Discover Activities</router-link>
+        <router-link to="/MyGroups">My Groups</router-link>
+        <router-link to="/Activities">Discover Activities</router-link>
       </div>
       <div class="user-info">
         <el-dropdown trigger="click">

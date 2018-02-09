@@ -51,6 +51,7 @@ export default {
     },
   },
   beforeCreate() {
+    this.$store.dispatch('loadGroups');
     // this.checkToken();
   },
   beforeDestroy() {

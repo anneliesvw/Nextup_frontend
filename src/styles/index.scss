@@ -16,10 +16,13 @@
 @import 'components/forms';
 @import 'components/sidebar/sidebar';
 @import 'components/groups/group';
+@import 'components/groups/info-panel';
 @import 'components/emptystate/_emptystate';
 @import 'components/usermessages/simple_usermessage';
 @import 'components/sidebar/chat-menu';
+@import 'components/sidebar/group-sidebar';
 @import 'components/dialog';
+@import 'components/dialogs/invite-member';
 
 // Containers
 @import 'containers/main-container';

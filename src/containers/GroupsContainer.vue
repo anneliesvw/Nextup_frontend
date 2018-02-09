@@ -6,7 +6,6 @@
         v-if="dialogVisible"
         :isVisible="true"
         @close="closeDialog"
-        @created="addGroup"
         >
       </CreateGroup>
       <div class="content-container">
@@ -27,7 +26,6 @@
 </template>
 
 <script>
-import GroupsApi from '../services/groupservice';
 import Group from '../components/groups/Group.vue';
 import CreateGroup from '../components/groups/CreateGroup.vue';
 import Sidebar from '../components/sidebars/Sidebar.vue';
@@ -41,8 +39,12 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      groups: [],
     };
+  },
+  computed: {
+    groups() {
+      return this.$store.getters.getGroups;
+    },
   },
   methods: {
     openDialog() {
@@ -51,21 +53,6 @@ export default {
     closeDialog() {
       this.dialogVisible = false;
     },
-    addGroup(g) {
-      this.groups.push(g);
-    },
-  },
-  mounted() {
-    // TODO: Loading screen.
-    GroupsApi.getGroups(
-      res => {
-        this.groups = res.data;
-        window.console.log(res);
-      },
-      err => {
-        window.console.log('kleinen error in de groepsapi', err);
-      },
-    );
   },
 };
 </script>
