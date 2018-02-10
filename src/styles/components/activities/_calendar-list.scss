@@ -1,5 +1,4 @@
-$calendar-header-size: 30px;
-
+$calendar-header-size: 40px;
 .max-width {
   width: 100%;
 }
@@ -14,30 +13,42 @@ $calendar-header-size: 30px;
   min-width: 800px;
   width: 100%;
   .day-of-week {
-    padding: 0px;
+    @include mediumshadow;
+    padding: 3px;
     width: 14%;
-
+    position: relative;
     .day-header {
+      @include flexrow;
+      align-items: center;
+      justify-content: center;
       height: $calendar-header-size;
       text-align: center;
       font-weight: bold;
+      background: $brand-blue-7;
+      color: white;
+      position: fixed;
+      width: 10%;
+    }
+    .day-content {
+      background: white;
+      .day-hour {
+        height: 70px;
+        width: 100%; // border: 1px solid $brand-blue-5;
+        border-top: 1px dashed $brand-gray-1;
+      }
+      /* .day-quarter-hour {
+        height: 25%;
+        width: 100%;
+        border: 1px solid $brand-blue-2;
+      } */
     }
   }
-  .day-hour {
-    height: 50px;
-    width: 100%;
-    border: 1px solid $brand-blue-5;
-  }
-  /* .day-quarter-hour {
-    height: 25%;
-    width: 100%;
-    border: 1px solid $brand-blue-2;
-  } */
 }
+
 .calendar-hours {
   margin-top: $calendar-header-size;
   .calendar-hour {
-    height: 50px;
+    height: 70px;
     text-align: center;
   }
 }
