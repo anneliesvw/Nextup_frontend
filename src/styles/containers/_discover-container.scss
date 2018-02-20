@@ -1,3 +1,8 @@
+.discover-container {
+  display: grid;
+  grid-template-columns: calc(100% - 100px) 100px;
+}
+
 .discover-title {
   width: 100%;
   padding: 10px;
@@ -8,16 +13,18 @@
   border-bottom: 2px solid $brand-blue-7;
   margin-bottom: 15px;
 }
+
 .discover-wrapper {
   padding: 30px;
   background-color: white;
 }
+
 .discover-recommended {
   margin-bottom: 20px;
 }
+
 .discover-row {
   @include flexrow;
-
   justify-content: center;
   .discover-graphic {
     height: 200px;
@@ -43,38 +50,161 @@
     }
   }
 }
-.discover-graphic:hover > .discover-overlay {
+
+.discover-graphic:hover>.discover-overlay {
   cursor: pointer;
   top: 0;
 }
+
 .row-1 {
   display: grid;
   grid-template-columns: 40% 40% 20%;
 }
+
 .row-2 {
   display: grid;
   grid-template-columns: 20% 40% 40%;
 }
+
 .row-3 {
   display: grid;
   grid-template-columns: 40% 20% 40%;
 }
+
 .discover-dialog-graphic {
   height: 200px;
   background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/3d/London_Bridge_%289691084663%29.jpg');
   background-size: cover;
   background-position: center;
 }
+
 .discover-dialog-body {
   margin: 20px;
 }
+
 .el-dialog__body {
   padding: 0 !important;
 }
+
 .discover-dialog-info {
   margin: 20px 0px;
 }
+
 .discover-dialog-present {
   margin-bottom: 20px;
   font-size: 24px !important;
 }
+
+//carousel
+.discover-contain {
+  @include flexrow;
+  justify-content: center;
+  align-items: center;
+  align-content: stretch;
+  flex-wrap: nowrap;
+}
+
+$duration: 450ms;
+$tileWidth: 250px;
+$tileHeight: ($tileWidth / (16/9));
+$iconSize: 50px;
+$growFactor: 1.5; // 1.5 times the original size
+$moveLeft: -($tileWidth * ($growFactor - 1) / 2);
+$moveRight: $tileWidth * ($growFactor - 1);
+.discover-row {
+  overflow-x: hidden;
+}
+
+.discover-arrow {
+  background: $brand-blue-7;
+  height: $tileHeight;
+  @include flexrow;
+  align-items: center;
+  padding: 10px;
+  color: white;
+}
+
+.discover-arrow:hover {
+  cursor: pointer;
+  background: $brand-blue-3;
+}
+
+.discover-row__inner {
+  @include flexrow;
+  align-items: center;
+  width: 100%;
+  transition: $duration transform;
+  font-size: 0;
+  white-space: nowrap;
+  margin: ($tileHeight / 2) 0;
+}
+
+.discover-tile__details {
+  color: white;
+}
+
+.discover-tile {
+  position: relative;
+  display: inline-block;
+  width: $tileWidth;
+  height: $tileHeight;
+  margin-right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: $duration all;
+  transform-origin: center left;
+}
+
+.discover-tile__img {
+  width: $tileWidth;
+  height: $tileHeight;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/3d/London_Bridge_%289691084663%29.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.discover-tile__details {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  font-size: 10px;
+  opacity: 0;
+  background: linear-gradient( to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+  transition: $duration opacity;
+  &:after &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: black;
+  }
+  .discover-tile:hover & {
+    opacity: 1;
+  }
+}
+
+.discover-tile__title {
+  position: absolute;
+  bottom: 0;
+  padding: 10px;
+}
+
+.discover-row__inner:hover {
+  transform: translate3d($moveLeft, 0, 0);
+}
+
+.discover-row__inner:hover .discover-tile {
+  opacity: 0.3;
+  &:hover {
+    transform: scale($growFactor);
+    opacity: 1;
+  }
+}
+
+.discover-tile:hover~.discover-tile {
+  transform: translate3d($moveRight, 0, 0);
+}
+
+/* https://benfrain.com/a-horizontal-scrolling-navigation-pattern-for-touch-and-mouse-with-moving-current-indicator/ */
