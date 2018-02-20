@@ -3,11 +3,11 @@
     :visible.sync="dialogVisible">
     <div class="create-group-form">
       <el-form label-position="top" class="create-group-name">
-        <div class="create-group-graphic" :style="backgroundPattern">
-          <div class="create-group-cirkel">
-            <i class="fas fa-camera camera-icon"></i>
-          </div>
-        </div>
+        <ImageUploader
+          :placeHolder="backgroundImage"
+          imageType="groups"
+        >         
+        </ImageUploader>
         <div class="create-group-left">
             <el-form-item label="Name">
               <el-input class="create-group-input" v-model="groupInfo.name"></el-input>
@@ -31,8 +31,12 @@
 
 <script>
   import PatternGenerator from '../../services/patterngenerator';
+  import ImageUploader from '../ImageUploader.vue';
 
   export default {
+    components: {
+      ImageUploader,
+    },
     props: ['isVisible'],
     data() {
       return {
@@ -46,10 +50,8 @@
       };
     },
     computed: {
-      backgroundPattern() {
-        return {
-          backgroundImage: PatternGenerator.generateImage(this.groupInfo.name || ''),
-        };
+      backgroundImage() {
+        return PatternGenerator.generateImage(this.groupInfo.name || '');
       },
       dialogVisible: {
         get() {
@@ -86,16 +88,6 @@
           },
         };
         this.$store.dispatch('addGroup', payload);
-      },
-      addMember() {
-        this.members.push({
-          name: this.memberToAdd,
-        });
-        this.memberToAdd = '';
-      },
-      removeMember(index) {
-        // TODO: remove right
-        this.members.splice(index, 1);
       },
     },
   };
