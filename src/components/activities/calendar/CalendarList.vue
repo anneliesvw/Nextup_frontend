@@ -33,7 +33,15 @@
     data() {
       return {
         test: 'fdfd',
-        testEvents: [{name: 'Bier zuipen', description: 'lekker toch', location: 'de kroeg', startdate: '17 / 2 / 2018'}]
+        testEvents: [{
+          name: 'Bier zuipen',
+          description: 'lekker toch',
+          location: 'de kroeg',
+          startdate: '17/2/2018 14:00',
+          enddate: '17/2/2018 17:00',
+          isprivate: 'true',
+          isopen: 'true',
+        }],
       };
     },
     methods: {

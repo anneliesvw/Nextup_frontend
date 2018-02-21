@@ -12,7 +12,9 @@ $calendar-hours-width: 100px;
   @include flexrow;
   justify-content: center; // justify-content: space-between;
   height: $calendar-header-height;
-  margin-left: $calendar-hours-width; // margin-right: 17px;
+  margin-left: $calendar-hours-width;
+  padding-left: 3px;
+  margin-right: 21px;
   min-width: 800px; // width: 100%;
   .day-header {
     @include flexrow;
@@ -22,7 +24,6 @@ $calendar-hours-width: 100px;
     font-weight: bold;
     background: $brand-blue-7;
     color: white;
-    @include mediumshadow;
     padding: 3px;
     width: 14%;
   }
