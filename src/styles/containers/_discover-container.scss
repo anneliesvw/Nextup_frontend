@@ -42,6 +42,13 @@
   margin-bottom: 20px;
 }
 
+.discover-category-title {
+  margin-top: 10px;
+  color: $brand-blue-7;
+  font-family: $title-font-family;
+  text-transform: uppercase;
+}
+
 //carousel
 $duration: 450ms;
 $tileWidth: 250px;

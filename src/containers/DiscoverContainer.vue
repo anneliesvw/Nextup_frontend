@@ -2,11 +2,27 @@
   <div class="discover-container">
 
     <div class="discover-wrapper">
-      <div class="discover-recommended" v-for="i in 5" :key="i">
-        <div class="discover-title">categorie</div>
+      <div class="discover-recommended">
+        <div class="discover-title">Discover events</div>
         <div class="discover-intrest">
           <carousel-events></carousel-events>
         </div>
+      </div>
+      <div class="discover-recommended">
+        <div class="discover-title">Location</div>
+        <div class="discover-intrest">
+          <carousel-events></carousel-events>
+        </div>
+      </div>
+      <div class="discover-recommended">
+        <div class="discover-title">Interests</div>
+        <div class="discover-category" v-for="i in 5" :key="i">
+          <div class="discover-category-title">category name</div>
+          <div class="discover-intrest">
+          <carousel-events></carousel-events>
+        </div>
+        </div>
+        
       </div>
     </div>
     <chat-menu></chat-menu>
