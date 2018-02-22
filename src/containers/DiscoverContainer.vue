@@ -2,17 +2,9 @@
   <div class="discover-container">
 
     <div class="discover-wrapper">
-      <div class="discover-recommended">
-        <div class="discover-title">recommended</div>
-        <div class="discover-intrest" v-for="i in 3" :key="i">
-          <div class="discover-intrest-title">interesse 1</div>
-          <carousel-events></carousel-events>
-        </div>
-      </div>
-      <div class="discover-recommended">
-        <div class="discover-title">others</div>
-        <div class="discover-intrest" v-for="i in 3" :key="i">
-          <div class="discover-intrest-title">others 1</div>
+      <div class="discover-recommended" v-for="i in 5" :key="i">
+        <div class="discover-title">categorie</div>
+        <div class="discover-intrest">
           <carousel-events></carousel-events>
         </div>
       </div>
