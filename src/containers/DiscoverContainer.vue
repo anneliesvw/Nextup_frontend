@@ -1,25 +1,20 @@
 <template>
   <div class="discover-container">
-    <detail-event v-if="dialogVisible" :isVisible="true" @close="closeDialog">
-    </detail-event>
+
     <div class="discover-wrapper">
       <div class="discover-recommended">
         <div class="discover-title">recommended</div>
-        <carousel class="discover-carousel" :perPage="1" :perPageCustom="[[768, 2], [1024, 3], [1340, 5], [1600, 6], [1900, 7]]" :paginationEnabled="false" :navigationEnabled="true">
-          <slide class="discover-tile" v-for="i in 10" :key="i">
-            <div class="discover-tile-img"></div>
-            <div class="discover-tile-title">Top Gear</div>
-            <!-- <div class="discover-tile__media">
-              <div class="discover-tile__img"></div>
-            </div>
-            <div class="discover-tile__details">
-              <div class="discover-tile__title">
-                Top Gear
-              </div>
-            </div> -->
-          </slide>
-        </carousel>
-        
+        <div class="discover-intrest" v-for="i in 3" :key="i">
+          <div class="discover-intrest-title">interesse 1</div>
+          <carousel-events></carousel-events>
+        </div>
+      </div>
+      <div class="discover-recommended">
+        <div class="discover-title">others</div>
+        <div class="discover-intrest" v-for="i in 3" :key="i">
+          <div class="discover-intrest-title">others 1</div>
+          <carousel-events></carousel-events>
+        </div>
       </div>
     </div>
     <chat-menu></chat-menu>
@@ -32,7 +27,7 @@ import Sidebar from '../components/sidebars/Sidebar.vue';
 import ChatMenu from '../components/sidebars/ChatMenu.vue';
 import DetailEvent from '../components/groups/detailEvent.vue';
 import PatternGenerator from '../services/patterngenerator';
-import CarouselEvent from '../components/events/CarouselEvent.vue';
+import CarouselEvents from '../components/events/CarouselEvents.vue';
 
 export default {
   components: {
@@ -42,7 +37,7 @@ export default {
     ChatMenu,
     DetailEvent,
     PatternGenerator,
-    CarouselEvent,
+    CarouselEvents,
   },
   data() {
     return {

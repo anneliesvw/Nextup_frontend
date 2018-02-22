@@ -2,6 +2,8 @@
   <el-dialog title="Event name" class="discover-dialog" :visible.sync="dialogVisible">
     <div class="discover-dialog-graphic"></div>
     <div class="discover-dialog-body">
+      <div class="discover-dialog-img">
+      </div>
       <div class="discover-dialog-date">
         ZATERDAG 07/02 | 17:00 - 20:00
       </div>
