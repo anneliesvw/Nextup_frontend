@@ -7,6 +7,7 @@ import Users from '../containers/users/UsersContainer.vue';
 import ConfirmEmail from '../containers/users/ConfirmEmail.vue';
 import GroupDetail from '../containers/GroupDetailsContainer.vue';
 import Events from '../containers/EventsContainer.vue';
+import Discover from '../containers/DiscoverContainer.vue';
 
 Vue.use(Router);
 
@@ -47,6 +48,11 @@ export default new Router({
       path: '/group/event',
       name: 'Event',
       component: Events,
+    },
+    {
+      path: '/Activities',
+      name: 'Discover',
+      component: Discover,
     },
   ],
 });
