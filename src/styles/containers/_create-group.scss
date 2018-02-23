@@ -2,33 +2,6 @@
   @include flexcol;
   margin: 20px;
   max-width: 1000px;
-  .create-group-graphic {
-    @include flexrow;
-    justify-content: center;
-    align-items: flex-end;
-    background-image: url('http://www.xtremedivers.com/pictures/google_pic1.jpg');
-    //background-size: cover;
-    //background-position: center;
-    background-color: $brand-blue-5;
-    height: 200px;
-    width: 100%;
-    opacity: 0.4;
-    align-items: center;
-    .create-group-cirkel {
-      background: $brand-gray-1;
-      height: 125px;
-      width: 125px;
-      border-radius: 50%;
-      border: 1px solid $brand-gray-5;
-      @include flexrow;
-      justify-content: center;
-      align-items: center;
-      .camera-icon {
-        font-size: 72px;
-        padding-bottom: 7px;
-      }
-    }
-  }
   .create-group-name {
     .createGroup-left {
       @include flexcol;
