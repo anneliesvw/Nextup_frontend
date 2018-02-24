@@ -1,7 +1,7 @@
 <template>
   <div class="chat-wrapper">
     <!-- TODO: key vfor -->
-    <chat-element v-for="testchat in testData" :key="testchat.name" :data="testchat" >
+    <chat-element v-for="testchat in testData" :key="testchat.name" :data="testchat">
     </chat-element>
     <!-- TODO: create new chat functionality -->
     <div class="new-chat chat-bubble">
@@ -10,32 +10,37 @@
   </div>
 </template>
 <script>
-import ChatElement from './ChatElement.vue';
+  import ChatElement from './ChatElement.vue';
 
-export default {
-  data() {
-    return {
-      // TODO: use API
-      testData: [
-        {
+  export default {
+    sockets: {
+      connect() {
+        console.log('socket connected');
+      },
+      chatmessage(val) {
+        console.log(`received chatmessage event from socket ${val}`);
+      },
+    },
+    data() {
+      return {
+        // TODO: use API
+        testData: [{
           name: 'Trump',
           url: 'https://i.imgur.com/iO1VTVZ.png',
-          messages: [
-            {
-              myMessage: true,
-              text: 'bla bla bla',
-            },
-            {
-              myMessage: false,
-              text: 'zeer zeker',
-            },
+          messages: [{
+            myMessage: true,
+            text: 'bla bla bla',
+          },
+          {
+            myMessage: false,
+            text: 'zeer zeker',
+          },
           ],
-        },
-      ],
-    };
-  },
-  components: {
-    ChatElement,
-  },
-};
+        }],
+      };
+    },
+    components: {
+      ChatElement,
+    },
+  };
 </script>

@@ -37,6 +37,7 @@ export default {
         text: this.text,
       });
       this.text = '';
+      this.$socket.emit('chatmessage', 'test');
     },
   },
 };
