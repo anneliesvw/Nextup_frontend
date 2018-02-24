@@ -1,10 +1,10 @@
 <template>
   <div class="chat-element">
-    <div class="chat-bubble" @click="active = !active">
-      <img :src="data.url" :alt="data.name">
+    <div class="chat-bubble" @click="toggleActive">
+      <img src="https://i.imgur.com/iO1VTVZ.png" :alt="group.name">
     </div>
-    <div class="notification">1</div>
-    <div>{{data.name}}</div>
+    <div class="notification" v-if="notifications>0">1</div>
+    <div>{{group.name}}</div>
     <div class="chat-arrow" v-if="active" />
     <div class="chat-window" v-if="active">
       <div class="messages">
@@ -22,22 +22,37 @@
 <script>
 export default {
   // TODO: add notification functionality
-  props: ['data'],
+  props: ['group'],
+  sockets: {
+    chatmessage(val) {
+      if (!this.active) {
+        this.notifications += 1;
+      }
+      this.messages.push({
+        myMessage: true,
+        text: val,
+      });
+      console.log(`received chatmessage event from socket ${val}`);
+    },
+  },
   data() {
     return {
       active: false,
-      messages: this.data.messages,
+      messages: [],
       text: '',
+      notifications: 0,
     };
   },
   methods: {
     submitMessage() {
-      this.messages.push({
-        myMessage: true,
-        text: this.text,
-      });
+      this.$socket.emit('chatmessage', { room: `${this.group.groupId}_${this.group.name}`, message: this.text });
       this.text = '';
-      this.$socket.emit('chatmessage', 'test');
+    },
+    toggleActive() {
+      this.active = !this.active;
+      if (this.active) {
+        this.notifications = 0;
+      }
     },
   },
 };

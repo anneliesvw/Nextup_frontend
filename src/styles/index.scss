@@ -23,9 +23,11 @@
 @import 'components/sidebar/group-sidebar';
 @import 'components/dialog';
 @import 'components/dialogs/invite-member';
+@import 'components/image-uploader';
 
 // Containers
 @import 'containers/main-container';
 @import 'containers/_group-detail-container';
-@import "containers/create-group";
+@import 'containers/create-group';
 @import 'containers/create-event';
+@import 'containers/_discover-container';

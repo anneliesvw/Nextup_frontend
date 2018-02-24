@@ -15,7 +15,7 @@ import AuthService from './services/authservice';
 export default {
   data() {
     return {
-      loggedIn: true,
+      loggedIn: '',
     };
   },
   components: {
@@ -58,7 +58,7 @@ export default {
     LoginEvents.bus.$off(LoginEvents.TRY_LOGIN, this.tryLogin);
   },
   mounted() {
-    // this.checkToken();
+    this.checkToken();
     window.console.log('api', process.env.API_ENDPOINT);
     LoginEvents.bus.$on(LoginEvents.TRY_LOGIN, this.tryLogin);
   },
