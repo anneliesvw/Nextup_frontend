@@ -23,7 +23,7 @@
           <div>
             {{user.username}}
           </div>
-          <div class="member-remove">
+          <div class="member-remove" @click="removeUser(user.userId)">
             <i class="fas fa-trash-alt"></i>
           </div>
         </div>
@@ -62,13 +62,46 @@ export default {
         groupId: this.activeGroup.groupId,
         username: this.username,
         onSuccess: () => {
-          window.console.log('lol');
+          this.$notify({
+            title: 'User Added',
+            message: 'User successfully added.',
+            type: 'success',
+            duration: 2000,
+          });
         },
         onError: () => {
-          window.console.log('error');
+          this.$notify({
+            title: 'Unable To Add User',
+            message: 'Unable to add user.',
+            type: 'error',
+            duration: 2000,
+          });
         },
       };
       this.$store.dispatch('addUserToGroup', payload);
+    },
+    removeUser(user) {
+      const payload = {
+        userId: user,
+        groupId: this.activeGroup.groupId,
+        onSuccess: () => {
+          this.$notify({
+            title: 'User Removed',
+            message: 'User successfully removed.',
+            type: 'success',
+            duration: 2000,
+          });
+        },
+        onError: () => {
+          this.$notify({
+            title: 'Unable To Remove User',
+            message: 'Unable to remove user.',
+            type: 'error',
+            duration: 2000,
+          });
+        },
+      };
+      this.$store.dispatch('deleteUserFromGroup', payload);
     },
     addfriend() {
       this.members.unshift({ value: this.state1 });

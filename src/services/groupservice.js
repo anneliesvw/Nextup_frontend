@@ -25,6 +25,13 @@ const createGroup = (groupInfo, onSucces, onError) => {
   ).then(onSucces, onError);
 };
 
+const deleteGroup = (groupInfo, onSucces, onError) => {
+  axios.delete(
+    `${GROUPS_URL}/${groupInfo}`,
+    getHeader(),
+  ).then(onSucces, onError);
+};
+
 const addUserToGroup = (username, groupId, onSucces, onError) => {
   axios.post(
     `${GROUPS_URL}/${groupId}/users`,
@@ -35,10 +42,19 @@ const addUserToGroup = (username, groupId, onSucces, onError) => {
   ).then(onSucces, onError);
 };
 
+const deleteUserFromGroup = (userId, groupId, onSucces, onError) => {
+  axios.delete(
+    `${GROUPS_URL}/${groupId}/users/${userId}`,
+    getHeader(),
+  ).then(onSucces, onError);
+};
+
 export default {
   getGroups,
   getGroup,
   createGroup,
   addUserToGroup,
+  deleteUserFromGroup,
+  deleteGroup,
 };
 

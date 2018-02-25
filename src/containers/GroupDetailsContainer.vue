@@ -1,5 +1,10 @@
 <template>
   <div class="group-detail-container main-container">
+    <CreateEvent
+      v-if="eventDialogVisible"
+      :isVisible="true"
+      @close="closeEventDialog">
+    </CreateEvent>
     <MemberDialog
       v-if="dialogVisible"
       :isVisible="true"
@@ -31,11 +36,12 @@
           <div class="banner-buttons">
             <el-button type="primary" @click="dialogVisible = true">Invite Others</el-button>
             <el-button type="danger">Leave Group</el-button>
+            <el-button type="danger" @click="deleteGroup">Delete Group</el-button>
           </div>
         </div>
       </div>
       <div class="group-panels">
-        <InfoPanel title="Events">
+        <InfoPanel title="Events" @showEventDialog="eventDialogVisible = true">
         </InfoPanel>
         <InfoPanel title="Polls">
         </InfoPanel>
@@ -64,6 +70,7 @@
   import PatternGenerator from '../services/patterngenerator';
   import GroupDialog from '../components/groups/CreateGroup.vue';
   import EmptyState from '../components/emptystate/EmptyState.vue';
+  import CreateEvent from '../components/events/CreateEvent.vue';
 
   export default {
     components: {
@@ -73,6 +80,7 @@
       MemberDialog,
       GroupDialog,
       EmptyState,
+      CreateEvent,
     },
     computed: {
       bannerPlaceholder() {
@@ -88,6 +96,7 @@
       return {
         dialogVisible: false,
         groupDialogVisible: false,
+        eventDialogVisible: false,
       };
     },
     methods: {
@@ -100,8 +109,35 @@
       closeGroupDialog() {
         this.groupDialogVisible = false;
       },
+      closeEventDialog() {
+        this.eventDialogVisible = false;
+      },
       onGroupSelected(group) {
         this.$router.push(`/group/detail/${group.groupId}`);
+      },
+      deleteGroup() {
+        const payload = {
+          groupInfo: this.activeGroup.groupId,
+          onSuccess: res => {
+            this.$notify({
+              title: 'Group Deleted',
+              message: `Group '${res.data.name}' successfully deleted.`,
+              type: 'success',
+              duration: 2000,
+            });
+            this.$emit('close');
+          },
+          onError: () => {
+            this.$notify({
+              title: 'Unable To Delete Group',
+              message: 'Unable to delete group.',
+              type: 'error',
+              duration: 2000,
+            });
+            this.$emit('close');
+          },
+        };
+        this.$store.dispatch('deleteGroup', payload);
       },
     },
   };

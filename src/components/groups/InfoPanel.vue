@@ -5,6 +5,12 @@
         {{this.title}}
       </div>
       <div class="panel-body">
+        <div class="group-wrapper">
+          <div class="group-add" @click="() => this.$emit('showEventDialog', true)">
+            <i class="fas fa-plus"></i>
+            <span>Create event</span>
+          </div>
+        </div>
         <Activity v-for="i in 3" :key="i"></Activity>
       </div>
     </div>

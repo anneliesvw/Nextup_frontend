@@ -30,6 +30,10 @@ export default new Vuex.Store({
       const groupIndex = state.groups.findIndex(g => group.groupId === g.groupId);
       if (groupIndex >= 0) Vue.set(state.groups, groupIndex, group);
     },
+    deleteGroup: (state, group) => {
+      const index = state.groups.indexOf(group);
+      state.groups.splice(index, 1);
+    },
   },
   actions: {
     setLoginAttempt: ({ commit }, payload) => {
@@ -55,6 +59,20 @@ export default new Vuex.Store({
         },
       );
     },
+    deleteGroup: ({ commit }, payload) => {
+      GroupsApi.deleteGroup(
+        payload.groupInfo,
+        res => {
+          logger.log('group succesfully deleted');
+          commit('deleteGroup', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to delete group', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
     addUserToGroup: ({ commit }, payload) => {
       GroupsApi.addUserToGroup(
         payload.username,
@@ -66,6 +84,21 @@ export default new Vuex.Store({
         },
         err => {
           logger.log('unable to add user to group', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    deleteUserFromGroup: ({ commit }, payload) => {
+      GroupsApi.deleteUserFromGroup(
+        payload.userId,
+        payload.groupId,
+        res => {
+          logger.log('user succesfully deleted from group.');
+          commit('updateGroup', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to delete user from group', err);
           if (payload.onError) payload.onError(err);
         },
       );
