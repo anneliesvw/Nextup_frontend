@@ -15,7 +15,7 @@
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>Profile Settings </el-dropdown-item>
+            <el-dropdown-item><router-link to="/Settings">Profile settings</router-link></el-dropdown-item>
             <el-dropdown-item>Preferences</el-dropdown-item>
             <el-dropdown-item>Help & Feedback</el-dropdown-item>
             <el-dropdown-item :divided="true">Logout</el-dropdown-item>

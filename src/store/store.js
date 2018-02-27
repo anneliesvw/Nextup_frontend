@@ -34,6 +34,10 @@ export default new Vuex.Store({
       const index = state.groups.indexOf(group);
       state.groups.splice(index, 1);
     },
+    addEventToGroup: (state, payload) => {
+      const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
+      if (groupIndex >= 0) state.groups[groupIndex].events.push(payload.eventInfo);
+    },
   },
   actions: {
     setLoginAttempt: ({ commit }, payload) => {
@@ -143,6 +147,24 @@ export default new Vuex.Store({
         },
         err => {
           logger.log('unable to update poll', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    addEventToGroup: ({ commit }, payload) => {
+      GroupsApi.addEventToGroup(
+        payload.groupId,
+        payload.eventInfo,
+        res => {
+          logger.log(`event successfully added to group ${payload.groupId}`);
+          commit('addEventToGroup', {
+            groupId: payload.groupId,
+            eventInfo: res.data,
+          });
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log(`error whilst adding event to group with id ${payload.groupId}`, err);
           if (payload.onError) payload.onError(err);
         },
       );
