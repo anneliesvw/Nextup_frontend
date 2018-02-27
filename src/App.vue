@@ -15,7 +15,7 @@ import AuthService from './services/authservice';
 export default {
   data() {
     return {
-      loggedIn: true,
+      loggedIn: false,
     };
   },
   components: {
@@ -52,13 +52,14 @@ export default {
   },
   beforeCreate() {
     this.$store.dispatch('loadGroups');
+    this.$store.dispatch('loadUserDetails');
     // this.checkToken();
   },
   beforeDestroy() {
     LoginEvents.bus.$off(LoginEvents.TRY_LOGIN, this.tryLogin);
   },
   mounted() {
-    // this.checkToken();
+    this.checkToken();
     window.console.log('api', process.env.API_ENDPOINT);
     LoginEvents.bus.$on(LoginEvents.TRY_LOGIN, this.tryLogin);
   },

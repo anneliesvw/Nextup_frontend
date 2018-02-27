@@ -27,6 +27,7 @@
     "vue-i18n": "^7.4.2",
     "vue-router": "^3.0.1",
     "vue2-google-maps": "^0.8.8",
+    "vue-socket.io": "^2.1.1-b",
     "vuex": "^3.0.1",
     "vuex-router-sync": "^5.0.0"
   },
@@ -52,6 +53,7 @@
     "eslint-plugin-import": "^2.8.0",
     "file-loader": "^1.1.4",
     "node-sass": "^4.7.2",
+    "prettier-eslint": "^8.8.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.0",
     "uglifyjs-webpack-plugin": "^1.2.2",

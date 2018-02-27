@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import GroupsApi from '../services/groupservice';
+import AuthApi from '../services/authservice';
 
 const logger = window.console;
 Vue.use(Vuex);
@@ -10,11 +11,13 @@ export default new Vuex.Store({
     debug: true,
     loginAttempt: '',
     groups: [],
+    userDetails: null,
   },
   getters: {
     getLoginAttempt: state => state.loginAttempt,
     getGroups: state => state.groups,
     getGroupById: state => id => state.groups.find(g => g.groupId === id),
+    getUserDetails: state => state.userDetails,
   },
   mutations: {
     setLoginAttempt: (state, payload) => {
@@ -37,6 +40,9 @@ export default new Vuex.Store({
     addEventToGroup: (state, payload) => {
       const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
       if (groupIndex >= 0) state.groups[groupIndex].events.push(payload.eventInfo);
+    },
+    setUserDetails: (state, payload) => {
+      state.userDetails = payload;
     },
   },
   actions: {
@@ -166,6 +172,17 @@ export default new Vuex.Store({
         err => {
           logger.log(`error whilst adding event to group with id ${payload.groupId}`, err);
           if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    loadUserDetails: ({ commit }) => {
+      AuthApi.getUserDetails(
+        res => {
+          logger.log('Current user details succesfully loaded.');
+          commit('setUserDetails', res.data);
+        },
+        err => {
+          logger.log('Unable to load current user details', err);
         },
       );
     },

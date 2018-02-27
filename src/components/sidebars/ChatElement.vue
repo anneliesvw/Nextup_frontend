@@ -1,10 +1,10 @@
 <template>
   <div class="chat-element">
-    <div class="chat-bubble" @click="active = !active">
-      <img :src="data.url" :alt="data.name">
+    <div class="chat-bubble" @click="toggleActive">
+      <img src="https://i.imgur.com/iO1VTVZ.png" :alt="group.name">
     </div>
-    <div class="notification">1</div>
-    <div>{{data.name}}</div>
+    <div class="notification" v-if="notifications>0">1</div>
+    <div>{{group.name}}</div>
     <div class="chat-arrow" v-if="active" />
     <div class="chat-window" v-if="active">
       <div class="messages">
@@ -20,23 +20,51 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   // TODO: add notification functionality
-  props: ['data'],
+  props: ['group'],
+  sockets: {
+    chatmessage(val) {
+      console.log(val);
+      if (!this.active) {
+        this.notifications += 1;
+      }
+      this.messages.push({
+        myMessage: true,
+        text: val,
+      });
+      window.console.log(`received chatmessage event from socket ${val}`);
+    },
+  },
   data() {
     return {
       active: false,
-      messages: this.data.messages,
+      messages: [],
       text: '',
+      notifications: 0,
     };
+  },
+  computed: {
+    ...mapGetters(['getUserDetails']),
   },
   methods: {
     submitMessage() {
-      this.messages.push({
-        myMessage: true,
-        text: this.text,
+      this.$socket.emit('chatmessage', {
+        room: `${this.group.groupId}_${this.group.name}`,
+        message: {
+          from: this.getUserDetails.person.firstname,
+          text: this.text,
+        },
       });
       this.text = '';
+    },
+    toggleActive() {
+      this.active = !this.active;
+      if (this.active) {
+        this.notifications = 0;
+      }
     },
   },
 };

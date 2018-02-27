@@ -5,6 +5,12 @@ const API_URL = process.env.API_ENDPOINT;
 const TOKEN_ENDPOINT = `${API_URL}/oauth/token`;
 const API_ENDPOINT = `${API_URL}/api/users`;
 
+const getHeader = () => ({
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('NEXTUP_TOKEN')}`,
+  },
+});
+
 const tryLogin = (username, password, onSuccess, onError) => {
   const authOptions = {
     method: 'POST',
@@ -25,8 +31,13 @@ const register = (userInfo, onSuccess, onError) => {
   axios.post(`${API_ENDPOINT}/register`, userInfo).then(onSuccess, onError);
 };
 
+const getUserDetails = (onSuccess, onError) => {
+  axios.get(`${API_ENDPOINT}/me`, getHeader()).then(onSuccess, onError);
+};
+
 export default {
   tryLogin,
   confirmEmail,
   register,
+  getUserDetails,
 };
