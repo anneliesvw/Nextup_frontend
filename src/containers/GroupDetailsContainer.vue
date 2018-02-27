@@ -16,6 +16,19 @@
       :isVisible="true"
       @close="closeGroupDialog">
     </GroupDialog>
+    <CreatePoll
+      v-if="pollDialogVisible"
+      :activeGroup="this.activeGroup"
+      @click="pollDialogVisible = true"
+      @close="closePollDialog">
+    </CreatePoll>
+    <PollDialog 
+      :poll="this.pollDetail"
+      v-if="pollDetailVisible"
+      :isVisible="true"
+      :activeGroup="this.activeGroup"
+      @close="closePollDetail">
+    </PollDialog>
 
     <div class="sidebar-wrapper">
       <GroupSidebar
@@ -41,10 +54,10 @@
         </div>
       </div>
       <div class="group-panels">
-        <InfoPanel title="Events" @showEventDialog="eventDialogVisible = true">
+        <InfoPanel title="Events" :events="activeGroup.events" @showEventDialog="eventDialogVisible = true">
         </InfoPanel>
-        <InfoPanel title="Polls">
-        </InfoPanel>
+        <PollInfoPanel title="Polls" :polls="activeGroup.polls" @showPollDetail="showPollDetail($event)" @showPollDialog="pollDialogVisible = true">
+        </PollInfoPanel>
       </div>
     </div>
     <div class="no-group-selected" v-else>
@@ -66,11 +79,14 @@
   import GroupSidebar from '../components/sidebars/GroupSidebar.vue';
   import MemberDialog from '../components/groups/MemberDialog.vue';
   import InfoPanel from '../components/groups/InfoPanel.vue';
+  import PollInfoPanel from '../components/groups/PollInfoPanel.vue';
   import ChatMenu from '../components/sidebars/ChatMenu.vue';
   import PatternGenerator from '../services/patterngenerator';
   import GroupDialog from '../components/groups/CreateGroup.vue';
   import EmptyState from '../components/emptystate/EmptyState.vue';
   import CreateEvent from '../components/events/CreateEvent.vue';
+  import CreatePoll from '../components/groups/CreatePoll.vue';
+  import PollDialog from '../components/groups/PollDialog.vue';
 
   export default {
     components: {
@@ -81,6 +97,9 @@
       GroupDialog,
       EmptyState,
       CreateEvent,
+      PollInfoPanel,
+      CreatePoll,
+      PollDialog,
     },
     computed: {
       bannerPlaceholder() {
@@ -97,6 +116,9 @@
         dialogVisible: false,
         groupDialogVisible: false,
         eventDialogVisible: false,
+        pollDialogVisible: false,
+        pollDetailVisible: false,
+        pollDetail: '',
       };
     },
     methods: {
@@ -111,6 +133,12 @@
       },
       closeEventDialog() {
         this.eventDialogVisible = false;
+      },
+      closePollDialog() {
+        this.pollDialogVisible = false;
+      },
+      closePollDetail() {
+        this.pollDetailVisible = false;
       },
       onGroupSelected(group) {
         this.$router.push(`/group/detail/${group.groupId}`);
@@ -138,6 +166,10 @@
           },
         };
         this.$store.dispatch('deleteGroup', payload);
+      },
+      showPollDetail(poll) {
+        this.pollDetailVisible = true;
+        this.pollDetail = poll;
       },
     },
   };

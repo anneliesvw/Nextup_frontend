@@ -103,5 +103,20 @@ export default new Vuex.Store({
         },
       );
     },
+    addPoll: ({ commit }, payload) => {
+      GroupsApi.addPollToGroup(
+        payload,
+        res => {
+          logger.log('poll succesfully added to group');
+          commit('updateGroup', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to add poll to group', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+      commit('updateGroup', payload);
+    },
   },
 });

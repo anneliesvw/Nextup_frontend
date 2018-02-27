@@ -11,7 +11,7 @@
             <span>Create event</span>
           </div>
         </div>
-        <Activity v-for="i in 3" :key="i"></Activity>
+        <Activity v-for="event in events" :key="event.eventId"></Activity>
       </div>
     </div>
   </div>
@@ -21,7 +21,7 @@
   import Activity from '../activities/Activity.vue';
   
   export default {
-    props: ['title'],
+    props: ['title', 'events'],
     components: {
       Activity,
     },
