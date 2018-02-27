@@ -2,14 +2,14 @@
   <el-dialog title="Create Event" :visible.sync="showCreateEvent">
     <div class="create-event-form">
       <el-form label-position="top" class="create-event">
-        <div class="create-event-graphic">
-          <div class="create-event-circle">
-            <i class="fas fa-camera camera-icon"></i>
-          </div>
-        </div>
+        <ImageUploader
+          :placeHolder="backgroundImage"
+          imageType="events"
+        >         
+        </ImageUploader>
         <div class="create-event-input">
             <el-form-item label="Title">
-              <el-input placeholder="Enter title here"></el-input>
+              <el-input placeholder="Enter title here" v-model="eventInfo.title"></el-input>
             </el-form-item>
             <el-form-item label="Accessibility">
               <el-switch v-model="publicValue" active-color="#ff4949" inactive-color="#13ce66" active-text="Private" inactive-text="Public">
@@ -51,10 +51,19 @@
 </template>
 
 <script>
+import ImageUploader from '../ImageUploader.vue';
+import PatternGenerator from '../../services/patterngenerator';
+
 export default {
   props: ['isVisible'],
+  components: {
+    ImageUploader,
+  },
   data() {
     return {
+      eventInfo: {
+        title: '',
+      },
       dateValue: '',
       publicValue: false,
       dynamicTags: [],
@@ -66,6 +75,9 @@ export default {
     };
   },
   computed: {
+    backgroundImage() {
+      return PatternGenerator.generateImage(this.eventInfo.title || '');
+    },
     showCreateEvent: {
       get() {
         return this.isVisible;
@@ -78,43 +90,6 @@ export default {
     },
   },
   methods: {
-    addMember() {
-      this.members.push({
-        name: this.memberToAdd,
-      });
-      this.memberToAdd = '';
-    },
-    removeMember(index) {
-      // TODO: remove right
-      this.members.splice(index, 1);
-    },
-    querySearch(queryString, cb) {
-      const results = queryString
-        ? this.friends.filter(this.createFilter(queryString))
-        : this.friends;
-      // call callback function to return suggestions
-      cb(results);
-    },
-    createFilter(queryString) {
-      return friend =>
-        friend.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
-    },
-    loadAll() {
-      return [
-        {
-          value: 'Robbe12',
-        },
-        {
-          value: 'Matjas',
-        },
-        {
-          value: 'Mahen',
-        },
-        {
-          value: 'Annelies',
-        },
-      ];
-    },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
@@ -131,9 +106,6 @@ export default {
       this.inputVisible = false;
       this.inputValue = '';
     },
-  },
-  mounted() {
-    this.friends = this.loadAll();
   },
 };
 </script>
