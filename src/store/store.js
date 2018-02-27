@@ -105,7 +105,7 @@ export default new Vuex.Store({
     },
     addPoll: ({ commit }, payload) => {
       GroupsApi.addPollToGroup(
-        payload,
+        payload.poll,
         res => {
           logger.log('poll succesfully added to group');
           commit('updateGroup', res.data);
@@ -116,7 +116,36 @@ export default new Vuex.Store({
           if (payload.onError) payload.onError(err);
         },
       );
-      commit('updateGroup', payload);
+    },
+    removePoll: ({ commit }, payload) => {
+      GroupsApi.deletePollFromGroup(
+        payload.groupId,
+        payload.pollId,
+        res => {
+          logger.log('poll succesfully deleted');
+          commit('updateGroup', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to remove poll', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    updatePoll: ({ commit }, payload) => {
+      GroupsApi.updatePollFromGroup(
+        payload.groupId,
+        payload.poll,
+        res => {
+          logger.log('poll succesfully updated');
+          commit('updateGroup', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to update poll', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
     },
   },
 });

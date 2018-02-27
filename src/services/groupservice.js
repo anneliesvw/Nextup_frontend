@@ -73,7 +73,7 @@ const deletePollFromGroup = (groupId, pollId, onSucces, onError) => {
 };
 
 const updatePollFromGroup = (groupId, poll, onSucces, onError) => {
-  poll.groupId = groupId;
+  poll.group = groupId;
   axios.put(
     `${GROUPS_URL}/${groupId}/polls/${poll.pollId}`,
     poll,
