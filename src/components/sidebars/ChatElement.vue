@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   // TODO: add notification functionality
   props: ['group'],
@@ -44,9 +46,18 @@ export default {
       notifications: 0,
     };
   },
+  computed: {
+    ...mapGetters(['getUserDetails']),
+  },
   methods: {
     submitMessage() {
-      this.$socket.emit('chatmessage', { room: `${this.group.groupId}_${this.group.name}`, message: this.text });
+      this.$socket.emit('chatmessage', {
+        room: `${this.group.groupId}_${this.group.name}`,
+        message: {
+          from: this.getUserDetails.person.firstname,
+          text: this.text,
+        },
+      });
       this.text = '';
     },
     toggleActive() {

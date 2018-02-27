@@ -52,6 +52,7 @@ export default {
   },
   beforeCreate() {
     this.$store.dispatch('loadGroups');
+    this.$store.dispatch('loadUserDetails');
     // this.checkToken();
   },
   beforeDestroy() {

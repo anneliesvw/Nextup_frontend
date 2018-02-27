@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import GroupsApi from '../services/groupservice';
+import AuthApi from '../services/authservice';
 
 const logger = window.console;
 Vue.use(Vuex);
@@ -10,11 +11,13 @@ export default new Vuex.Store({
     debug: true,
     loginAttempt: '',
     groups: [],
+    userDetails: null,
   },
   getters: {
     getLoginAttempt: state => state.loginAttempt,
     getGroups: state => state.groups,
     getGroupById: state => id => state.groups.find(g => g.groupId === id),
+    getUserDetails: state => state.userDetails,
   },
   mutations: {
     setLoginAttempt: (state, payload) => {
@@ -33,6 +36,9 @@ export default new Vuex.Store({
     deleteGroup: (state, group) => {
       const index = state.groups.indexOf(group);
       state.groups.splice(index, 1);
+    },
+    setUserDetails: (state, payload) => {
+      state.userDetails = payload;
     },
   },
   actions: {
@@ -117,6 +123,17 @@ export default new Vuex.Store({
         },
       );
       commit('updateGroup', payload);
+    },
+    loadUserDetails: ({ commit }) => {
+      AuthApi.getUserDetails(
+        res => {
+          logger.log('Current user details succesfully loaded.');
+          commit('setUserDetails', res.data);
+        },
+        err => {
+          logger.log('Unable to load current user details', err);
+        },
+      );
     },
   },
 });
