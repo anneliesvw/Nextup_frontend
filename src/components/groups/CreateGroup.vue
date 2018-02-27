@@ -17,7 +17,8 @@
                 class="create-group-input" 
                 type="textarea" 
                 :autosize="{minRows: 4, maxRows: 5}" 
-                v-model="groupInfo.description"></el-input>
+                v-model="groupInfo.description">
+              </el-input>
             </el-form-item>
         </div>
       </el-form>

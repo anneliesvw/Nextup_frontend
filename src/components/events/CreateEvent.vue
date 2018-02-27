@@ -2,61 +2,64 @@
   <el-dialog title="Create Event" :visible.sync="showCreateEvent">
     <div class="create-event-form">
       <el-form label-position="top" class="create-event">
-        <div class="create-event-graphic">
-          <div class="create-event-circle">
-            <i class="fas fa-camera camera-icon"></i>
-          </div>
-        </div>
+        <ImageUploader
+          :placeHolder="backgroundImage"
+          imageType="events"
+        >         
+        </ImageUploader>
         <div class="create-event-input">
             <el-form-item label="Title">
-              <el-input placeholder="Enter title here"></el-input>
+              <el-input placeholder="Enter title here" v-model="eventInfo.title"></el-input>
             </el-form-item>
             <el-form-item label="Accessibility">
-              <el-switch v-model="publicValue" active-color="#ff4949" inactive-color="#13ce66" active-text="Private" inactive-text="Public">
+              <el-switch v-model="eventInfo.isPrivate" active-text="Private" inactive-text="Public">
               </el-switch>
             </el-form-item>
-            <el-form-item label="Date">
-              <el-date-picker v-model="dateValue" type="datetimerange" start-placeholder="Start Date" end-placeholder="End date" :default-time="['12:00:00']" format="hh-mm dd-mm-yyyy">
+            <el-form-item label="Start Date">
+              <el-date-picker v-model="eventInfo.startDate" type="datetime" format="dd/MM/yyyy hh:mm">
               </el-date-picker>                
             </el-form-item>
-            <el-form-item label="Location">
-              <el-input placeholder=""></el-input>
+            <el-form-item label="End Date">
+              <el-date-picker v-model="eventInfo.endDate" type="datetime" format="dd/MM/yyyy hh:mm">
+              </el-date-picker> 
+            </el-form-item>
+            <el-form-item label="Location">            
+              <gmap-autocomplete 
+                class="google-maps-autocomplete"
+                @place_changed="onSetLocation">
+              </gmap-autocomplete>
             </el-form-item>      
             <el-form-item label="Description">
               <el-input type="textarea" :autosize="{minRows: 4, maxRows: 5}"></el-input>
             </el-form-item>
-            <el-form-item label="Tags">
-              <el-tag :key="tag" v-for="tag in dynamicTags" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}
-              </el-tag>
-              <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="mini" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
-              </el-input>
-              <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag
-              </el-button>
-            </el-form-item>
-            <el-form-item label="Max. participants">
-              <el-input-number v-model="participantsValue" :step="10" :min="0"></el-input-number>
-            </el-form-item>
-            <el-form-item label="Price">
-              <el-input placeholder="Please input" v-model="price" class="price-input">
-                <el-select v-model="valuta" slot="append" placeholder="Select">
-                  <el-option label="€" value="1"></el-option>
-                  <el-option label="$" value="2"></el-option>
-                </el-select>
-              </el-input>
-            </el-form-item>
         </div>
       </el-form>
     </div>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="$emit('close')">Cancel</el-button>
+      <el-button type="primary" @click="onCreateEvent">Create Event</el-button>
+    </span>
   </el-dialog>
 </template>
 
 <script>
+import ImageUploader from '../ImageUploader.vue';
+import PatternGenerator from '../../services/patterngenerator';
+
+
 export default {
-  props: ['isVisible'],
+  props: ['isVisible', 'activeGroup'],
+  components: {
+    ImageUploader,
+  },
   data() {
     return {
+      eventInfo: {
+        title: '',
+        isPrivate: false,
+        location: null,
+      },
       dateValue: '',
-      publicValue: false,
       dynamicTags: [],
       inputVisible: false,
       inputValue: '',
@@ -66,6 +69,9 @@ export default {
     };
   },
   computed: {
+    backgroundImage() {
+      return PatternGenerator.generateImage(this.eventInfo.title || '');
+    },
     showCreateEvent: {
       get() {
         return this.isVisible;
@@ -78,45 +84,30 @@ export default {
     },
   },
   methods: {
-    addMember() {
-      this.members.push({
-        name: this.memberToAdd,
-      });
-      this.memberToAdd = '';
-    },
-    removeMember(index) {
-      // TODO: remove right
-      this.members.splice(index, 1);
-    },
-    querySearch(queryString, cb) {
-      const results = queryString
-        ? this.friends.filter(this.createFilter(queryString))
-        : this.friends;
-      // call callback function to return suggestions
-      cb(results);
-    },
-    createFilter(queryString) {
-      return friend =>
-        friend.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
-    },
-    loadAll() {
-      return [
-        {
-          value: 'Robbe12',
+    onCreateEvent() {
+      const payload = {
+        groupId: this.activeGroup.groupId,
+        eventInfo: this.eventInfo,
+        onSuccess: res => {
+          this.$notify({
+            title: 'Event Created',
+            message: `Event '${res.data.id}' successfully created.`,
+            type: 'success',
+            duration: 2000,
+          });
+          this.$emit('close');
         },
-        {
-          value: 'Matjas',
+        onError: () => {
+          this.$notify({
+            title: 'Unable To Create Event',
+            message: 'Failed to created event',
+            type: 'error',
+            duration: 2000,
+          });
+          this.$emit('close');
         },
-        {
-          value: 'Mahen',
-        },
-        {
-          value: 'Annelies',
-        },
-      ];
-    },
-    handleClose(tag) {
-      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+      };
+      this.$store.dispatch('addEventToGroup', payload);
     },
     showInput() {
       this.inputVisible = true;
@@ -124,16 +115,13 @@ export default {
         this.$refs.saveTagInput.$refs.input.focus(_);
       });
     },
-    handleInputConfirm() {
-      if (this.inputValue) {
-        this.dynamicTags.push(this.inputValue);
-      }
-      this.inputVisible = false;
-      this.inputValue = '';
+    onSetLocation(place) {
+      this.eventInfo.location = {
+        latitude: place.geometry.location.lat(),
+        longitude: place.geometry.location.lng(),
+        name: place.formatted_address,
+      };
     },
-  },
-  mounted() {
-    this.friends = this.loadAll();
   },
 };
 </script>
