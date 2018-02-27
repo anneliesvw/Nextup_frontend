@@ -10,10 +10,10 @@
             </div>
             <div class="activity-details">
                 <div class="activity-owner">
-                    Kroegentocht
+                    {{ event ? event.name : '' }}
                 </div>
                 <div class="activity-date">
-                    ZATERDAG 27/07 | 10:00 - 17:00
+                    {{ startDate }}  |  {{ endDate }}
                 </div>
             
             </div>
@@ -23,16 +23,24 @@
   </div>
 </template>
 <script>
-    import PatternGenerator from '../../services/patterngenerator';
+  import moment from 'moment';
+  import PatternGenerator from '../../services/patterngenerator';
 
-    export default {
-      computed: {
-        backgroundPattern() {
-          const pattern = PatternGenerator.generateImage(`${Math.random() * 2345}`);
-          return {
-            backgroundImage: pattern,
-          };
-        },
+  export default {
+    props: ['event'],
+    computed: {
+      startDate() {
+        return moment(this.event.startDate).format('DD/MM/YYYY HH:mm');
       },
-    };
+      endDate() {
+        return moment(this.event.endDate).format('DD/MM/YYYY HH:mm');
+      },
+      backgroundPattern() {
+        const pattern = PatternGenerator.generateImage(`${Math.random() * 2345}`);
+        return {
+          backgroundImage: pattern,
+        };
+      },
+    },
+  };
 </script>

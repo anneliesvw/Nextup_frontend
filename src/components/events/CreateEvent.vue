@@ -9,18 +9,18 @@
         </ImageUploader>
         <div class="create-event-input">
             <el-form-item label="Title">
-              <el-input placeholder="Enter title here" v-model="eventInfo.title"></el-input>
+              <el-input placeholder="Enter title here" v-model="eventInfo.name"></el-input>
             </el-form-item>
             <el-form-item label="Accessibility">
               <el-switch v-model="eventInfo.isPrivate" active-text="Private" inactive-text="Public">
               </el-switch>
             </el-form-item>
             <el-form-item label="Start Date">
-              <el-date-picker v-model="eventInfo.startDate" type="datetime" format="dd/MM/yyyy hh:mm">
+              <el-date-picker v-model="eventInfo.startDate" type="datetime" format="HH:mm dd/MM/yyyy">
               </el-date-picker>                
             </el-form-item>
             <el-form-item label="End Date">
-              <el-date-picker v-model="eventInfo.endDate" type="datetime" format="dd/MM/yyyy hh:mm">
+              <el-date-picker v-model="eventInfo.endDate" type="datetime" format="HH:mm dd/MM/yyyy">
               </el-date-picker> 
             </el-form-item>
             <el-form-item label="Location">            
@@ -30,7 +30,7 @@
               </gmap-autocomplete>
             </el-form-item>      
             <el-form-item label="Description">
-              <el-input type="textarea" :autosize="{minRows: 4, maxRows: 5}"></el-input>
+              <el-input type="textarea" :autosize="{minRows: 4, maxRows: 5}" v-model="eventInfo.description"></el-input>
             </el-form-item>
         </div>
       </el-form>
@@ -55,9 +55,12 @@ export default {
   data() {
     return {
       eventInfo: {
-        title: '',
+        name: '',
         isPrivate: false,
         location: null,
+        startDate: null,
+        endDate: null,
+        description: null,
       },
       dateValue: '',
       dynamicTags: [],
@@ -108,12 +111,6 @@ export default {
         },
       };
       this.$store.dispatch('addEventToGroup', payload);
-    },
-    showInput() {
-      this.inputVisible = true;
-      this.$nextTick(_ => {
-        this.$refs.saveTagInput.$refs.input.focus(_);
-      });
     },
     onSetLocation(place) {
       this.eventInfo.location = {
