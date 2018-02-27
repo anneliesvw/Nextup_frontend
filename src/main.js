@@ -9,9 +9,7 @@ import store from './store/store';
 import App from './App.vue';
 import './styles/index.scss';
 
-// TODO: change URL
-// Vue.use(VueSocketio, 'https://nextup-chat.herokuapp.com');
-Vue.use(VueSocketio, 'http://localhost:3001');
+Vue.use(VueSocketio, 'https://nextup-chat.herokuapp.com');
 Vue.use(ElementUI, { locale });
 
 Vue.use(VueGoogleMaps, {
