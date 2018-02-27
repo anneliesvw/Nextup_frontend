@@ -9,7 +9,12 @@
     <div class="chat-window" v-if="active">
       <div class="messages">
         <!-- TODO: use unique key -->
-        <div v-for="(message, i) in messages" :key="i" class="message" :class="{ 'message-sent': message.myMessage, 'message-received': !message.myMessage }">{{ message.text}}</div>
+        <div v-for="(message, i) in messages" 
+          :key="i" class="message" 
+          :class="{ 'message-sent': message.myMessage, 'message-received': !message.myMessage }">
+          <div class="message-name" v-if="!message.myMessage">{{ message.name }}</div>
+          <div class="message-content">{{ message.text }}</div>
+        </div>
       </div>
       <div class="message-box">
         <!-- TODO: add attribute type="textarea" if v-bind attribute meets character threshold -->
@@ -23,19 +28,18 @@
 import { mapGetters } from 'vuex';
 
 export default {
-  // TODO: add notification functionality
   props: ['group'],
   sockets: {
     chatmessage(val) {
-      console.log(val);
       if (!this.active) {
         this.notifications += 1;
       }
+      window.console.log(val.from);
       this.messages.push({
-        myMessage: true,
-        text: val,
+        myMessage: val.from === this.getUserDetails.userId,
+        text: val.text,
+        name: this.getUserById(val.from)[0].person.firstName || 'unknown',
       });
-      window.console.log(`received chatmessage event from socket ${val}`);
     },
   },
   data() {
@@ -54,7 +58,7 @@ export default {
       this.$socket.emit('chatmessage', {
         room: `${this.group.groupId}_${this.group.name}`,
         message: {
-          from: this.getUserDetails.person.firstname,
+          from: this.getUserDetails.userId,
           text: this.text,
         },
       });
@@ -65,6 +69,9 @@ export default {
       if (this.active) {
         this.notifications = 0;
       }
+    },
+    getUserById(id) {
+      return this.group.users.filter(u => u.userId === parseInt(id, 10));
     },
   },
 };
