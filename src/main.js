@@ -9,7 +9,7 @@ import store from './store/store';
 import App from './App.vue';
 import './styles/index.scss';
 
-Vue.use(VueSocketio, 'https://nextup-chat.herokuapp.com');
+Vue.use(VueSocketio, process.env.CHAT_ENDPOINT);
 Vue.use(ElementUI, { locale });
 
 Vue.use(VueGoogleMaps, {

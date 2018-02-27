@@ -3,7 +3,8 @@
     <div class="main-container">
       <Sidebar></Sidebar>
       <div class="content-container">
-        <Activity v-for="item in 10" :key="item"></Activity>
+        Welkom, je hebt niks te doen. Spijtig.
+        <!--Activity v-for="item in 10" :key="item"></Activity-->
       </div>
       <chat-menu></chat-menu>
     </div>
