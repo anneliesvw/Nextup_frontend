@@ -1,6 +1,5 @@
 <template>
   <div class="chat-wrapper">
-    <!-- TODO: key vfor -->
     <chat-element v-for="group in getGroups" :key="group.groupId" :group="group">
     </chat-element>
     <!-- TODO: create new chat functionality -->
@@ -17,34 +16,23 @@
     sockets: {
       connect() {
         window.console.log('socket connected');
-        this.getGroups.forEach(group => {
-          this.$socket.emit('joinroom', `${group.groupId}_${group.name}`);
-        });
+        const groupsclone = this.getGroups;
+        window.console.log(groupsclone);
       },
       chatmessage(val) {
         window.console.log(`received chatmessage event from socket ${val}`);
       },
     },
-    data() {
-      return {
-        // TODO: use API
-        testData: [{
-          name: 'Trump',
-          url: 'https://i.imgur.com/iO1VTVZ.png',
-          messages: [{
-            myMessage: true,
-            text: 'bla bla bla',
-          },
-          {
-            myMessage: false,
-            text: 'zeer zeker',
-          },
-          ],
-        }],
-      };
-    },
     computed: {
       ...mapGetters(['getGroups']),
+    },
+    watch: {
+      getGroups(groups) {
+        groups.forEach(group => {
+          this.$socket.emit('joinroom', `${group.groupId}_${group.name}`);
+          window.console.log(`joined room ${group.groupId}_${group.name}`);
+        });
+      },
     },
     components: {
       ChatElement,
