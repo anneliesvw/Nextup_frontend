@@ -34,3 +34,8 @@ body {
   padding: 0;
   min-height: 100%;
 }
+
+// GOOGLE MAPS AUTOCOMPLETE Z-INDEX Should always be on top
+.pac-container {
+  z-index: 4000;
+}

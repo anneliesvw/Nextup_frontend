@@ -30,6 +30,14 @@ export default new Vuex.Store({
       const groupIndex = state.groups.findIndex(g => group.groupId === g.groupId);
       if (groupIndex >= 0) Vue.set(state.groups, groupIndex, group);
     },
+    deleteGroup: (state, group) => {
+      const index = state.groups.indexOf(group);
+      state.groups.splice(index, 1);
+    },
+    addEventToGroup: (state, payload) => {
+      const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
+      if (groupIndex >= 0) state.groups[groupIndex].events.push(payload.eventInfo);
+    },
   },
   actions: {
     setLoginAttempt: ({ commit }, payload) => {
@@ -55,6 +63,20 @@ export default new Vuex.Store({
         },
       );
     },
+    deleteGroup: ({ commit }, payload) => {
+      GroupsApi.deleteGroup(
+        payload.groupInfo,
+        res => {
+          logger.log('group succesfully deleted');
+          commit('deleteGroup', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to delete group', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
     addUserToGroup: ({ commit }, payload) => {
       GroupsApi.addUserToGroup(
         payload.username,
@@ -66,6 +88,54 @@ export default new Vuex.Store({
         },
         err => {
           logger.log('unable to add user to group', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    deleteUserFromGroup: ({ commit }, payload) => {
+      GroupsApi.deleteUserFromGroup(
+        payload.userId,
+        payload.groupId,
+        res => {
+          logger.log('user succesfully deleted from group.');
+          commit('updateGroup', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to delete user from group', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    addPoll: ({ commit }, payload) => {
+      GroupsApi.addPollToGroup(
+        payload,
+        res => {
+          logger.log('poll succesfully added to group');
+          commit('updateGroup', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to add poll to group', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+      commit('updateGroup', payload);
+    },
+    addEventToGroup: ({ commit }, payload) => {
+      GroupsApi.addEventToGroup(
+        payload.groupId,
+        payload.eventInfo,
+        res => {
+          logger.log(`event successfully added to group ${payload.groupId}`);
+          commit('addEventToGroup', {
+            groupId: payload.groupId,
+            eventInfo: res.data,
+          });
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log(`error whilst adding event to group with id ${payload.groupId}`, err);
           if (payload.onError) payload.onError(err);
         },
       );
