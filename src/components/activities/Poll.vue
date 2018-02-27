@@ -14,7 +14,7 @@
                     {{poll.name}}
                 </div>
                 <div class="activity-date">
-                    {{poll.deadline}}
+                    {{ date }}
                 </div>
             
             </div>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+  import moment from 'moment';
   import PatternGenerator from '../../services/patterngenerator';
 
   export default {
@@ -35,6 +36,9 @@
         return {
           backgroundImage: pattern,
         };
+      },
+      date() {
+        return moment(this.poll.deadline).format('HH:mm DD/MM/YYYY');
       },
     },
   };

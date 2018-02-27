@@ -6,7 +6,7 @@
       </div>
       <div class="panel-body">
         <div class="group-wrapper">
-          <div class="group-add" @click="() => this.$emit('showPollDialog')">
+          <div class="group-add" @click="showCreatePoll">
             <i class="fas fa-plus"></i>
             <span>Create poll</span>
           </div>
@@ -31,8 +31,8 @@
       return {};
     },
     methods: {
-      openPollDialog(poll) {
-        this.$emit('openPollDialog', poll);
+      showCreatePoll() {
+        this.$emit('showCreatePoll');
       },
       showPollDetail(poll) {
         this.$emit('showPollDetail', poll);

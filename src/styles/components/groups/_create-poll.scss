@@ -9,3 +9,13 @@
 .polloption-name {
   max-width: 33%;
 }
+
+.option-list-item {
+  @include defaultshadow;
+  @include flexrow;
+  justify-content: space-between;
+}
+
+.update-poll-form {
+  @include flexcol;
+}

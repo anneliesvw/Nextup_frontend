@@ -20,7 +20,7 @@
     <CreatePoll
       v-if="pollDialogVisible"
       :activeGroup="this.activeGroup"
-      @click="pollDialogVisible = true"
+      :isVisible="true"
       @close="closePollDialog">
     </CreatePoll>
     <PollDialog 
@@ -138,6 +138,9 @@
       },
       closeEventDialog() {
         this.eventDialogVisible = false;
+      },
+      setPollDialogVisible() {
+        this.pollDialogVisible = true;
       },
       closePollDialog() {
         this.pollDialogVisible = false;
