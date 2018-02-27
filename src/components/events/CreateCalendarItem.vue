@@ -59,43 +59,6 @@ export default {
     },
   },
   methods: {
-    addMember() {
-      this.members.push({
-        name: this.memberToAdd,
-      });
-      this.memberToAdd = '';
-    },
-    removeMember(index) {
-      // TODO: remove right
-      this.members.splice(index, 1);
-    },
-    querySearch(queryString, cb) {
-      const results = queryString
-        ? this.friends.filter(this.createFilter(queryString))
-        : this.friends;
-      // call callback function to return suggestions
-      cb(results);
-    },
-    createFilter(queryString) {
-      return friend =>
-        friend.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
-    },
-    loadAll() {
-      return [
-        {
-          value: 'Robbe12',
-        },
-        {
-          value: 'Matjas',
-        },
-        {
-          value: 'Mahen',
-        },
-        {
-          value: 'Annelies',
-        },
-      ];
-    },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
@@ -112,9 +75,6 @@ export default {
       this.inputVisible = false;
       this.inputValue = '';
     },
-  },
-  mounted() {
-    this.friends = this.loadAll();
   },
 };
 </script>
