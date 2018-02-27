@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: './src/main.js',
@@ -99,10 +100,13 @@ if (process.env.NODE_ENV === 'production') {
         NODE_ENV: '"production"',
       },
     }), */
-    new webpack.optimize.UglifyJsPlugin({
+    new UglifyJSPlugin({
       sourceMap: true,
-      compress: {
-        warnings: false,
+      uglifyOptions: {
+        ecma: 8,
+        compress: {
+          warnings: false,
+        },
       },
     }),
     new webpack.LoaderOptionsPlugin({

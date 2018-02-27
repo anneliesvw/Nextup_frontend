@@ -72,7 +72,7 @@ typings/
 .env.*
 
 #Build generated
-dist/
+#dist/
 build/
 
 # Serverless generated files
