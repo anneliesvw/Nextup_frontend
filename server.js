@@ -5,7 +5,7 @@ const serveStatic = require('serve-static');
 const csl = console;
 
 const app = express();
-app.use(serveStatic(path.join(__dirname, './dist')));
+app.use('/dist', serveStatic(path.join(__dirname, './dist')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './index.html'));
 });
