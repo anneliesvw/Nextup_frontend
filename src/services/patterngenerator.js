@@ -34,7 +34,9 @@ const stringHash = s => s.split('')
 
 const generateImage = (text, baseColor, opacity) => {
   const hash = stringHash(text);
-  window.console.log('index', (Math.abs(hash) % allPatterns.length), 'length', allPatterns.length, 'fun', allPatterns[(Math.abs(hash) % allPatterns.length)]);
+  // window.console.log('index', (Math.abs(hash) % allPatterns.length),
+  // 'length', allPatterns.length, 'fun',
+  // allPatterns[(Math.abs(hash) % allPatterns.length)]);
   return HeroPatterns[allPatterns[(Math.abs(hash) % allPatterns.length)]](baseColor || '#ffffff', opacity || 0.9);
 };
 

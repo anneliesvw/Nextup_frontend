@@ -25,6 +25,7 @@ export default {
   props: ['group'],
   sockets: {
     chatmessage(val) {
+      console.log(val);
       if (!this.active) {
         this.notifications += 1;
       }
@@ -32,7 +33,7 @@ export default {
         myMessage: true,
         text: val,
       });
-      console.log(`received chatmessage event from socket ${val}`);
+      window.console.log(`received chatmessage event from socket ${val}`);
     },
   },
   data() {

@@ -15,7 +15,7 @@ import AuthService from './services/authservice';
 export default {
   data() {
     return {
-      loggedIn: '',
+      loggedIn: false,
     };
   },
   components: {

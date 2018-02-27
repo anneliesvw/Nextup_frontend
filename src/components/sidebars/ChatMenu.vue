@@ -16,13 +16,13 @@
   export default {
     sockets: {
       connect() {
-        console.log('socket connected');
+        window.console.log('socket connected');
         this.getGroups.forEach(group => {
           this.$socket.emit('joinroom', `${group.groupId}_${group.name}`);
         });
       },
       chatmessage(val) {
-        console.log(`received chatmessage event from socket ${val}`);
+        window.console.log(`received chatmessage event from socket ${val}`);
       },
     },
     data() {
