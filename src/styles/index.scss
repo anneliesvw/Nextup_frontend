@@ -17,6 +17,7 @@
 @import 'components/sidebar/sidebar';
 @import 'components/groups/group';
 @import 'components/groups/info-panel';
+@import 'components/groups/create-poll';
 @import 'components/emptystate/_emptystate';
 @import 'components/usermessages/simple_usermessage';
 @import 'components/sidebar/chat-menu';
@@ -25,6 +26,8 @@
 @import 'components/dialogs/invite-member';
 @import 'components/user/user-settings';
 @import 'components/user/group-item';
+@import 'components/image-uploader';
+
 
 // Containers
 @import 'containers/main-container';

@@ -5,7 +5,13 @@
         {{this.title}}
       </div>
       <div class="panel-body">
-        <Activity v-for="i in 3" :key="i"></Activity>
+        <div class="group-wrapper">
+          <div class="group-add" @click="() => this.$emit('showEventDialog', true)">
+            <i class="fas fa-plus"></i>
+            <span>Create event</span>
+          </div>
+        </div>
+        <Activity v-for="event in events" :key="event.eventId"></Activity>
       </div>
     </div>
   </div>
@@ -15,7 +21,7 @@
   import Activity from '../activities/Activity.vue';
   
   export default {
-    props: ['title'],
+    props: ['title', 'events'],
     components: {
       Activity,
     },
