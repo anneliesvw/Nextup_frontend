@@ -21,5 +21,9 @@ export default {
     Sidebar,
     ChatMenu,
   },
+  data() {
+    return {};
+  },
+  methods: {},
 };
 </script>
