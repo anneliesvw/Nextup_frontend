@@ -1,41 +1,39 @@
 <template>
-  <el-dialog title="Create Poll">
+  <el-dialog title="Create Poll" :visible.sync="dialogVisible">
     <div class="create-event-form">
       <el-form label-position="top" class="create-event">
         <div class="create-event-input">
             <el-form-item label="Title">
               <el-input placeholder="Enter title here" v-model="title"></el-input>
             </el-form-item>
+            <el-form-item label="Poll Options">
+              <div class="polloption-add">
+                <el-input placeholder="Enter option here" v-model="newOption" class="polloption-name"></el-input>
+                <!-- <el-date-picker v-model="dateValue" class="polloption-name" type="datetimerange" start-placeholder="Start Date" end-placeholder="End date" :default-time="['12:00:00']" format="hh:mm dd/MM/yyyy">
+                </el-date-picker> -->
+                <el-button type="primary" @click="addOption">Add option</el-button>
+              </div>
+            </el-form-item>
+
+            <div class="option-list">
+              <div class="option-list-item" v-for="option in options" :key="option.id">
+                <el-input :value="option.description" disabled>
+                </el-input>
+                <el-button slot="append" class="appended-input" type="danger" @click="removeOption(option)">Delete</el-button>
+              </div> 
+            </div>
+
             <el-form-item label="Visible for members">
               <el-switch v-model="isClosed" active-color="#ff4949" inactive-color="#13ce66" active-text="Closed" inactive-text="Open">
               </el-switch>
             </el-form-item>
             <el-form-item label="Deadline">
-              <el-date-picker v-model="deadline" type="datetime" start-placeholder="Deadline" :default-time="['12:00:00']" format="hh:mm dd/MM/yyyy">
+              <el-date-picker v-model="deadline" type="datetime" placeholder="Deadline" format="HH:mm dd/MM/yyyy">
               </el-date-picker>                
             </el-form-item>    
             <el-form-item label="Description">
               <el-input v-model="description" type="textarea" :autosize="{minRows: 4, maxRows: 5}"></el-input>
             </el-form-item>
-            <el-form-item label="Poll Options">
-              <div class="polloption-add">
-                <el-input placeholder="Enter option here" v-model="newOption" class="polloption-name"></el-input>
-                <el-date-picker v-model="dateValue" class="polloption-name" type="datetimerange" start-placeholder="Start Date" end-placeholder="End date" :default-time="['12:00:00']" format="hh:mm dd/MM/yyyy">
-                </el-date-picker>
-                <el-button type="primary" @click="addOption">Add option</el-button>
-              </div>
-            </el-form-item>
-
-            <div class="member-list">
-              <div class="member-list-item" v-for="option in options" :key="option">
-                <div>
-                  {{option.description}}
-                </div>
-                <div class="member-remove" @click="removeOption(option)">
-                  <i class="fas fa-trash-alt"></i>
-                </div>
-              </div>
-            </div>
             <el-button type="primary" @click="savePoll">Create poll</el-button>
         </div>
       </el-form>
@@ -59,7 +57,7 @@ export default {
     };
   },
   computed: {
-    showCreateEvent: {
+    dialogVisible: {
       get() {
         return this.isVisible;
       },
@@ -84,13 +82,15 @@ export default {
     },
     savePoll() {
       const payload = {
-        groupId: this.activeGroup.groupId,
-        name: this.title,
-        description: this.description,
-        deadline: this.deadline,
-        closed: this.isClosed,
-        pollOptions: this.options,
-        onSucces: () => {
+        poll: {
+          groupId: this.activeGroup.groupId,
+          name: this.title,
+          description: this.description,
+          deadline: this.deadline,
+          closed: this.isClosed,
+          pollOptions: this.options,
+        },
+        onSuccess: () => {
           this.$notify({
             title: 'Poll Added',
             message: 'Poll successfully added.',

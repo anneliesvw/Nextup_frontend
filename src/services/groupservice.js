@@ -73,7 +73,7 @@ const deletePollFromGroup = (groupId, pollId, onSucces, onError) => {
 };
 
 const updatePollFromGroup = (groupId, poll, onSucces, onError) => {
-  poll.groupId = groupId;
+  poll.group = groupId;
   axios.put(
     `${GROUPS_URL}/${groupId}/polls/${poll.pollId}`,
     poll,
@@ -84,6 +84,14 @@ const updatePollFromGroup = (groupId, poll, onSucces, onError) => {
 const getEventsFromGroup = (groupId, onSucces, onError) => {
   axios.get(
     `${EVENTS_URL}/group/${groupId}`,
+    getHeader(),
+  ).then(onSucces, onError);
+};
+
+const addEventToGroup = (groupId, event, onSucces, onError) => {
+  axios.post(
+    `${EVENTS_URL}/group/${groupId}`,
+    event,
     getHeader(),
   ).then(onSucces, onError);
 };
@@ -100,5 +108,6 @@ export default {
   deletePollFromGroup,
   updatePollFromGroup,
   getEventsFromGroup,
+  addEventToGroup,
 };
 

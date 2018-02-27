@@ -2,32 +2,7 @@
   @include flexcol;
   margin: 20px;
   max-width: 1000px;
-  .create-event-graphic {
-    @include flexrow;
-    justify-content: center;
-    align-items: flex-end;
-    background-image: url('https://www.eventbriz.com/wp-content/uploads/2017/09/NOWLIVE.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 200px;
-    width: 100%;
-    opacity: 0.4;
-    align-items: center;
-    .create-event-circle {
-      background: $brand-gray-1;
-      height: 125px;
-      width: 125px;
-      border-radius: 50%;
-      border: 1px solid $brand-gray-5;
-      @include flexrow;
-      justify-content: center;
-      align-items: center;
-      .camera-icon {
-        font-size: 72px;
-        padding-bottom: 7px;
-      }
-    }
-  }
+ 
   .create-event-name {
     .create-event-input {
       @include flexcol;
@@ -38,45 +13,12 @@
       }
     }
   }
-
-  .fas:hover {
-    cursor: pointer;
-  }
-  .fas {
-    color: $brand-gray-7;
-    font-size: 20px;
-    margin: 5px;
-  }
-  .create-event-graphic:hover {
-    opacity: 1;
-    cursor: pointer;
-    transition: opacity 200ms ease-in;
-    -moz-transition: opacity 200ms ease-in;
-    -webkit-transition: opacity 200ms ease-in;
-    -o-transition: opacity 200ms ease-in;
-    .createEvent-circle {
-      -webkit-transition: all 200ms ease-in;
-      -webkit-transform: scale(1.2);
-      -ms-transition: all 200ms ease-in;
-      -ms-transform: scale(1.2);
-      -moz-transition: all 200ms ease-in;
-      -moz-transform: scale(1.2);
-      transition: all 200ms ease-in;
-      transform: scale(1.2);
-    }
-  }
-
-  .create-event-graphic {
-    transition: opacity 200ms ease-out;
-    -moz-transition: opacity 200ms ease-out;
-    -webkit-transition: opacity 200ms ease-out;
-    -o-transition: opacity 200ms ease-out;
-    .create-event-circle {
-      -webkit-transition: all 200ms ease-out;
-      -ms-transition: all 200ms ease-out;
-      -moz-transition: all 200ms ease-out;
-      transition: all 200ms ease-out;
-    }
+  .google-maps-autocomplete {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid rgb(220, 223, 230);
+    font-size: 1em;
+    padding: 10px;
   }
 
   .create-event-date {
@@ -85,9 +27,6 @@
     align-items: center;
   }
 
-  .el-tag + .el-tag {
-    margin-left: 0.5em;
-  }
   .button-new-tag {
     margin-left: 0.5em;
     height: 32px;

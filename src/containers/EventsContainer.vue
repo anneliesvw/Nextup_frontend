@@ -12,7 +12,7 @@
         <div class="group-wrapper">
           <div class="group-add" @click="openDialog">
             <i class="fas fa-plus"></i>
-            <span>Create group</span>
+            <span>Create event</span>
           </div>
         </div>
         <Group v-for="item in 5" :key="item"></Group>

@@ -40,6 +40,10 @@ export default new Vuex.Store({
     setUserDetails: (state, payload) => {
       state.userDetails = payload;
     },
+    addEventToGroup: (state, payload) => {
+      const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
+      if (groupIndex >= 0) state.groups[groupIndex].events.push(payload.eventInfo);
+    },
   },
   actions: {
     setLoginAttempt: ({ commit }, payload) => {
@@ -111,7 +115,7 @@ export default new Vuex.Store({
     },
     addPoll: ({ commit }, payload) => {
       GroupsApi.addPollToGroup(
-        payload,
+        payload.poll,
         res => {
           logger.log('poll succesfully added to group');
           commit('updateGroup', res.data);
@@ -122,7 +126,54 @@ export default new Vuex.Store({
           if (payload.onError) payload.onError(err);
         },
       );
-      commit('updateGroup', payload);
+    },
+    removePoll: ({ commit }, payload) => {
+      GroupsApi.deletePollFromGroup(
+        payload.groupId,
+        payload.pollId,
+        res => {
+          logger.log('poll succesfully deleted');
+          commit('updateGroup', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to remove poll', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    updatePoll: ({ commit }, payload) => {
+      GroupsApi.updatePollFromGroup(
+        payload.groupId,
+        payload.poll,
+        res => {
+          logger.log('poll succesfully updated');
+          commit('updateGroup', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to update poll', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    addEventToGroup: ({ commit }, payload) => {
+      GroupsApi.addEventToGroup(
+        payload.groupId,
+        payload.eventInfo,
+        res => {
+          logger.log(`event successfully added to group ${payload.groupId}`);
+          commit('addEventToGroup', {
+            groupId: payload.groupId,
+            eventInfo: res.data,
+          });
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log(`error whilst adding event to group with id ${payload.groupId}`, err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
     },
     loadUserDetails: ({ commit }) => {
       AuthApi.getUserDetails(
