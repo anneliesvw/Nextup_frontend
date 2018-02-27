@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     openDialog() {
-      console.log('opendialog');
+      window.console.log('opendialog');
       this.dialogVisible = true;
     },
     closeDialog() {

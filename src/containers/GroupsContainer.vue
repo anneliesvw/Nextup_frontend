@@ -18,7 +18,8 @@
         <Group 
           v-for="group in groups" 
           :key="group.groupId"
-          :group="group">
+          :group="group"
+        >
         </Group>
       </div>
     </div>
