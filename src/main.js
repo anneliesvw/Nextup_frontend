@@ -1,3 +1,4 @@
+import * as VueGoogleMaps from 'vue2-google-maps';
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI from 'element-ui';
 import Vue from 'vue';
@@ -8,6 +9,13 @@ import App from './App.vue';
 import './styles/index.scss';
 
 Vue.use(ElementUI, { locale });
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: process.env.GOOGLE_API_KEY,
+    libraries: 'places',
+  },
+});
 
 /* eslint-disable */
 const app = new Vue({

@@ -3,6 +3,7 @@
     <CreateEvent
       v-if="eventDialogVisible"
       :isVisible="true"
+      :activeGroup="activeGroup"
       @close="closeEventDialog">
     </CreateEvent>
     <MemberDialog
@@ -54,9 +55,13 @@
         </div>
       </div>
       <div class="group-panels">
-        <InfoPanel title="Events" :events="activeGroup.events" @showEventDialog="eventDialogVisible = true">
+        <InfoPanel title="Events" 
+          :events="activeGroup.events"
+          @showEventDialog="eventDialogVisible = true">
         </InfoPanel>
-        <PollInfoPanel title="Polls" :polls="activeGroup.polls" @showPollDetail="showPollDetail($event)" @showPollDialog="pollDialogVisible = true">
+        <PollInfoPanel title="Polls" :polls="activeGroup.polls" 
+          @showPollDetail="showPollDetail($event)" 
+          @showPollDialog="pollDialogVisible = true">
         </PollInfoPanel>
       </div>
     </div>
