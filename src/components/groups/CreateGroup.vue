@@ -24,7 +24,7 @@
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="$emit('close')">Cancel</el-button>
-      <el-button type="primary" @click="createGroup">Create group</el-button>
+      <el-button class="create-group-btn" type="primary" @click="createGroup">Create group</el-button>
     </span>
   </el-dialog>
 </template>
