@@ -1,6 +1,6 @@
 <template>
   <div class="chat-wrapper">
-    <chat-element v-for="group in getGroups" :key="group.groupId" :group="group">
+    <chat-element v-for="group in getGroups" :key="group.groupId" :group="group" @activechat="setActiveChat" :activechat="activechat">
     </chat-element>
     <!-- TODO: create new chat functionality -->
     <div class="new-chat chat-bubble">
@@ -23,8 +23,18 @@
         window.console.log(`received chatmessage event from socket ${val}`);
       },
     },
+    data() {
+      return {
+        activechat: -1,
+      };
+    },
     computed: {
       ...mapGetters(['getGroups']),
+    },
+    methods: {
+      setActiveChat(id) {
+        this.activechat = id;
+      },
     },
     watch: {
       getGroups(groups) {

@@ -35,6 +35,7 @@
   import ImageUploader from '../ImageUploader.vue';
 
   export default {
+    sockets: {},
     components: {
       ImageUploader,
     },
@@ -70,6 +71,7 @@
         const payload = {
           groupInfo: this.groupInfo,
           onSuccess: res => {
+            this.$socket.emit('createroom', { roomname: `${res.data.groupId}_${res.data.name}`, messages: [] });
             this.$notify({
               title: 'Group Created',
               message: `Group '${res.data.name}' successfully created.`,
