@@ -1,13 +1,13 @@
 <template>
   <div class="chat-element">
-    <div class="chat-bubble" @click="toggleActive">
+    <div class="chat-bubble" @click="setMyselfActive">
       <img src="https://i.imgur.com/iO1VTVZ.png" :alt="group.name">
     </div>
     <div class="notification" v-if="notifications>0">1</div>
     <div>{{group.name}}</div>
     <div class="chat-arrow" v-if="active" />
     <div class="chat-window" v-if="active">
-      <div class="messages">
+      <div id="messagebox" class="messages">
         <!-- TODO: use unique key -->
         <div v-for="(message, i) in messages" 
           :key="i" class="message" 
@@ -28,23 +28,24 @@
 import { mapGetters } from 'vuex';
 
 export default {
-  props: ['group'],
+  props: ['group', 'activechat'],
   sockets: {
-    chatmessage(val) {
-      if (!this.active) {
-        this.notifications += 1;
+    savedmessage(val) {
+      if (val.room === `${this.group.groupId}_${this.group.name}`) {
+        this.$nextTick(() => this.addMessage(val));
       }
-      window.console.log(val.from);
-      this.messages.push({
-        myMessage: val.from === this.getUserDetails.userId,
-        text: val.text,
-        name: this.getUserById(val.from)[0].person.firstName || 'unknown',
-      });
+    },
+    chatmessage(val) {
+      if (val.room === `${this.group.groupId}_${this.group.name}`) {
+        if (!this.active) {
+          this.notifications += 1;
+        }
+        this.addMessage(val);
+      }
     },
   },
   data() {
     return {
-      active: false,
       messages: [],
       text: '',
       notifications: 0,
@@ -52,6 +53,9 @@ export default {
   },
   computed: {
     ...mapGetters(['getUserDetails']),
+    active() {
+      return this.activechat === this.group.groupId;
+    },
   },
   methods: {
     submitMessage() {
@@ -73,6 +77,22 @@ export default {
     getUserById(id) {
       return this.group.users.filter(u => u.userId === parseInt(id, 10));
     },
+    addMessage(messageObject) {
+      this.messages.push({
+        myMessage: messageObject.message.from === this.getUserDetails.userId,
+        text: messageObject.message.text,
+        name: this.getUserById(messageObject.message.from)[0] ? this.getUserById(messageObject.message.from)[0].person.firstName : 'unknown',
+      });
+    },
+    setMyselfActive() {
+      this.$emit('activechat', this.group.groupId === this.activechat ? -1 : this.group.groupId);
+    },
+  },
+  updated() {
+    const container = this.$el.querySelector('#messagebox');
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
   },
 };
 </script>

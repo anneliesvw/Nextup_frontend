@@ -49,6 +49,10 @@
           </div>
           <div class="banner-buttons">
             <el-button type="primary" @click="dialogVisible = true">Invite Others</el-button>
+            <!-- TODO: BELANGRIJK!! -->
+            <!-- Degene die leave group uitwerkt zet deze lijn code bij de onsuccess aub, de chat dankt u -->
+            <!-- this.$socket.emit('leaveroom', `${GROUPID}_${NAME}`); -->
+            <!-- met juiste waarden voor id en name -->
             <el-button type="danger">Leave Group</el-button>
             <el-button type="danger" @click="deleteGroup">Delete Group</el-button>
           </div>
@@ -152,12 +156,15 @@
         this.$router.push(`/group/detail/${group.groupId}`);
       },
       deleteGroup() {
+        // clone so onsuccess has data
+        const infoclone = { ...this.activeGroup };
         const payload = {
           groupInfo: this.activeGroup.groupId,
-          onSuccess: res => {
+          onSuccess: () => {
+            this.$socket.emit('deleteroom', `${infoclone.groupId}_${infoclone.name}`);
             this.$notify({
               title: 'Group Deleted',
-              message: `Group '${res.data.name}' successfully deleted.`,
+              message: `Group '${infoclone.name}' successfully deleted.`,
               type: 'success',
               duration: 2000,
             });
