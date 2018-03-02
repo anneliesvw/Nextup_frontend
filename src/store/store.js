@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import GroupsApi from '../services/groupservice';
+import mutations from './mutations';
 
 const logger = window.console;
 Vue.use(Vuex);
@@ -16,21 +17,7 @@ export default new Vuex.Store({
     getGroups: state => state.groups,
     getGroupById: state => id => state.groups.find(g => g.groupId === id),
   },
-  mutations: {
-    setLoginAttempt: (state, payload) => {
-      state.loginAttempt = payload;
-    },
-    addGroup: (state, group) => {
-      state.groups.push(group);
-    },
-    setGroups: (state, groups) => {
-      state.groups = groups;
-    },
-    updateGroup: (state, group) => {
-      const groupIndex = state.groups.findIndex(g => group.groupId === g.groupId);
-      if (groupIndex >= 0) Vue.set(state.groups, groupIndex, group);
-    },
-  },
+  mutations,
   actions: {
     setLoginAttempt: ({ commit }, payload) => {
       commit('setLoginAttempt', payload);
