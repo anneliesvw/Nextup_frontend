@@ -1,0 +1,49 @@
+.create-event-form {
+  @include flexcol;
+  margin: 20px;
+  max-width: 1000px;
+ 
+  .create-event-name {
+    .create-event-input {
+      @include flexcol;
+      margin-top: 20px;
+      .el-form-item {
+        flex: 1;
+        min-width: 100%;
+      }
+    }
+  }
+  .google-maps-autocomplete {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid rgb(220, 223, 230);
+    font-size: 1em;
+    padding: 10px;
+  }
+
+  .create-event-date {
+    @include flexrow;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .button-new-tag {
+    margin-left: 0.5em;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .input-new-tag {
+    width: 90px;
+    margin-left: 0.5em;
+    vertical-align: bottom;
+  }
+
+  .price-input {
+    width: 50%;
+    .el-select {
+      width: 8em;
+    }
+  }
+}

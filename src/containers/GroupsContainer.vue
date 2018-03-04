@@ -15,7 +15,12 @@
             <span>Create group</span>
           </div>
         </div>
-        <Group v-for="item in 5" :key="item"></Group>
+        <Group 
+          v-for="group in groups" 
+          :key="group.groupId"
+          :group="group"
+        >
+        </Group>
       </div>
     </div>
   </div>
@@ -36,6 +41,11 @@ export default {
     return {
       dialogVisible: false,
     };
+  },
+  computed: {
+    groups() {
+      return this.$store.getters.getGroups;
+    },
   },
   methods: {
     openDialog() {

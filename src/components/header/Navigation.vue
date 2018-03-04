@@ -3,8 +3,8 @@
       <div class="title">Next Up</div>
       <div class="links">
         <router-link :to="{name: 'Default'}" exact>My Activities</router-link>
-        <router-link to="MyGroups">My Groups</router-link>
-        <router-link to="Activities">Discover Activities</router-link>
+        <router-link to="/MyGroups">My Groups</router-link>
+        <router-link to="/Activities">Discover Activities</router-link>
       </div>
       <div class="user-info">
         <el-dropdown trigger="click">
@@ -15,7 +15,7 @@
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>Profile Settings </el-dropdown-item>
+            <el-dropdown-item><router-link to="/Settings">Profile settings</router-link></el-dropdown-item>
             <el-dropdown-item>Preferences</el-dropdown-item>
             <el-dropdown-item>Help & Feedback</el-dropdown-item>
             <el-dropdown-item :divided="true">Logout</el-dropdown-item>

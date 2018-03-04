@@ -3,8 +3,8 @@
     <div class="main-container">
       <Sidebar></Sidebar>
       <div class="content-container">
-        <!--<Activity v-for="item in 10" :key="item"></Activity>-->
-        <calendar-list></calendar-list>
+        <!--calendar-list></calendar-list-->
+        Welkom, je hebt niks te doen. Spijtig.
       </div>
       <chat-menu></chat-menu>
     </div>
@@ -24,5 +24,9 @@ export default {
     ChatMenu,
     CalendarList,
   },
+  data() {
+    return {};
+  },
+  methods: {},
 };
 </script>

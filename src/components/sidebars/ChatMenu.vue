@@ -1,7 +1,6 @@
 <template>
   <div class="chat-wrapper">
-    <!-- TODO: key vfor -->
-    <chat-element v-for="testchat in testData" :key="testchat.name" :data="testchat" >
+    <chat-element v-for="group in getGroups" :key="group.groupId" :group="group" @activechat="setActiveChat" :activechat="activechat">
     </chat-element>
     <!-- TODO: create new chat functionality -->
     <div class="new-chat chat-bubble">
@@ -10,32 +9,43 @@
   </div>
 </template>
 <script>
-import ChatElement from './ChatElement.vue';
+  import { mapGetters } from 'vuex';
+  import ChatElement from './ChatElement.vue';
 
-export default {
-  data() {
-    return {
-      // TODO: use API
-      testData: [
-        {
-          name: 'Trump',
-          url: 'https://i.imgur.com/iO1VTVZ.png',
-          messages: [
-            {
-              myMessage: true,
-              text: 'bla bla bla',
-            },
-            {
-              myMessage: false,
-              text: 'zeer zeker',
-            },
-          ],
-        },
-      ],
-    };
-  },
-  components: {
-    ChatElement,
-  },
-};
+  export default {
+    sockets: {
+      connect() {
+        window.console.log('socket connected');
+        const groupsclone = this.getGroups;
+        window.console.log(groupsclone);
+      },
+      chatmessage(val) {
+        window.console.log(`received chatmessage event from socket ${val}`);
+      },
+    },
+    data() {
+      return {
+        activechat: -1,
+      };
+    },
+    computed: {
+      ...mapGetters(['getGroups']),
+    },
+    methods: {
+      setActiveChat(id) {
+        this.activechat = id;
+      },
+    },
+    watch: {
+      getGroups(groups) {
+        groups.forEach(group => {
+          this.$socket.emit('joinroom', `${group.groupId}_${group.name}`);
+          window.console.log(`joined room ${group.groupId}_${group.name}`);
+        });
+      },
+    },
+    components: {
+      ChatElement,
+    },
+  };
 </script>

@@ -5,6 +5,10 @@ import Register from '../containers/users/RegisterContainer.vue';
 import Groups from '../containers/GroupsContainer.vue';
 import Users from '../containers/users/UsersContainer.vue';
 import ConfirmEmail from '../containers/users/ConfirmEmail.vue';
+import GroupDetail from '../containers/GroupDetailsContainer.vue';
+import Events from '../containers/EventsContainer.vue';
+import Discover from '../containers/DiscoverContainer.vue';
+import UserSettings from '../components/users/UserSettings.vue';
 
 Vue.use(Router);
 
@@ -27,6 +31,11 @@ export default new Router({
       component: Groups,
     },
     {
+      path: '/group/detail/:groupId?',
+      name: 'GroupDetail',
+      component: GroupDetail,
+    },
+    {
       path: '/users/:component',
       name: 'Users',
       component: Users,
@@ -35,6 +44,21 @@ export default new Router({
       path: '/confirmEmail/:token',
       name: 'ConfirmEmail',
       component: ConfirmEmail,
+    },
+    {
+      path: '/group/event',
+      name: 'Event',
+      component: Events,
+    },
+    {
+      path: '/Activities',
+      name: 'Discover',
+      component: Discover,
+    },
+    {
+      path: '/Settings',
+      name: 'UserSettings',
+      component: UserSettings,
     },
   ],
 });

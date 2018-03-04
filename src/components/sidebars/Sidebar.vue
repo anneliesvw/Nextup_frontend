@@ -3,8 +3,8 @@
 		<div class="groups">
 			<div class="groups-header">Groups</div>
 			<ol>
-				<li v-for="group in groups" :key="group">
-					<span>{{ group }}</span> 
+				<li v-for="group in groups" :key="group.groupId">
+					<span>{{ group.name }}</span> 
 					<el-checkbox :checked="true"></el-checkbox>
 				</li>
 			</ol>
@@ -14,11 +14,10 @@
 
 <script>
 export default {
-  data() {
-    return {
-      // todo via backend
-      groups: ['Group1', 'Group2', 'Group3'],
-    };
+  computed: {
+    groups() {
+      return this.$store.getters.getGroups;
+    },
   },
 };
 </script>

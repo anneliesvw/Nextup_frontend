@@ -1,15 +1,20 @@
 <template>
   <div class="chat-element">
-    <div class="chat-bubble" @click="active = !active">
-      <img :src="data.url" :alt="data.name">
+    <div class="chat-bubble" @click="setMyselfActive">
+      <img src="https://i.imgur.com/iO1VTVZ.png" :alt="group.name">
     </div>
-    <div class="notification">1</div>
-    <div>{{data.name}}</div>
+    <div class="notification" v-if="notifications>0">1</div>
+    <div>{{group.name}}</div>
     <div class="chat-arrow" v-if="active" />
     <div class="chat-window" v-if="active">
-      <div class="messages">
+      <div id="messagebox" class="messages">
         <!-- TODO: use unique key -->
-        <div v-for="(message, i) in messages" :key="i" class="message" :class="{ 'message-sent': message.myMessage, 'message-received': !message.myMessage }">{{ message.text}}</div>
+        <div v-for="(message, i) in messages" 
+          :key="i" class="message" 
+          :class="{ 'message-sent': message.myMessage, 'message-received': !message.myMessage }">
+          <div class="message-name" v-if="!message.myMessage">{{ message.name }}</div>
+          <div class="message-content">{{ message.text }}</div>
+        </div>
       </div>
       <div class="message-box">
         <!-- TODO: add attribute type="textarea" if v-bind attribute meets character threshold -->
@@ -20,24 +25,74 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
-  // TODO: add notification functionality
-  props: ['data'],
+  props: ['group', 'activechat'],
+  sockets: {
+    savedmessage(val) {
+      if (val.room === `${this.group.groupId}_${this.group.name}`) {
+        this.$nextTick(() => this.addMessage(val));
+      }
+    },
+    chatmessage(val) {
+      if (val.room === `${this.group.groupId}_${this.group.name}`) {
+        if (!this.active) {
+          this.notifications += 1;
+        }
+        this.addMessage(val);
+      }
+    },
+  },
   data() {
     return {
-      active: false,
-      messages: this.data.messages,
+      messages: [],
       text: '',
+      notifications: 0,
     };
+  },
+  computed: {
+    ...mapGetters(['getUserDetails']),
+    active() {
+      return this.activechat === this.group.groupId;
+    },
   },
   methods: {
     submitMessage() {
-      this.messages.push({
-        myMessage: true,
-        text: this.text,
+      this.$socket.emit('chatmessage', {
+        room: `${this.group.groupId}_${this.group.name}`,
+        message: {
+          from: this.getUserDetails.userId,
+          text: this.text,
+        },
       });
       this.text = '';
     },
+    toggleActive() {
+      this.active = !this.active;
+      if (this.active) {
+        this.notifications = 0;
+      }
+    },
+    getUserById(id) {
+      return this.group.users.filter(u => u.userId === parseInt(id, 10));
+    },
+    addMessage(messageObject) {
+      this.messages.push({
+        myMessage: messageObject.message.from === this.getUserDetails.userId,
+        text: messageObject.message.text,
+        name: this.getUserById(messageObject.message.from)[0] ? this.getUserById(messageObject.message.from)[0].person.firstName : 'unknown',
+      });
+    },
+    setMyselfActive() {
+      this.$emit('activechat', this.group.groupId === this.activechat ? -1 : this.group.groupId);
+    },
+  },
+  updated() {
+    const container = this.$el.querySelector('#messagebox');
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
   },
 };
 </script>

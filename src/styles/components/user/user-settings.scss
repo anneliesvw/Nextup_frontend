@@ -1,0 +1,92 @@
+.usersettings-container {
+  display: grid;
+  grid-template-columns: calc(100% - 100px) 100px;
+}
+.usersettings-wrapper {
+  width: 100%;
+}
+.usersettings-img {
+  height: 250px;
+  background-color: $brand-blue-4;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.usersettings-profilepic {
+  height: 250px;
+  width: 250px;
+  margin-top: 125px;
+  border-radius: 50%;
+  border: 3px solid white;
+  background-color: $brand-gray-4;
+  position: absolute;
+  top: 0;
+  left: calc(((100% - 100px)/2) - 75px);
+}
+.usersettings-column {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 30px);
+  align-items: center;
+  padding: 20px;
+}
+.usersettings-label {
+  font-weight: bold;
+  color: $brand-blue-7;
+}
+.usersettings-line {
+  border-bottom: 1px solid $brand-blue-3;
+}
+
+.usersettings-wrap-tab {
+  @include flexrow;
+  align-content: center;
+  justify-content: center;
+}
+.usersettings-tab {
+  margin: 130px 50px 20px 50px;
+  width: 60%;
+}
+
+.edit-password-monkey1 {
+  background-size: cover;
+  background-position: center;
+  height: 25px;
+  width: 25px;
+  background-image: url('https://cdn.thinglink.me/api/image/1010252198820446210/1240/10/scaletowidth');
+}
+.edit-password-monkey2 {
+  background-size: cover;
+  background-position: center;
+  width: 25px;
+  height: 25px;
+  background-image: url('https://cdn.shopify.com/s/files/1/1061/1924/products/Monkey_Face_Emoji_large.png?v=1480481036');
+}
+.edit-password-group {
+  @include flexrow;
+  justify-content: center;
+  align-items: center;
+}
+.usersettings-pref-input {
+  max-width: 250px;
+}
+.usersettings-preference-container {
+  @include flexrow;
+  flex-wrap: wrap;
+  .usersettings-preference {
+    border: 1px solid $brand-gray-7;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 5px;
+    @include flexrow;
+    .usersettings-pref {
+      padding-right: 10px;
+    }
+    .usersettings-remove {
+      cursor: pointer;
+    }
+  }
+}
+.edit-password-btn {
+  padding: 6px 10px !important;
+}

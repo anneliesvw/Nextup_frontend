@@ -1,5 +1,6 @@
 .main-container {
   background: $brand-blue-1;
+  flex:1;
   display: grid;
   grid-template-columns: 230px auto 100px;
 }

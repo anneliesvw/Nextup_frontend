@@ -55,7 +55,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+#.env
 
 .DS_Store
 
@@ -68,11 +68,11 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file(s)
-.env
-.env.*
+#.env
+
 
 #Build generated
-dist/
+#dist/
 build/
 
 # Serverless generated files

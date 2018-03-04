@@ -4,6 +4,14 @@ body {
   margin: 0px;
 }
 
+html {
+  min-height: 100vh;
+}
+body {
+  min-height: 100vh;
+  @include flexcol;
+}
+
 * {
   font-family: $base-font-family;
   box-sizing: border-box;
@@ -21,6 +29,13 @@ body {
 }
 
 .site-wrapper {
+  flex: 1;
   @include flexcol;
   padding: 0;
+  min-height: 100%;
+}
+
+// GOOGLE MAPS AUTOCOMPLETE Z-INDEX Should always be on top
+.pac-container {
+  z-index: 4000;
 }

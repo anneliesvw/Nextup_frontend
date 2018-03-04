@@ -20,7 +20,7 @@
 }
 
 @mixin brand-blue-gradient {
-    background-color: $brand-blue-8; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, $brand-blue-7, $brand-blue-8); /* Chrome 10-25, Safari 5.1-6 */
+    background-color: $brand-blue-8; 
+    background: -webkit-linear-gradient(to right, $brand-blue-7, $brand-blue-8);
     background: linear-gradient(to right, $brand-blue-7, $brand-blue-8);
 }

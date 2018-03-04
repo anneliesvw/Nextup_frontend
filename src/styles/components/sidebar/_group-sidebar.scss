@@ -1,0 +1,47 @@
+.group-sidebar {
+  //box-shadow: -5px 0px 10px $base-shadow-color;
+  border: 1px solid $brand-blue-2;
+  border-radius: 4px;
+  z-index: 33;
+  margin: 15px;
+  .sidebar-title {
+    text-align: center;
+    border-bottom: 1px solid $brand-blue-2;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    font-family: $title-font-family;
+    background-color: white;
+    padding: 13px;
+    font-weight: 500;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    color: $brand-blue-7;
+  }
+  .group-buttons {
+    text-align: center;
+    padding: 0px;
+    .el-button {
+      width: 100%;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-top-right-radius: 0px;
+      border-top-left-radius: 0px;
+    }
+  }
+}
+.group-link {
+  position: relative;
+  padding: 13px;
+  border-bottom: 1px solid $brand-blue-2;
+  background-color: lighten($brand-gray-1, 12);
+  &.group-link-active {
+    color: $brand-blue-7;
+    z-index: 33;
+    background: white;
+    border-left: 3px solid $brand-blue-7;
+  }
+  &:hover {
+    cursor: pointer;
+    color: $brand-blue-5;
+  }
+}

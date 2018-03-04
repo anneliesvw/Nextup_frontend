@@ -1,5 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: './src/main.js',
@@ -80,6 +82,12 @@ module.exports = {
   performance: {
     hints: false,
   },
+  plugins: [
+    new Dotenv({
+      path: '.env',
+      safe: false,
+    }),
+  ],
   devtool: '#eval-source-map',
 };
 
@@ -87,15 +95,18 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map';
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
+    /* new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"',
       },
-    }),
-    new webpack.optimize.UglifyJsPlugin({
+    }), */
+    new UglifyJSPlugin({
       sourceMap: true,
-      compress: {
-        warnings: false,
+      uglifyOptions: {
+        ecma: 8,
+        compress: {
+          warnings: false,
+        },
       },
     }),
     new webpack.LoaderOptionsPlugin({

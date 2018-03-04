@@ -1,6 +1,7 @@
 .group-wrapper {
   min-width: 33%;
   padding: 12px;
+  cursor: pointer;
 }
 
 .group-add {
@@ -43,10 +44,11 @@
   border-radius: 4px;
   border: 1px solid $brand-gray-1; //min-width: 33%;
   .group-graphic {
+    background: $brand-blue-4;
     background-image: url('http://s4.thingpic.com/images/yq/38G3FoGaxdnzWNxyDrXLfE6V.png');
     width: 100%;
     height: 200px;
-    background-size: cover;
+    //background-size: cover;
     background-position: center;
   }
   .group-bottom {

@@ -1,17 +1,19 @@
 <template>
   <div class="activity-wrapper">
       <div class="activity-container">
-        <div class="activity-graphic"></div>
+        <div class="activity-graphic" :style="backgroundPattern">
+
+        </div>
         <div class="activity-bottom">
             <div class="activity-toggle">
                 <input type="checkbox">
             </div>
             <div class="activity-details">
                 <div class="activity-owner">
-                    Grindr vriendjes
+                    {{ event ? event.name : '' }}
                 </div>
                 <div class="activity-date">
-                    ZATERDAG 27/07 | 10:00 - 17:00
+                    {{ startDate }}  |  {{ endDate }}
                 </div>
             
             </div>
@@ -20,3 +22,25 @@
     </div>
   </div>
 </template>
+<script>
+  import moment from 'moment';
+  import PatternGenerator from '../../services/patterngenerator';
+
+  export default {
+    props: ['event'],
+    computed: {
+      startDate() {
+        return moment(this.event.startDate).format('DD/MM/YYYY HH:mm');
+      },
+      endDate() {
+        return moment(this.event.endDate).format('DD/MM/YYYY HH:mm');
+      },
+      backgroundPattern() {
+        const pattern = PatternGenerator.generateImage(`${Math.random() * 2345}`);
+        return {
+          backgroundImage: pattern,
+        };
+      },
+    },
+  };
+</script>

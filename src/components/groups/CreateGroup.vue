@@ -1,44 +1,97 @@
 <template>
-  <el-dialog title="Create group" class="createGroup-dialog" 
+  <el-dialog title="Create group" class="create-group-dialog" 
     :visible.sync="dialogVisible">
     <div class="create-group-form">
-      <el-form label-position="top" class="createGroup-name">
-        <div class="create-group-graphic">
-          <div class="create-group-cirkel">
-            <i class="fas fa-camera camera-icon"></i>
-          </div>
-        </div>
+      <el-form label-position="top" class="create-group-name">
+        <ImageUploader
+          :placeHolder="backgroundImage"
+          imageType="groups"
+        >         
+        </ImageUploader>
         <div class="create-group-left">
             <el-form-item label="Name">
-              <el-input class="create-group-input"></el-input>
+              <el-input class="create-group-input" v-model="groupInfo.name"></el-input>
             </el-form-item>
             <el-form-item label="Description">
-              <el-input class="create-group-input" type="textarea" :autosize="{minRows: 4, maxRows: 5}"></el-input>
+              <el-input 
+                class="create-group-input" 
+                type="textarea" 
+                :autosize="{minRows: 4, maxRows: 5}" 
+                v-model="groupInfo.description">
+              </el-input>
             </el-form-item>
         </div>
       </el-form>
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="$emit('close')">Cancel</el-button>
-      <el-button type="primary" @click="$emit('close')">Create group</el-button>
+      <el-button type="primary" @click="createGroup">Create group</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
-export default {
-  props: ['isVisible'],
-  computed: {
-    dialogVisible: {
-      get() {
-        return this.isVisible;
+  import PatternGenerator from '../../services/patterngenerator';
+  import ImageUploader from '../ImageUploader.vue';
+
+  export default {
+    sockets: {},
+    components: {
+      ImageUploader,
+    },
+    props: ['isVisible'],
+    data() {
+      return {
+        groupInfo: {
+          name: '',
+          description: '',
+        },
+        friends: [],
+        members: [],
+        memberToAdd: '',
+      };
+    },
+    computed: {
+      backgroundImage() {
+        return PatternGenerator.generateImage(this.groupInfo.name || '');
       },
-      set(newValue) {
-        if (!newValue) {
-          this.$emit('close');
-        }
+      dialogVisible: {
+        get() {
+          return this.isVisible;
+        },
+        set(newValue) {
+          if (!newValue) {
+            this.$emit('close');
+          }
+        },
       },
     },
-  },
-};
+    methods: {
+      createGroup() {
+        const payload = {
+          groupInfo: this.groupInfo,
+          onSuccess: res => {
+            this.$socket.emit('createroom', { roomname: `${res.data.groupId}_${res.data.name}`, messages: [] });
+            this.$notify({
+              title: 'Group Created',
+              message: `Group '${res.data.name}' successfully created.`,
+              type: 'success',
+              duration: 2000,
+            });
+            this.$emit('close');
+          },
+          onError: () => {
+            this.$notify({
+              title: 'Unable To Create Group',
+              message: 'Unable to create group.',
+              type: 'error',
+              duration: 2000,
+            });
+            this.$emit('close');
+          },
+        };
+        this.$store.dispatch('addGroup', payload);
+      },
+    },
+  };
 </script>
