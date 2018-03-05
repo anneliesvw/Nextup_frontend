@@ -18,61 +18,67 @@
       </el-form>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="$emit('close')">Cancel</el-button>
+      <el-button @click="close">Cancel</el-button>
       <el-button type="primary" @click="updateUser">Save</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
-  export default {
-    props: ['isENVisible', 'userDetails'],
-    data() {
-      return {
-        userInfo: this.userDetails,
+export default {
+  props: ['isENVisible', 'userDetails'],
+  data() {
+    return {
+      originalState: this.userDetails,
+      userInfo: { ...this.userDetails },
+    };
+  },
+  computed: {
+    dialogVisible: {
+      get() {
+        return this.isENVisible;
+      },
+      set(newValue) {
+        if (!newValue) {
+          this.userInfo = Object.assign({}, this.originalState);
+          this.$emit('close');
+        }
+      },
+    },
+  },
+  methods: {
+    close() {
+      this.userInfo = Object.assign({}, this.originalState);
+      this.$emit('close');
+    },
+    onSetLocation(place) {
+      this.userInfo.person.location.longitude = place.geometry.location.lng();
+      this.userInfo.person.location.latitude = place.geometry.location.lat();
+      this.userInfo.person.location.name = place.formatted_address;
+    },
+    updateUser() {
+      const payload = {
+        user: this.userInfo,
+        onSuccess: () => {
+          this.$notify({
+            title: 'User Updated',
+            message: 'User successfully updated.',
+            type: 'success',
+            duration: 2000,
+          });
+        },
+        onError: () => {
+          this.$notify({
+            title: 'Unable To Update User',
+            message: 'Unable to update User.',
+            type: 'error',
+            duration: 2000,
+          });
+        },
       };
+      this.$store.dispatch('updateUser', payload);
+      this.$emit('close');
     },
-    computed: {
-      dialogVisible: {
-        get() {
-          return this.isENVisible;
-        },
-        set(newValue) {
-          if (!newValue) {
-            this.$emit('close');
-          }
-        },
-      },
-    },
-    methods: {
-      onSetLocation(place) {
-        this.userInfo.person.location.longitude = place.geometry.location.lng();
-        this.userInfo.person.location.latitude = place.geometry.location.lat();
-        this.userInfo.person.location.name = place.formatted_address;
-      },
-      updateUser() {
-        const payload = {
-          user: this.userInfo,
-          onSuccess: () => {
-            this.$notify({
-              title: 'User Updated',
-              message: 'User successfully updated.',
-              type: 'success',
-              duration: 2000,
-            });
-          },
-          onError: () => {
-            this.$notify({
-              title: 'Unable To Update User',
-              message: 'Unable to update User.',
-              type: 'error',
-              duration: 2000,
-            });
-          },
-        };
-        this.$store.dispatch('updateUser', payload);
-        this.$emit('close');
-      },
-    },
-  };
+  },
+};
 </script>

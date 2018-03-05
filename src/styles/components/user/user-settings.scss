@@ -21,7 +21,7 @@
   background-color: $brand-gray-4;
   position: absolute;
   top: 0;
-  left: calc(((100% - 100px)/2) - 75px);
+  left: calc(((100% - 100px) / 2) - 75px);
 }
 .usersettings-column {
   display: grid;
@@ -35,7 +35,10 @@
   color: $brand-blue-7;
 }
 .usersettings-line {
-  border-bottom: 1px solid $brand-blue-3;
+  /* border-bottom: 1px solid $brand-blue-3; */
+}
+.usersettings-password-line {
+  border-bottom: 3px solid $brand-blue-3;
 }
 
 .usersettings-wrap-tab {

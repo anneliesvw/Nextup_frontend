@@ -204,6 +204,20 @@ export default new Vuex.Store({
         },
       );
     },
+    updatePassword: ({ commit }, payload) => {
+      UserApi.updatePassword(
+        payload,
+        res => {
+          logger.log('password succesfully updated');
+          commit('updateUser', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to update password', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
     addEventToGroup: ({ commit }, payload) => {
       GroupsApi.addEventToGroup(
         payload.groupId,

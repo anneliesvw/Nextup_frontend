@@ -10,7 +10,7 @@ const getHeader = () => ({
 });
 
 const updateUser = (userDetails, onSuccess, onError) => {
-  axios.put(`${API_ENDPOINT}/update`, userDetails, getHeader()).then(onSuccess, onError);
+  axios.put(`${API_ENDPOINT}/me`, userDetails, getHeader()).then(onSuccess, onError);
 };
 
 const addTagToUser = (payload, onSucces, onError) => {
@@ -22,8 +22,16 @@ const addTagToUser = (payload, onSucces, onError) => {
 const deleteTagFromUser = (userId, tagId, onSucces, onError) => {
   axios.delete(`${API_ENDPOINT}/${userId}/tags/${tagId}`, getHeader()).then(onSucces, onError);
 };
+
+const updatePassword = (payload, onSucces, onError) => {
+  axios
+    .put(`${API_ENDPOINT}/me/password`, payload.changePassword, getHeader())
+    .then(onSucces, onError);
+};
+
 export default {
   updateUser,
   addTagToUser,
   deleteTagFromUser,
+  updatePassword,
 };
