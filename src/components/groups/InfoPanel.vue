@@ -11,7 +11,10 @@
             <span>Create event</span>
           </div>
         </div>
-        <Activity v-for="event in events" :key="event.eventId"></Activity>
+        <Activity 
+          v-for="event in events" 
+          :key="event.eventId" 
+          :event="event"></Activity>
       </div>
     </div>
   </div>

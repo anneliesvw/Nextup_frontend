@@ -38,6 +38,9 @@ export default new Vuex.Store({
       const index = state.groups.indexOf(group);
       state.groups.splice(index, 1);
     },
+    setUserDetails: (state, payload) => {
+      state.userDetails = payload;
+    },
     addEventToGroup: (state, payload) => {
       const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
       if (groupIndex >= 0) state.groups[groupIndex].events.push(payload.eventInfo);

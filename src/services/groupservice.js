@@ -88,6 +88,14 @@ const getEventsFromGroup = (groupId, onSucces, onError) => {
   ).then(onSucces, onError);
 };
 
+const addEventToGroup = (groupId, event, onSucces, onError) => {
+  axios.post(
+    `${EVENTS_URL}/group/${groupId}`,
+    event,
+    getHeader(),
+  ).then(onSucces, onError);
+};
+
 export default {
   getGroups,
   getGroup,
@@ -100,5 +108,6 @@ export default {
   deletePollFromGroup,
   updatePollFromGroup,
   getEventsFromGroup,
+  addEventToGroup,
 };
 
