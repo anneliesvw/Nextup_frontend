@@ -9,6 +9,10 @@ import store from './store/store';
 import App from './App.vue';
 import './styles/index.scss';
 
+
+// TODO: change URL
+// Vue.use(VueSocketio, 'https://nextup-chat.herokuapp.com');
+// Vue.use(VueSocketio, 'http://localhost:3001');
 Vue.use(VueSocketio, process.env.CHAT_ENDPOINT);
 Vue.use(ElementUI, { locale });
 
@@ -21,8 +25,8 @@ Vue.use(VueGoogleMaps, {
 
 /* eslint-disable */
 const app = new Vue({
-	router,
-	store,
-	el: '#app',
-	render: h => h(App),
+  router,
+  store,
+  el: '#app',
+  render: h => h(App),
 });

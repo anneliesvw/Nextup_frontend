@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import GroupsApi from '../services/groupservice';
+import UserApi from '../services/userservice';
 import AuthApi from '../services/authservice';
 
 const logger = window.console;
@@ -43,6 +44,12 @@ export default new Vuex.Store({
     addEventToGroup: (state, payload) => {
       const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
       if (groupIndex >= 0) state.groups[groupIndex].events.push(payload.eventInfo);
+    },
+    setUserDetails: (state, payload) => {
+      state.userDetails = payload;
+    },
+    updateUser: (state, payload) => {
+      state.userDetails = payload;
     },
   },
   actions: {
@@ -113,6 +120,21 @@ export default new Vuex.Store({
         },
       );
     },
+    deleteTagFromUser: ({ commit }, payload) => {
+      UserApi.deleteTagFromUser(
+        payload.userId,
+        payload.tagId,
+        res => {
+          logger.log('tag succesfully deleted from user.');
+          commit('updateUser', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to delete tag from user', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
     addPoll: ({ commit }, payload) => {
       GroupsApi.addPollToGroup(
         payload.poll,
@@ -123,6 +145,20 @@ export default new Vuex.Store({
         },
         err => {
           logger.log('unable to add poll to group', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    addTag: ({ commit }, payload) => {
+      UserApi.addTagToUser(
+        payload,
+        res => {
+          logger.log('tag succesfully added to user');
+          commit('updateUser', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to add tag to user', err);
           if (payload.onError) payload.onError(err);
         },
       );
@@ -153,6 +189,34 @@ export default new Vuex.Store({
         },
         err => {
           logger.log('unable to update poll', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    updateUser: ({ commit }, payload) => {
+      UserApi.updateUser(
+        payload.user,
+        res => {
+          logger.log('user succesfully updated');
+          commit('updateUser', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to update user', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    updatePassword: ({ commit }, payload) => {
+      UserApi.updatePassword(
+        payload,
+        res => {
+          logger.log('password succesfully updated');
+          commit('updateUser', res.data);
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log('unable to update password', err);
           if (payload.onError) payload.onError(err);
         },
       );
