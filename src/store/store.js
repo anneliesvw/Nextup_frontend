@@ -120,7 +120,7 @@ export default new Vuex.Store({
     deleteTagFromUser: ({ commit }, payload) => {
       UserApi.deleteTagFromUser(
         payload.userId,
-        payload.tagname,
+        payload.tagId,
         res => {
           logger.log('tag succesfully deleted from user.');
           commit('updateUser', res.data);

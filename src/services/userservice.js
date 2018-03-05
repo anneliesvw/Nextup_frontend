@@ -15,12 +15,12 @@ const updateUser = (userDetails, onSuccess, onError) => {
 
 const addTagToUser = (payload, onSucces, onError) => {
   axios
-    .post(`${API_ENDPOINT}/${payload.userId}/tags`, payload.tagname, getHeader())
+    .post(`${API_ENDPOINT}/${payload.userId}/tags`, payload.tag, getHeader())
     .then(onSucces, onError);
 };
 
-const deleteTagFromUser = (userId, tagname, onSucces, onError) => {
-  axios.delete(`${API_ENDPOINT}/${userId}/users/${tagname}`, getHeader()).then(onSucces, onError);
+const deleteTagFromUser = (userId, tagId, onSucces, onError) => {
+  axios.delete(`${API_ENDPOINT}/${userId}/tags/${tagId}`, getHeader()).then(onSucces, onError);
 };
 export default {
   updateUser,

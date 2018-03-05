@@ -113,8 +113,10 @@ export default {
     },
     saveTag() {
       const payload = {
+        tag: {
+          tagname: this.newPreferenceText,
+        },
         userId: this.getUserDetails.userId,
-        tagname: this.newPreferenceText,
         onSuccess: () => {
           this.$notify({
             title: 'Preference Added',
@@ -133,11 +135,12 @@ export default {
         },
       };
       this.$store.dispatch('addTag', payload);
+      this.newPreferenceText = '';
     },
     removePreference(pref) {
       const payload = {
         userId: this.getUserDetails.userId,
-        tagname: pref.tagname,
+        tagId: pref.tagId,
         onSuccess: () => {
           this.$notify({
             title: 'Preference Deleted',
