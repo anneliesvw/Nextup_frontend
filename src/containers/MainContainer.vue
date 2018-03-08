@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div class="main-container">
       <Sidebar></Sidebar>
       <div class="content-container">
@@ -7,7 +6,6 @@
         Welkom, je hebt niks te doen. Spijtig.
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -20,10 +18,6 @@ export default {
     Activity,
     Sidebar,
     CalendarList,
-  },
-  beforeCreate() {
-    this.$store.dispatch('loadGroups');
-    this.$store.dispatch('loadUserDetails');
   },
 };
 </script>
