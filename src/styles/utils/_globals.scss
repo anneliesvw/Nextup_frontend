@@ -33,6 +33,12 @@ body {
   @include flexcol;
   padding: 0;
   min-height: 100%;
+  .site-main {
+    @include flexrow;
+    .site-content{
+      flex: 1;
+    }
+  }
 }
 
 // GOOGLE MAPS AUTOCOMPLETE Z-INDEX Should always be on top

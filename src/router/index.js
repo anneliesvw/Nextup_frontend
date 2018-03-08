@@ -6,7 +6,7 @@ import Groups from '../containers/GroupsContainer.vue';
 import Users from '../containers/users/UsersContainer.vue';
 import ConfirmEmail from '../containers/users/ConfirmEmail.vue';
 import GroupDetail from '../containers/GroupDetailsContainer.vue';
-import Events from '../containers/EventsContainer.vue';
+import Event from '../components/events/EventPage.vue';
 import Discover from '../containers/DiscoverContainer.vue';
 import UserSettings from '../components/users/UserSettings.vue';
 
@@ -46,9 +46,9 @@ export default new Router({
       component: ConfirmEmail,
     },
     {
-      path: '/group/event',
+      path: '/events/:id',
       name: 'Event',
-      component: Events,
+      component: Event,
     },
     {
       path: '/Activities',

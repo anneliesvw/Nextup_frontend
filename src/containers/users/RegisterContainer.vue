@@ -7,7 +7,7 @@
             <div class="register-text">
               Login, new events ahead!
             </div>
-            <el-form status-icon :rules="loginRules" :model="loginInfo" inline-message="true" ref="loginInfo" label-position="top" @keyup.enter.native="onLogin">
+            <el-form status-icon :rules="loginRules" :model="loginInfo" :inline-message="true" ref="loginInfo" label-position="top" @keyup.enter.native="onLogin">
               <el-form-item label="Username" class="form-item" prop="username">
                 <el-input v-model="loginInfo.username" @change="setLoginAttempt('')"></el-input>
               </el-form-item>
@@ -26,7 +26,7 @@
             <div class="register-text">
               Start planning today!
             </div>
-            <el-form status-icon :rules="rules" :model="registerInfo" inline-message="true" ref="registerInfo" label-position="top" @keyup.enter.native="onRegister">
+            <el-form status-icon :rules="rules" :model="registerInfo" :inline-message="true" ref="registerInfo" label-position="top" @keyup.enter.native="onRegister">
               <el-form-item label="E-mail" class="form-item" prop="username">
                 <el-input v-model="registerInfo.username"></el-input>
               </el-form-item>

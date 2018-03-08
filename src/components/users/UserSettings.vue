@@ -61,19 +61,16 @@
       </div>
 
     </div>
-    <chat-menu></chat-menu>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import ChatMenu from '../sidebars/ChatMenu.vue';
 import EditName from './dialogs/EditName.vue';
 import EditPassword from './dialogs/EditPassword.vue';
 import GroupItem from './groupItem.vue';
 
 export default {
   components: {
-    ChatMenu,
     EditName,
     EditPassword,
     GroupItem,
