@@ -1,9 +1,13 @@
 <template>
   <div class="site-wrapper">
     <Navigation v-if="loggedIn"></Navigation>
-    <router-view></router-view>
+    <div class="site-main">
+      <div class="site-content">
+        <router-view></router-view>
+      </div>
+      <chat-menu v-if="loggedIn"></chat-menu>
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -11,6 +15,7 @@ import { mapActions } from 'vuex';
 import LoginEvents from './events/loginevents';
 import Navigation from './components/header/Navigation.vue';
 import AuthService from './services/authservice';
+import ChatMenu from './components/sidebars/ChatMenu.vue';
 
 export default {
   data() {
@@ -20,11 +25,11 @@ export default {
   },
   components: {
     Navigation,
+    ChatMenu,
   },
   methods: {
     ...mapActions(['setLoginAttempt']),
     tryLogin(loginInfo) {
-      window.console.log(loginInfo);
       AuthService.tryLogin(
         loginInfo.username,
         loginInfo.password,
@@ -40,27 +45,22 @@ export default {
         },
       );
     },
-    checkToken() {
-      const token = localStorage.getItem('NEXTUP_TOKEN');
-      window.console.log(token);
-      if (token != null) {
-        this.loggedIn = true;
-      } else {
-        this.$router.push('Register');
-      }
-    },
   },
   beforeCreate() {
-    this.$store.dispatch('loadGroups');
-    this.$store.dispatch('loadUserDetails');
-    // this.checkToken();
+    AuthService.getUserDetails(() => {
+      window.console.log('token verified');
+      this.loggedIn = true;
+    }, () => {
+      localStorage.removeItem('NEXTUP_TOKEN');
+      this.loggedIn = false;
+      window.console.log('token could not be verified');
+      this.$router.push('Register');
+    });
   },
   beforeDestroy() {
     LoginEvents.bus.$off(LoginEvents.TRY_LOGIN, this.tryLogin);
   },
   mounted() {
-    this.checkToken();
-    window.console.log('api', process.env.API_ENDPOINT);
     LoginEvents.bus.$on(LoginEvents.TRY_LOGIN, this.tryLogin);
   },
 };

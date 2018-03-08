@@ -1,9 +1,10 @@
 <template>
   <div class="info-panel-wrapper">
     <div class="group-info-panel">
-      <div class="panel-title">
+      <!-- <div class="panel-title">
         {{this.title}}
-      </div>
+      </div> -->
+      <generic-title> {{ this.title }} </generic-title>
       <div class="panel-body">
         <div class="group-wrapper">
           <div class="group-add" @click="() => this.$emit('showEventDialog', true)">
@@ -22,11 +23,13 @@
 
 <script>
   import Activity from '../activities/Activity.vue';
+  import GenericTitle from '../layout_misc/GenericTitle.vue';
   
   export default {
     props: ['title', 'events'],
     components: {
       Activity,
+      GenericTitle,
     },
     data() {
       return {};

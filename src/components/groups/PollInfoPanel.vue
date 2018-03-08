@@ -1,9 +1,9 @@
 <template>
   <div class="info-panel-wrapper">
     <div class="group-info-panel">
-      <div class="panel-title">
+      <generic-title>
         {{this.title}}
-      </div>
+      </generic-title>
       <div class="panel-body">
         <div class="group-wrapper">
           <div class="group-add" @click="showCreatePoll">
@@ -20,12 +20,14 @@
 <script>
   import Activity from '../activities/Activity.vue';
   import Poll from '../activities/Poll.vue';
-  
+  import GenericTitle from '../layout_misc/GenericTitle.vue';
+
   export default {
     props: ['title', 'polls'],
     components: {
       Activity,
       Poll,
+      GenericTitle,
     },
     data() {
       return {};

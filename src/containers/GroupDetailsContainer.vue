@@ -39,25 +39,17 @@
       </GroupSidebar>
     </div>
     <div class="group-wall" v-if="activeGroup">
-      <div class="group-banner" :style="bannerPlaceholder">
-        <div class="banner-overlay">
-          <div class="banner-title">
-            {{activeGroup.name}}
-          </div>
-          <div class="group-members">
-            //TODO
-          </div>
-          <div class="banner-buttons">
-            <el-button type="primary" @click="dialogVisible = true">Invite Others</el-button>
+      <banner :title="activeGroup.name" :image="bannerImage">
+        <div class="banner-buttons">
+            <el-button type="primary" @click="dialogVisible = true">Invite Others</el-button> 
             <!-- TODO: BELANGRIJK!! -->
             <!-- Degene die leave group uitwerkt zet deze lijn code bij de onsuccess aub, de chat dankt u -->
             <!-- this.$socket.emit('leaveroom', `${GROUPID}_${NAME}`); -->
             <!-- met juiste waarden voor id en name -->
-            <el-button type="danger">Leave Group</el-button>
+            <!-- <el-button type="danger">Leave Group</el-button> -->
             <el-button type="danger" @click="deleteGroup">Delete Group</el-button>
           </div>
-        </div>
-      </div>
+      </banner>
       <div class="group-panels">
         <InfoPanel title="Events" 
           :events="activeGroup.events"
@@ -79,113 +71,117 @@
 
       </EmptyState>
     </div>
-    <ChatMenu>
-    </ChatMenu>
   </div>  
 </template>
 
 <script>
-  import GroupSidebar from '../components/sidebars/GroupSidebar.vue';
-  import MemberDialog from '../components/groups/MemberDialog.vue';
-  import InfoPanel from '../components/groups/InfoPanel.vue';
-  import PollInfoPanel from '../components/groups/PollInfoPanel.vue';
-  import ChatMenu from '../components/sidebars/ChatMenu.vue';
-  import PatternGenerator from '../services/patterngenerator';
-  import GroupDialog from '../components/groups/CreateGroup.vue';
-  import EmptyState from '../components/emptystate/EmptyState.vue';
-  import CreateEvent from '../components/events/CreateEvent.vue';
-  import CreatePoll from '../components/groups/CreatePoll.vue';
-  import PollDialog from '../components/groups/PollDialog.vue';
+import GroupSidebar from '../components/sidebars/GroupSidebar.vue';
+import MemberDialog from '../components/groups/MemberDialog.vue';
+import InfoPanel from '../components/groups/InfoPanel.vue';
+import PollInfoPanel from '../components/groups/PollInfoPanel.vue';
+import PatternGenerator from '../services/patterngenerator';
+import GroupDialog from '../components/groups/CreateGroup.vue';
+import EmptyState from '../components/emptystate/EmptyState.vue';
+import CreateEvent from '../components/events/CreateEvent.vue';
+import CreatePoll from '../components/groups/CreatePoll.vue';
+import PollDialog from '../components/groups/PollDialog.vue';
+import Banner from '../components/layout_misc/Banner.vue';
 
-  export default {
-    components: {
-      GroupSidebar,
-      InfoPanel,
-      ChatMenu,
-      MemberDialog,
-      GroupDialog,
-      EmptyState,
-      CreateEvent,
-      PollInfoPanel,
-      CreatePoll,
-      PollDialog,
-    },
-    computed: {
-      bannerPlaceholder() {
-        return {
-          backgroundImage: PatternGenerator.generateImage('rotzak'),
-        };
-      },
-      activeGroup() {
-        return this.$store.getters.getGroupById(parseInt(this.$route.params.groupId, 10));
-      },
-    },
-    data() {
+export default {
+  components: {
+    GroupSidebar,
+    InfoPanel,
+    MemberDialog,
+    GroupDialog,
+    EmptyState,
+    CreateEvent,
+    PollInfoPanel,
+    CreatePoll,
+    PollDialog,
+    Banner,
+  },
+  computed: {
+    bannerPlaceholder() {
       return {
-        dialogVisible: false,
-        groupDialogVisible: false,
-        eventDialogVisible: false,
-        pollDialogVisible: false,
-        pollDetailVisible: false,
-        pollDetail: '',
+        backgroundImage: PatternGenerator.generateImage('rotzak'),
       };
     },
-    methods: {
-      closeDialog() {
-        this.dialogVisible = false;
-      },
-      onCreateGroup() {
-        this.groupDialogVisible = true;
-      },
-      closeGroupDialog() {
-        this.groupDialogVisible = false;
-      },
-      closeEventDialog() {
-        this.eventDialogVisible = false;
-      },
-      setPollDialogVisible() {
-        this.pollDialogVisible = true;
-      },
-      closePollDialog() {
-        this.pollDialogVisible = false;
-      },
-      closePollDetail() {
-        this.pollDetailVisible = false;
-      },
-      onGroupSelected(group) {
-        this.$router.push(`/group/detail/${group.groupId}`);
-      },
-      deleteGroup() {
-        // clone so onsuccess has data
-        const infoclone = { ...this.activeGroup };
-        const payload = {
-          groupInfo: this.activeGroup.groupId,
-          onSuccess: () => {
-            this.$socket.emit('deleteroom', `${infoclone.groupId}_${infoclone.name}`);
-            this.$notify({
-              title: 'Group Deleted',
-              message: `Group '${infoclone.name}' successfully deleted.`,
-              type: 'success',
-              duration: 2000,
-            });
-            this.$emit('close');
-          },
-          onError: () => {
-            this.$notify({
-              title: 'Unable To Delete Group',
-              message: 'Unable to delete group.',
-              type: 'error',
-              duration: 2000,
-            });
-            this.$emit('close');
-          },
-        };
-        this.$store.dispatch('deleteGroup', payload);
-      },
-      showPollDetail(poll) {
-        this.pollDetailVisible = true;
-        this.pollDetail = poll;
-      },
+    bannerImage() {
+      return PatternGenerator.generateImage('schaap');
     },
-  };
+    activeGroup() {
+      return this.$store.getters.getGroupById(parseInt(this.$route.params.groupId, 10));
+    },
+  },
+  data() {
+    return {
+      dialogVisible: false,
+      groupDialogVisible: false,
+      eventDialogVisible: false,
+      pollDialogVisible: false,
+      pollDetailVisible: false,
+      pollDetail: '',
+    };
+  },
+  methods: {
+    closeDialog() {
+      this.dialogVisible = false;
+    },
+    onCreateGroup() {
+      this.groupDialogVisible = true;
+    },
+    closeGroupDialog() {
+      this.groupDialogVisible = false;
+    },
+    closeEventDialog() {
+      this.eventDialogVisible = false;
+    },
+    setPollDialogVisible() {
+      this.pollDialogVisible = true;
+    },
+    closePollDialog() {
+      this.pollDialogVisible = false;
+    },
+    closePollDetail() {
+      this.pollDetailVisible = false;
+    },
+    onGroupSelected(group) {
+      this.$router.push(`/group/detail/${group.groupId}`);
+    },
+    deleteGroup() {
+      // clone so onsuccess has data
+      const infoclone = { ...this.activeGroup };
+      const payload = {
+        groupInfo: this.activeGroup.groupId,
+        onSuccess: () => {
+          this.$socket.emit(
+            'deleteroom',
+            `${infoclone.groupId}_${infoclone.name}`,
+          );
+          this.$notify({
+            title: 'Group Deleted',
+            message: `Group '${infoclone.name}' successfully deleted.`,
+            type: 'success',
+            duration: 2000,
+          });
+          this.$emit('close');
+        },
+        onError: () => {
+          this.$notify({
+            title: 'Unable To Delete Group',
+            message: 'Unable to delete group.',
+            type: 'error',
+            duration: 2000,
+          });
+          this.$emit('close');
+        },
+      };
+      this.$store.dispatch('deleteGroup', payload);
+    },
+    showPollDetail(poll) {
+      this.pollDetailVisible = true;
+      this.pollDetail = poll;
+    },
+  },
+};
 </script>

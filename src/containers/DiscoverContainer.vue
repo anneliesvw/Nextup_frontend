@@ -25,14 +25,12 @@
         
       </div>
     </div>
-    <chat-menu></chat-menu>
   </div>
 </template>
 
 <script>
 import { Carousel, Slide } from 'vue-carousel';
 import Sidebar from '../components/sidebars/Sidebar.vue';
-import ChatMenu from '../components/sidebars/ChatMenu.vue';
 import DetailEvent from '../components/groups/detailEvent.vue';
 import PatternGenerator from '../services/patterngenerator';
 import CarouselEvents from '../components/events/CarouselEvents.vue';
@@ -42,7 +40,6 @@ export default {
     Carousel,
     Slide,
     Sidebar,
-    ChatMenu,
     DetailEvent,
     PatternGenerator,
     CarouselEvents,

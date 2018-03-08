@@ -11,6 +11,8 @@ export default new Vuex.Store({
     debug: true,
     loginAttempt: '',
     groups: [],
+    personalEvents: [],
+    suggestedEvents: [],
     userDetails: null,
   },
   getters: {
@@ -18,6 +20,21 @@ export default new Vuex.Store({
     getGroups: state => state.groups,
     getGroupById: state => id => state.groups.find(g => g.groupId === id),
     getUserDetails: state => state.userDetails,
+    getGroupEvents: state => {
+      const events = [];
+      state.groups.map(g => g.events.map(e => events.push(e)));
+      return events;
+    },
+    getEventById: (state, getters) => id => {
+      console.log('another getter', state.personalEvents
+        .concat(state.suggestedEvents)
+        .concat(getters.getGroupEvents));
+      console.log('id', id);
+      return state.personalEvents
+        .concat(state.suggestedEvents)
+        .concat(getters.getGroupEvents)
+        .find(e => parseInt(e.eventId, 10) === parseInt(id, 10));
+    },
   },
   mutations: {
     setLoginAttempt: (state, payload) => {
@@ -51,7 +68,9 @@ export default new Vuex.Store({
     },
     loadGroups: ({ commit }) => {
       GroupsApi.getGroups(
-        res => commit('setGroups', res.data),
+        res => {
+          commit('setGroups', res.data);
+        },
         err => window.console.log('failed to load groups.', err),
       );
     },
