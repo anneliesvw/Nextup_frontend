@@ -26,16 +26,12 @@ export default new Vuex.Store({
       state.groups.map(g => g.events.map(e => events.push(e)));
       return events;
     },
-    getEventById: (state, getters) => id => {
-      console.log('another getter', state.personalEvents
-        .concat(state.suggestedEvents)
-        .concat(getters.getGroupEvents));
-      console.log('id', id);
-      return state.personalEvents
+    getEventById: (state, getters) => id =>
+      state.personalEvents
         .concat(state.suggestedEvents)
         .concat(getters.getGroupEvents)
-        .find(e => parseInt(e.eventId, 10) === parseInt(id, 10));
-    },
+        .find(e => parseInt(e.eventId, 10) === parseInt(id, 10))
+    ,
   },
   mutations: {
     setLoginAttempt: (state, payload) => {
@@ -61,9 +57,6 @@ export default new Vuex.Store({
     addEventToGroup: (state, payload) => {
       const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
       if (groupIndex >= 0) state.groups[groupIndex].events.push(payload.eventInfo);
-    },
-    setUserDetails: (state, payload) => {
-      state.userDetails = payload;
     },
     updateUser: (state, payload) => {
       state.userDetails = payload;

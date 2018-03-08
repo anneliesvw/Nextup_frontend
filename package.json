@@ -28,7 +28,6 @@
     "vue-router": "^3.0.1",
     "vue-socket.io": "^2.1.1-b",
     "vue2-google-maps": "^0.8.8",
-    "vue-socket.io": "^2.1.1-b",
     "vuex": "^3.0.1",
     "vuex-router-sync": "^5.0.0"
   },
