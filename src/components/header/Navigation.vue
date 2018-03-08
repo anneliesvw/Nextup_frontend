@@ -15,7 +15,7 @@
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item><router-link to="/Settings">Profile settings</router-link></el-dropdown-item>
+            <router-link class="app-header-nav" to="/Settings"><el-dropdown-item>Profile settings</el-dropdown-item></router-link>
             <el-dropdown-item>Preferences</el-dropdown-item>
             <el-dropdown-item>Help & Feedback</el-dropdown-item>
             <el-dropdown-item :divided="true">Logout</el-dropdown-item>

@@ -40,10 +40,8 @@
 </template>
 
 <script>
-
 export default {
-  components: {
-  },
+  components: {},
   props: ['isVisible', 'activeGroup', 'poll'],
   data() {
     return {

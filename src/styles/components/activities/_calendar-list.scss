@@ -1,0 +1,70 @@
+$calendar-header-height: 40px;
+$calendar-hours-width: 100px;
+.max-width {
+  width: 100%;
+}
+
+.calendar-wrapper {
+  @include flexcol;
+}
+
+.day-headers-wrapper {
+  @include flexrow;
+  justify-content: center; // justify-content: space-between;
+  height: $calendar-header-height;
+  margin-left: $calendar-hours-width;
+  padding-left: 3px;
+  margin-right: 21px;
+  min-width: 800px; // width: 100%;
+  .day-header {
+    @include flexrow;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: bold;
+    background: $brand-blue-7;
+    color: white;
+    padding: 3px;
+    width: 14%;
+  }
+}
+
+.scrollable-content {
+  @include flexrow;
+  overflow-y: auto;
+  height: 80vh;
+  .calendar-hours {
+    // margin-top: $calendar-header-height;
+    min-width: $calendar-hours-width;
+    .calendar-hour {
+      height: 70px;
+      text-align: center;
+    }
+  }
+  .days-wrapper {
+    @include flexrow;
+    justify-content: center;
+    min-width: 800px;
+    width: 100%;
+    .day-of-week {
+      padding: 3px;
+      width: 14%;
+      .day-content {
+        background: white;
+        .day-hour {
+          height: 70px;
+          width: 100%; // border: 1px solid $brand-blue-5;
+          border-top: 1px dashed $brand-gray-1;
+          border-right: 2px solid #f2f2f2;
+          border-left: 2px solid #f2f2f2;
+          // @include mediumshadow;
+        }
+        /* .day-quarter-hour {
+        height: 25%;
+        width: 100%;
+        border: 1px solid $brand-blue-2;
+      } */
+      }
+    }
+  }
+}

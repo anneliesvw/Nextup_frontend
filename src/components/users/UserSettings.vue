@@ -3,7 +3,7 @@
 
     <div class="usersettings-wrapper">
 
-      <edit-name v-if="editNameVisible" :isENVisible="true" @close="closeDialogName">
+      <edit-name v-if="editNameVisible" :isENVisible="true" :userDetails="getUserDetails" @close="closeDialogName">
       </edit-name>
       <edit-password v-if="editPasswordVisible" :isEPVisible="true" @close="closeDialogPW">
       </edit-password>
@@ -17,12 +17,25 @@
 
           <el-tab-pane label="general settings">
             <div class="usersettings-column">
-              <div class="usersettings-label">name</div>
-              <div class="usersettings-text">Matthias Goossens</div>
+              <div class="usersettings-label">Firstname</div>
+              <div class="usersettings-text">{{getUserDetails.person.firstName}}</div>
               <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button>
-              <div class="usersettings-line"></div>
-              <div class="usersettings-line"></div>
-              <div class="usersettings-line"></div>
+              <div class="usersettings-line" v-for="i in 3" :key="i"></div>
+              <div class="usersettings-label">Lastname</div>
+              <div class="usersettings-text">{{getUserDetails.person.lastName}}</div>
+              <div></div>
+              <!-- <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button> -->
+              <div class="usersettings-line" v-for="i in 3" :key="i"></div>
+              <div class="usersettings-label">Username</div>
+              <div class="usersettings-text">{{getUserDetails.username}}</div>
+              <div></div>
+              <!-- <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button> -->
+              <div class="usersettings-line" v-for="i in 3" :key="i"></div>
+              <div class="usersettings-label">Location</div>
+              <div class="usersettings-text">{{getUserDetails.person.location.name}}</div>
+              <div></div>
+              <!-- <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button> -->
+              <div class="usersettings-line usersettings-password-line" v-for="i in 3" :key="i"></div>
               <div class="usersettings-label">password</div>
               <div class="usersettings-text">*******</div>
               <el-button class="usersettings-button" type="text" @click="openDialogPW">edit</el-button>
@@ -30,14 +43,14 @@
           </el-tab-pane>
 
           <el-tab-pane label="groups">
-            <group-item v-for="i in 20" :key="i"></group-item>
+            <group-item v-for="group in getGroups" :key="group.id" :groupName="group.name"></group-item>
           </el-tab-pane>
 
           <el-tab-pane label="preferences">
-            <el-input class="usersettings-pref-input" v-model="newPreferenceText" v-on:keyup.enter.native="addNewPreference" placeholder="+ preference"></el-input>
+            <el-input class="usersettings-pref-input" v-model="newPreferenceText" v-on:keyup.enter.native="saveTag" placeholder="+ preference"></el-input>
             <div class="usersettings-preference-container">
-              <div v-for="pref in preferences" :key="pref" class="usersettings-preference">
-                <div class="usersettings-pref">{{pref}} </div>
+              <div v-for="(pref) in getUserDetails.tags" :key="pref.tagId" class="usersettings-preference">
+                <div class="usersettings-pref">{{pref.tagname}} </div>
                 <div class="usersettings-remove" @click="removePreference(pref)">x</div>
               </div>
             </div>
@@ -51,6 +64,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import EditName from './dialogs/EditName.vue';
 import EditPassword from './dialogs/EditPassword.vue';
 import GroupItem from './groupItem.vue';
@@ -67,7 +81,6 @@ export default {
       editNameVisible: false,
       editPasswordVisible: false,
       newPreferenceText: '',
-      preferences: ['pref1', 'pref2'],
     };
   },
   methods: {
@@ -90,9 +103,58 @@ export default {
       this.preferences.push(this.newPreferenceText);
       this.newPreferenceText = '';
     },
-    removePreference(index) {
-      this.preferences.splice(index, 1);
+    saveTag() {
+      const payload = {
+        tag: {
+          tagname: this.newPreferenceText,
+        },
+        userId: this.getUserDetails.userId,
+        onSuccess: () => {
+          this.$notify({
+            title: 'Preference Added',
+            message: 'Preference successfully added.',
+            type: 'success',
+            duration: 2000,
+          });
+        },
+        onError: () => {
+          this.$notify({
+            title: 'Unable To Add preference',
+            message: 'Unable to add preference.',
+            type: 'error',
+            duration: 2000,
+          });
+        },
+      };
+      this.$store.dispatch('addTag', payload);
+      this.newPreferenceText = '';
     },
+    removePreference(pref) {
+      const payload = {
+        userId: this.getUserDetails.userId,
+        tagId: pref.tagId,
+        onSuccess: () => {
+          this.$notify({
+            title: 'Preference Deleted',
+            message: 'Preference successfully deleted.',
+            type: 'success',
+            duration: 2000,
+          });
+        },
+        onError: () => {
+          this.$notify({
+            title: 'Unable To delete preference',
+            message: 'Unable to delete preference.',
+            type: 'error',
+            duration: 2000,
+          });
+        },
+      };
+      this.$store.dispatch('deleteTagFromUser', payload);
+    },
+  },
+  computed: {
+    ...mapGetters(['getUserDetails', 'getGroups']),
   },
 };
 </script>
