@@ -47,6 +47,7 @@
             <!-- this.$socket.emit('leaveroom', `${GROUPID}_${NAME}`); -->
             <!-- met juiste waarden voor id en name -->
             <!-- <el-button type="danger">Leave Group</el-button> -->
+            <!-- beste maker van de chat, dit zou niet mogen bepaalt worden door de frontend, is backend logica. Martin Fowler dankt u -->
             <el-button type="danger" @click="deleteGroup">Delete Group</el-button>
           </div>
       </banner>

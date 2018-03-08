@@ -27,6 +27,14 @@ export default {
     Navigation,
     ChatMenu,
   },
+  watch: {
+    loggedIn(newvalue) {
+      if (newvalue) {
+        this.$store.dispatch('loadGroups');
+        this.$store.dispatch('loadUserDetails');
+      }
+    },
+  },
   methods: {
     ...mapActions(['setLoginAttempt']),
     tryLogin(loginInfo) {

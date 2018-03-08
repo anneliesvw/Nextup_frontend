@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const API_URL = process.env.API_ENDPOINT;
 const GROUPS_URL = `${API_URL}/api/groups`;
+const INVITATIONS_URL = `${API_URL}/api/invitations`;
 const EVENTS_URL = `${API_URL}/api/events`;
 
 const getHeader = () => ({
@@ -35,7 +36,7 @@ const deleteGroup = (groupInfo, onSucces, onError) => {
 
 const addUserToGroup = (username, groupId, onSucces, onError) => {
   axios.post(
-    `${GROUPS_URL}/${groupId}/users`,
+    `${INVITATIONS_URL}/group/${groupId}`,
     {
       username,
     },
