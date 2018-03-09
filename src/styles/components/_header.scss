@@ -47,7 +47,7 @@ $header-padding: 25px;
 	}
 	.user-info {
 		@include flexrow;
-		padding: 0px 2*$header-padding;
+		padding-right: 2*$header-padding;
 		align-items: center;
 		cursor: pointer;
 		.avatar {
@@ -55,6 +55,35 @@ $header-padding: 25px;
 			height: 30px;
 			margin-right: 10px;
 			background: $brand-blue-2;
+		}
+	}
+	.invitation-info {
+		@include flexrow;
+		padding-left: 2*$header-padding;
+		align-items: center;
+		cursor: pointer;
+	}
+}
+
+.invitation-container {
+	@include flexrow;
+	.invitation-text {
+		max-width: 250px;
+		margin-right: 15px;
+		word-wrap: break-word;
+		line-height: 1.6;
+	}
+	.invitation-buttons {
+		@include flexrow;
+		align-items: center;
+		justify-content: center;
+		.invite-accept-button {
+			color: white;
+			background-color: $brand-blue-7
+		}
+		.invite-accept-button:hover {
+			color: $brand-blue-1;
+			background-color: $brand-blue-5;
 		}
 	}
 }
