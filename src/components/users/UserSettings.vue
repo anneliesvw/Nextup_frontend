@@ -36,6 +36,11 @@
         <div class="usersettings-label">Location</div>
         <div class="usersettings-text">{{getUserDetails.person.location.name}}</div>
         <div></div>
+
+        <div class="usersettings-line" v-for="i in 3" :key="i"></div>
+        <div class="usersettings-label">Preferences</div>
+        <div class="usersettings-text"><el-tag v-for="tag in getUserDetails.tags" :key="tag">{{tag.tagname}}</el-tag></div>
+        <div></div>
         <!-- <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button> -->
         <div class="usersettings-line usersettings-password-line" v-for="i in 3" :key="i"></div>
         <div class="usersettings-label">password</div>
