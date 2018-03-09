@@ -1,11 +1,16 @@
 .event-wrapper {
   @include flexrow;
-  
+  background-color: $brand-blue-1;
 }
 .event-content {
   min-width: 600px;
-  width: 70%;
+  width: 40%;
   @include flexcol;
   margin-left: auto;
   margin-right: auto;
+  background-color: white;
+  padding: 5px;
+  .fa-calendar-alt {
+    color: $brand-blue-7;
+  }
 }

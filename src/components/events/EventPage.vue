@@ -1,13 +1,15 @@
 <template>
   <div class="event-wrapper" v-if="eventData">
-    <!-- <div class="event-header-image">
-      <img src="http://screenpicks.com/wp-content/uploads/2010/09/alg_resize_jersey-shore.jpg" alt="event image">
-    </div> -->
     <div class="event-content">
       <banner :title="eventData.name" :image="backgroundImage"></banner>
       <generic-title>Info</generic-title>
-      <div class="event-startDate">{{ eventData.startDate }}</div>
+      <div class="event-startDate">
+        <i class="far fa-calendar-alt fa-2x"></i>
+        {{ getFormattedDate(eventData.startDate) }} until {{ getFormattedDate(eventData.endDate) }}
+      </div>
       <div class="event-description">{{ eventData.description }}</div>
+      <generic-title>Aanwezigen</generic-title>
+      <generic-title>Location</generic-title>
       <div class="event-announcements"></div>
       <div class="event-discution"></div>
     </div>
@@ -35,6 +37,12 @@ export default {
     },
     backgroundImage() {
       return "url('http://screenpicks.com/wp-content/uploads/2010/09/alg_resize_jersey-shore.jpg')";
+    },
+  },
+  methods: {
+    getFormattedDate(dateIn) {
+      const dateObj = new Date(dateIn);
+      return `${dateObj.getDate()}-${dateObj.getMonth()}-${dateObj.getFullYear()} ${dateObj.getHours()}:${dateObj.getMinutes()}`;
     },
   },
 };
