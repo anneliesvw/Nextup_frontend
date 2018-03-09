@@ -15,6 +15,10 @@
     max-height: 100%;
     max-width: 100%;
   }
+  .chat-group-name {
+    max-width: 70px;
+    word-wrap: break-word;
+  }
   .notification {
     @include flexrow;
     justify-content: center;

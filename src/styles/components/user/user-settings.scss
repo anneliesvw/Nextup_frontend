@@ -1,29 +1,35 @@
 .usersettings-container {
-  display: grid;
-  grid-template-columns: calc(100% - 100px) 100px;
+  min-width: 100%;
+  @include flexcol;
+  align-items: center;
 }
 .usersettings-wrapper {
+  padding-top: 40px;
   width: 100%;
+  max-width: 700px;
+  @include flexcol;
+  justify-content: center;
+  align-items: center;
+  .image-uploader {
+    width: 100%;
+    margin-bottom: 10px;
+    @include defaultshadow;
+    //padding: 20px;
+  }
 }
-.usersettings-img {
-  height: 250px;
-  background-color: $brand-blue-4;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
+
 .usersettings-profilepic {
   height: 250px;
-  width: 250px;
-  margin-top: 125px;
+  min-width: 100%;
   border-radius: 50%;
   border: 3px solid white;
   background-color: $brand-gray-4;
-  position: absolute;
-  top: 0;
-  left: calc(((100% - 100px) / 2) - 75px);
+  margin-bottom: 20px;
 }
 .usersettings-column {
+  border-radius: 3px;
+  background: white;
+  @include defaultshadow;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(9, 30px);
@@ -31,14 +37,16 @@
   padding: 20px;
 }
 .usersettings-label {
-  font-weight: bold;
+  font-weight: 300;
   color: $brand-blue-7;
 }
 .usersettings-line {
   /* border-bottom: 1px solid $brand-blue-3; */
 }
 .usersettings-password-line {
-  border-bottom: 3px solid $brand-blue-3;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid $brand-blue-7;
 }
 
 .usersettings-wrap-tab {
@@ -69,6 +77,16 @@
   @include flexrow;
   justify-content: center;
   align-items: center;
+  .el-input__inner {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  .edit-password-btn {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background-color: $brand-gray-1;
+    border: none;
+  }
 }
 .usersettings-pref-input {
   max-width: 250px;
