@@ -32,6 +32,7 @@ export default {
       if (newvalue) {
         this.$store.dispatch('loadGroups');
         this.$store.dispatch('loadUserDetails');
+        this.$store.dispatch('loadInvitations');
       }
     },
   },
