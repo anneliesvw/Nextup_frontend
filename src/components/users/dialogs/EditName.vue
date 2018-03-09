@@ -15,6 +15,44 @@
           <gmap-autocomplete class="google-maps-autocomplete" @place_changed="onSetLocation" v-model="userInfo.person.location.name">
           </gmap-autocomplete>
         </el-form-item>
+        <el-form-item label="Preferences">
+          <el-tag
+            :key="tag"
+            v-for="tag in userInfo.tags"
+            closable
+            :disable-transitions="false"
+            @close="handleClose(tag)">
+            {{tag.tagname}}
+          </el-tag>
+          <el-autocomplete
+            class="input-new-tag"
+            v-if="inputVisible"
+            v-model="inputValue"
+            :fetch-suggestions="querySearch"
+            :trigger-on-focus="false"
+            ref="saveTagInput"
+            size="mini"
+            @keyup.enter.native="handleInputConfirm"
+            @select="handleSelect"
+          >
+            <i
+              class="el-icon-close el-input__icon"
+              slot="suffix"
+              @click="handleCloseEdit">
+            </i>
+          </el-autocomplete>
+          <!-- <el-input
+            class="input-new-tag"
+            v-if="inputVisible"
+            v-model="inputValue"
+            ref="saveTagInput"
+            size="mini"
+            @keyup.enter.native="handleInputConfirm"
+            @blur="handleInputConfirm"
+          >
+          </el-input> -->
+          <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+        </el-form-item>
       </el-form>
     </div>
     <span slot="footer" class="dialog-footer">
@@ -25,12 +63,18 @@
 </template>
 
 <script>
+import TagApi from '../../../services/tagservice';
+
+const logger = window.console;
+
 export default {
   props: ['isENVisible', 'userDetails'],
   data() {
     return {
       originalState: this.userDetails,
       userInfo: { ...this.userDetails },
+      inputVisible: false,
+      inputValue: '',
     };
   },
   computed: {
@@ -78,6 +122,47 @@ export default {
       };
       this.$store.dispatch('updateUser', payload);
       this.$emit('close');
+    },
+    handleClose(tag) {
+      this.userInfo.tags.splice(this.userInfo.tags.indexOf(tag), 1);
+    },
+
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick(() => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+
+    handleInputConfirm() {
+      const { inputValue } = this;
+      if (inputValue) {
+        this.userInfo.tags.push({ tagname: inputValue });
+      }
+      this.inputVisible = false;
+      this.inputValue = '';
+    },
+    querySearch(queryString, cb) {
+      TagApi.getTags(
+        queryString,
+        res => {
+          logger.log('Similar tags succesfully loaded.');
+          const results = [];
+          res.data.forEach(e => results.push({ value: e.tagname }));
+          cb(results);
+        },
+        err => {
+          logger.log('Unable to load similar tags', err);
+        },
+      );
+    },
+    handleSelect(item) {
+      this.inputValue = item.value;
+      this.handleInputConfirm();
+    },
+    handleCloseEdit() {
+      this.inputVisible = false;
+      this.inputValue = '';
     },
   },
 };

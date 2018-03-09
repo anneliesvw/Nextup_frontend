@@ -11,7 +11,7 @@
           <div class="content-container">
             <div class="avatar"></div>
             <div class="el-dropdown-link name">
-              Matthias Goossens <i class="el-icon-arrow-down el-icon--right"></i>
+              {{this.user.person.firstName + " " + this.user.person.lastName}} <i class="el-icon-arrow-down el-icon--right"></i>
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
@@ -26,4 +26,12 @@
 </template>
 
 <script>
+
+export default {
+  computed: {
+    user() {
+      return this.$store.getters.getUserDetails;
+    },
+  },
+};
 </script>
