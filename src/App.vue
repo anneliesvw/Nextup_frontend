@@ -43,6 +43,12 @@ export default {
   },
   methods: {
     ...mapActions(['setLoginAttempt']),
+    logout() {
+      localStorage.removeItem('NEXTUP_TOKEN');
+      this.loggedIn = false;
+      window.console.log('logging out');
+      this.$router.push('Register');
+    },
     tryLogin(loginInfo) {
       AuthService.tryLogin(
         loginInfo.username,
@@ -65,17 +71,16 @@ export default {
       window.console.log('token verified');
       this.loggedIn = true;
     }, () => {
-      localStorage.removeItem('NEXTUP_TOKEN');
-      this.loggedIn = false;
-      window.console.log('token could not be verified');
-      this.$router.push('Register');
+      this.logout();
     });
   },
   beforeDestroy() {
     LoginEvents.bus.$off(LoginEvents.TRY_LOGIN, this.tryLogin);
+    LoginEvents.bus.$off(LoginEvents.LOGOUT, this.logout);
   },
   mounted() {
     LoginEvents.bus.$on(LoginEvents.TRY_LOGIN, this.tryLogin);
+    LoginEvents.bus.$on(LoginEvents.LOGOUT, this.logout);
   },
 };
 </script>
