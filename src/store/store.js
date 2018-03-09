@@ -76,8 +76,9 @@ export default new Vuex.Store({
     setLoginAttempt: ({ commit }, payload) => {
       commit('setLoginAttempt', payload);
     },
-    loadGroups: ({ commit }) => {
+    loadGroups: ({ commit, state }) => {
       GroupsApi.getGroups(
+        state.userDetails.userId,
         res => {
           commit('setGroups', res.data);
         },
@@ -261,11 +262,13 @@ export default new Vuex.Store({
         },
       );
     },
-    loadUserDetails: ({ commit }) => {
+    loadUserDetails: ({ commit, dispatch }) => {
       AuthApi.getUserDetails(
         res => {
           logger.log('Current user details succesfully loaded.');
           commit('setUserDetails', res.data);
+          dispatch('loadInvitations');
+          dispatch('loadGroups');
         },
         err => {
           logger.log('Unable to load current user details', err);
@@ -276,7 +279,6 @@ export default new Vuex.Store({
       InvitationApi.loadInvitations(
         res => {
           logger.log('Invitations succesfully loaded.');
-          logger.log(res.data);
           commit('setInvitations', res.data);
         },
         err => {

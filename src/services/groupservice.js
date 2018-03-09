@@ -4,6 +4,7 @@ const API_URL = process.env.API_ENDPOINT;
 const GROUPS_URL = `${API_URL}/api/groups`;
 const INVITATIONS_URL = `${API_URL}/api/invitations`;
 const EVENTS_URL = `${API_URL}/api/events`;
+const USERS_URL = `${API_URL}/api/users`;
 
 const getHeader = () => ({
   headers: {
@@ -11,8 +12,8 @@ const getHeader = () => ({
   },
 });
 
-const getGroups = (onSucces, onError) => {
-  axios.get(GROUPS_URL, getHeader()).then(onSucces, onError);
+const getGroups = (userId, onSucces, onError) => {
+  axios.get(`${USERS_URL}/${userId}/groups`, getHeader()).then(onSucces, onError);
 };
 
 const getGroup = (groupId, onSucces, onError) => {
