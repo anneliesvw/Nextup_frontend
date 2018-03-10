@@ -9,7 +9,8 @@
         {{currentUser ? currentUser.person.firstName : ''}}
       </div>
       <gmap-map :center="eventLocation" :zoom="7" style="">
-        <gmap-marker v-for="m in markers" 
+        <gmap-marker 
+          v-for="m in markers" 
           :position="m.position" 
           :clickable="true"
           :key="m.id"
@@ -18,6 +19,13 @@
           @mouseout="hideTitle"
           :optimized="false"
           >
+        </gmap-marker>
+        <gmap-marker
+          :position="eventLocation"
+          :icon="{
+            url: getCircle,
+            fillColor: 'blue',
+          }">
         </gmap-marker>
       </gmap-map>
 
@@ -92,6 +100,15 @@
           },
         }));
       },
+      getCircle() {
+        const svg = `
+        <?xml version="1.0"?>
+        <svg width="26px" height="26px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <circle stroke="#222" fill="blue" cx="50" cy="50" r="35"/>
+        </svg>
+        `;
+        return `data:image/svg+xml;charset=UTF-8;base64,${btoa(svg)}`;
+      },
     },
     methods: {
       showTitle(e, u) {
@@ -103,6 +120,16 @@
       hideTitle() {
         this.currentUser = null;
       },
+      moveSome() {
+        window.console.log('movin on');
+        this.locations.forEach(l => {
+          l.location.longitude += 0.01;
+          l.location.latitude += 0.01;
+        });
+      },
+    },
+    mounted() {
+      setInterval(this.moveSome, 1000);
     },
   };
 </script>
