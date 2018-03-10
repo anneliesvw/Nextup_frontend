@@ -32,7 +32,7 @@
   flex: 1;
   max-width: 100%;
   overflow: hidden;
-  padding: 30px;
+  padding: 55px;
   background-color: white;
 }
 
@@ -50,26 +50,30 @@
 
 //carousel
 $duration: 450ms;
-$tileWidth: 250px;
+$tileWidth: 400px;
 $tileHeight: ($tileWidth / (16/9));
-$growFactor: 1.5; // 1.5 times the original size
+$growFactor: 1.09; // 1.5 times the original size
 $moveRight: 100% * ($growFactor - 1);
 .VueCarousel-inner {
-  margin-bottom: 50px;
-  margin-top: 50px;
+  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .discover-tile {
   position: relative;
   display: inline-block;
-  width: $tileWidth;
-  height: $tileHeight;
-  margin-right: 10px;
+  min-width: $tileWidth;
+  //height: $tileHeight;
+  margin-right: 0px;
   font-size: 20px;
   cursor: pointer;
   transition: $duration all;
   transform-origin: center left;
+  .activity-wrapper {
+    padding: 4px;
+  }
 }
+
 
 .discover-tile-img {
   width: 100%;
@@ -80,7 +84,9 @@ $moveRight: 100% * ($growFactor - 1);
 }
 
 .discover-intrest {
-  padding: 0px 40px;
+  padding: 0px 15px;
+  margin-right: -15px;
+  margin-left: -15px;
 }
 .VueCarousel-navigation-button {
   color: $brand-blue-7 !important;
