@@ -2,16 +2,18 @@
 <!-- https://www.sitepoint.com/6-incredible-svg-pattern-generators/ -->
     <div class="group-wrapper" @click="openGroup">
       <div class="group-container">
-        <div class="group-graphic" :style="randomImage">
+        <div 
+          :class="{
+            'group-graphic': true,
+            'has-graphic': this.group.avatarUrl ? true : false,
+          }" 
+          :style="randomImage">
           
         </div>
         <div class="group-bottom">
           <div class="group-details">
             <div class="group-name">
               {{group.name}}
-            </div>
-            <div class="group-notifications">
-              5
             </div>
           </div>
 
@@ -43,7 +45,8 @@ export default {
   computed: {
     randomImage() {
       return {
-        backgroundImage: PatternGenerator.generateImage(this.group.name),
+        backgroundImage: this.group.avatarUrl ?
+          `url(${process.env.OBJECT_STORE}/${this.group.avatarUrl})` : PatternGenerator.generateImage(this.group.name),
       };
     },
   },

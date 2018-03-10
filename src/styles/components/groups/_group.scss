@@ -50,6 +50,9 @@
     height: 200px;
     //background-size: cover;
     background-position: center;
+    &.has-graphic {
+      background-size: 120%;
+    }
   }
   .group-bottom {
     padding: 12px;

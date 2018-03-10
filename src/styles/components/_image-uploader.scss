@@ -20,14 +20,20 @@
     width: 100%;
     opacity: 1;
     align-items: center;
+    &.has-graphic {
+      background-size: 110%;
+      background-position: center;
+    }
     &:hover {
       opacity: 1;
       transition: all 200ms;
       .image-upload-circle {
         transform: scale(1.2);
+        opacity: 1;
       }
     }
     .image-upload-circle {
+      opacity: 0.3;
       @include defaultshadow;
       transition: all 200ms;
       background: $brand-blue-1;
