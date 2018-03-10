@@ -1,7 +1,7 @@
 <template>
   <div class="chat-element">
     <div class="chat-bubble" @click="setMyselfActive">
-      <img src="https://i.imgur.com/iO1VTVZ.png" :alt="group.name">
+      <img :src="avatarUrl" :alt="group.name">
     </div>
     <div class="notification" v-if="notifications>0">1</div>
     <div class="chat-group-name">{{group.name}}</div>
@@ -55,6 +55,9 @@ export default {
     ...mapGetters(['getUserDetails']),
     active() {
       return this.activechat === this.group.groupId;
+    },
+    avatarUrl() {
+      return this.group.avatarUrl ? `${process.env.OBJECT_STORE}/${this.group.avatarUrl}` : 'https://i.imgur.com/iO1VTVZ.png';
     },
   },
   methods: {

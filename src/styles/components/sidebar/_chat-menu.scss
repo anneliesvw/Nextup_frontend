@@ -112,9 +112,10 @@
   border-radius: 50%;
   background-color: $brand-gray-5;
   @include flexrow;
+  @include defaultshadow;
   justify-content: center;
   align-items: center;
-  border: solid 1px $brand-blue-3;
+  //border: solid 1px $brand-blue-3;
   overflow: hidden;
   margin: 10px 10px 0 10px;
   cursor: pointer;

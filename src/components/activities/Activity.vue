@@ -1,7 +1,12 @@
 <template>
   <div class="activity-wrapper">
       <div class="activity-container">
-        <div class="activity-graphic" :style="backgroundPattern">
+        <div 
+        :class="{
+          'activity-graphic': true,
+          'has-graphic': this.event.avatarUrl ? true : false
+        }" 
+        :style="backgroundPattern">
 
         </div>
         <div class="activity-bottom">
@@ -38,7 +43,7 @@
         return moment(this.event.endDate).format('DD/MM/YYYY HH:mm');
       },
       backgroundPattern() {
-        const pattern = PatternGenerator.generateImage(`${Math.random() * 2345}`);
+        const pattern = this.event.avatarUrl ? `url(${process.env.OBJECT_STORE}/${this.event.avatarUrl})` : PatternGenerator.generateImage(`${Math.random() * 2345}`);
         return {
           backgroundImage: pattern,
         };

@@ -25,9 +25,11 @@
       transition: all 200ms;
       .image-upload-circle {
         transform: scale(1.2);
+        opacity: 1;
       }
     }
     .image-upload-circle {
+      opacity: 0.3;
       @include defaultshadow;
       transition: all 200ms;
       background: $brand-blue-1;

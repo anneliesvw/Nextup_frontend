@@ -6,6 +6,7 @@
         <ImageUploader
           :placeHolder="backgroundImage"
           imageType="groups"
+          v-model="groupInfo.avatarUrl"
         >         
         </ImageUploader>
         <div class="create-group-left">
@@ -43,6 +44,7 @@
     data() {
       return {
         groupInfo: {
+          avatarUrl: null,
           name: '',
           description: '',
         },

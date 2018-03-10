@@ -104,11 +104,13 @@ export default {
   computed: {
     bannerPlaceholder() {
       return {
-        backgroundImage: PatternGenerator.generateImage('rotzak'),
+        backgroundImage: this.activeGroup.avatarUrl ?
+          `url(${this.activeGroup.avatarUrl})` : PatternGenerator.generateImage(this.activeGroup.name),
       };
     },
     bannerImage() {
-      return PatternGenerator.generateImage('schaap');
+      return this.activeGroup.avatarUrl ?
+        `url(${process.env.OBJECT_STORE}/${this.activeGroup.avatarUrl})` : PatternGenerator.generateImage(this.activeGroup.name);
     },
     activeGroup() {
       return this.$store.getters.getGroupById(parseInt(this.$route.params.groupId, 10));
