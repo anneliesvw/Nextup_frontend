@@ -58,6 +58,10 @@ export default new Vuex.Store({
     setUserDetails: (state, payload) => {
       state.userDetails = payload;
     },
+    addPollToGroup: (state, payload) => {
+      const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
+      if (groupIndex >= 0) state.groups[groupIndex].polls.push(payload.pollInfo);
+    },
     addEventToGroup: (state, payload) => {
       const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
       if (groupIndex >= 0) state.groups[groupIndex].events.push(payload.eventInfo);
@@ -181,7 +185,10 @@ export default new Vuex.Store({
         payload.poll,
         res => {
           logger.log('poll succesfully added to group');
-          commit('updateGroup', res.data);
+          commit('addPollToGroup', {
+            groupId: payload.poll.groupId,
+            pollInfo: res.data,
+          });
           if (payload.onSuccess) payload.onSuccess(res);
         },
         err => {
