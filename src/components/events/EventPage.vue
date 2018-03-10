@@ -13,9 +13,9 @@
         <div class="event-startDate">
           {{ startDate }} | {{ endDate }}
         </div>
-        <i class="fas fa-users fa-1x"></i>
-        <div class="event-organiser">
-          {{ eventData.userOwner}}
+        <i class="fas fa-users fa-1x" v-if="this.eventData.groupOwner"></i>
+        <div class="event-organiser" v-if="this.eventData.groupOwner">
+          {{ eventData.groupOwner.name }}
         </div>
         <i class="fas fa-map-marker"></i>
         <div class="event-location">
