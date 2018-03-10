@@ -62,7 +62,7 @@ $moveRight: 100% * ($growFactor - 1);
 .discover-tile {
   position: relative;
   display: inline-block;
-  min-width: $tileWidth;
+  //min-width: $tileWidth;
   //height: $tileHeight;
   margin-right: 0px;
   font-size: 20px;
