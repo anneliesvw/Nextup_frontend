@@ -3,6 +3,7 @@
   background-color: $brand-blue-1;
 }
 .event-content {
+  @include defaultshadow;
   min-width: 600px;
   width: 40%;
   @include flexcol;
@@ -10,7 +11,18 @@
   margin-right: auto;
   background-color: white;
   padding: 5px;
-  .fa-calendar-alt {
-    color: $brand-blue-7;
+  .event-generic {
+    margin: 20px 20px;
   }
+  .event-general-info {
+    display: grid;
+    grid-template-columns: 25px auto;
+    grid-gap: 10px;
+  }
+  .fa-calendar-alt, .fa-users, .fa-map-marker, .fa-bullhorn {
+    color: $brand-blue-7;
+    @include flexrow;
+    justify-content: center;
+  }
+  
 }

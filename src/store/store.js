@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import GroupsApi from '../services/groupservice';
 import UserApi from '../services/userservice';
 import AuthApi from '../services/authservice';
+import EventApi from '../services/eventservice';
 
 const logger = window.console;
 Vue.use(Vuex);
@@ -60,6 +61,23 @@ export default new Vuex.Store({
     },
     updateUser: (state, payload) => {
       state.userDetails = payload;
+    },
+    addAttendingUserToEvent: (state, payload) => {
+      state.groups = state.groups.map(g => {
+        const eventIndex = g.events.findIndex(e => e.eventId === payload.eventId);
+        if (eventIndex >= 0) g.events[eventIndex].users.push(payload.userInfo);
+        return g;
+      });
+    },
+    removeAttendingUserFromEvent: (state, payload) => {
+      state.groups = state.groups.map(g => {
+        const eventIndex = g.events.findIndex(e => e.eventId === payload.eventId);
+        if (eventIndex >= 0) {
+          const userIndex = g.events[eventIndex].users.findIndex(u => u.userId === payload.userId);
+          g.events[eventIndex].users.splice(userIndex, 1);
+        }
+        return g;
+      });
     },
   },
   actions: {
@@ -259,6 +277,34 @@ export default new Vuex.Store({
         },
         err => {
           logger.log('Unable to load current user details', err);
+        },
+      );
+    },
+    addAttendingUserToEvent: ({ commit }, payload) => {
+      EventApi.addAttendingUserToEvent(
+        payload.eventId,
+        () => {
+          logger.log(`added user (${payload.userInfo.userId}) as attendee to event (${payload.eventId})`);
+          commit('addAttendingUserToEvent', { eventId: payload.eventId, userInfo: payload.userInfo });
+          if (payload.onSuccess) payload.onSuccess();
+        },
+        err => {
+          logger.log(`Unable to add user (${payload.userInfo.userId}) to event (${payload.eventId})`, err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    removeAttendingUserFromEvent: ({ commit }, payload) => {
+      EventApi.removeAttendingUserFromEvent(
+        payload.eventId,
+        () => {
+          logger.log(`removed user (${payload.userInfo.userId}) as attendee from event (${payload.eventId})`);
+          commit('removeAttendingUserFromEvent', { eventId: payload.eventId, userId: payload.userInfo.userId });
+          if (payload.onSuccess) payload.onSuccess();
+        },
+        err => {
+          logger.log(`Unable to remove user (${payload.userInfo.userId}) from event (${payload.eventId})`, err);
+          if (payload.onError) payload.onError(err);
         },
       );
     },

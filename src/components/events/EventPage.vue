@@ -1,48 +1,98 @@
 <template>
   <div class="event-wrapper" v-if="eventData">
     <div class="event-content">
-      <banner :title="eventData.name" :image="backgroundImage"></banner>
-      <generic-title>Info</generic-title>
-      <div class="event-startDate">
-        <i class="far fa-calendar-alt fa-2x"></i>
-        {{ getFormattedDate(eventData.startDate) }} until {{ getFormattedDate(eventData.endDate) }}
+      <banner :title="eventData.name" :image="backgroundImage">
+        <div>
+          <el-button type="primary" @click="attendEvent" v-if="!isUserAttending">Attend event</el-button>
+          <el-button type="success" @click="removeAttendance" v-if="isUserAttending">Attending</el-button>
+        </div>
+      </banner>
+      <generic-title>General Info</generic-title>
+      <div class="event-general-info event-generic">
+        <i class="far fa-calendar-alt fa-1x"></i>
+        <div class="event-startDate">
+          {{ startDate }} | {{ endDate }}
+        </div>
+        <i class="fas fa-users fa-1x"></i>
+        <div class="event-organiser">
+          {{ eventData.userOwner}}
+        </div>
+        <i class="fas fa-map-marker"></i>
+        <div class="event-location">
+          {{ eventData.location.name}}
+        </div>
+        <i class="fas fa-bullhorn" v-if="!eventData.private"></i>
+        <div v-if="!eventData.private">Public event</div>
+        <i class="fas fa-user-secret" v-if="eventData.private"></i>
+        <div v-if="eventData.private">Private event</div>
       </div>
-      <div class="event-description">{{ eventData.description }}</div>
-      <generic-title>Aanwezigen</generic-title>
-      <generic-title>Location</generic-title>
-      <div class="event-announcements"></div>
-      <div class="event-discution"></div>
+      <generic-title>Description</generic-title>
+      <div class="event-description event-generic">
+        {{ eventData.description }}
+      </div>
+      <generic-title>Attending members</generic-title>
+      <div class="event-members event-generic">
+        <user-card v-for="user in eventData.users" :key="user.userId" :user="user"></user-card>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+import moment from 'moment';
 import GenericTitle from '../layout_misc/GenericTitle.vue';
 import Banner from '../layout_misc/Banner.vue';
+import PatternGenerator from '../../services/patterngenerator';
+import UserCard from '../users/UserCard.vue';
 
 export default {
   components: {
     GenericTitle,
     Banner,
+    UserCard,
   },
   data() {
     return {
     };
   },
   computed: {
-    ...mapGetters(['getEventById']),
+    ...mapGetters(['getEventById', 'getUserDetails']),
     eventData() {
       return this.getEventById(parseInt(this.$route.params.id, 10));
     },
     backgroundImage() {
-      return "url('http://screenpicks.com/wp-content/uploads/2010/09/alg_resize_jersey-shore.jpg')";
+      return PatternGenerator.generateImage(`${Math.random() * 2345}`);
+    },
+    startDate() {
+      return moment(this.eventData.startDate).format('DD/MM/YYYY HH:mm');
+    },
+    endDate() {
+      return moment(this.eventData.endDate).format('DD/MM/YYYY HH:mm');
+    },
+    isUserAttending() {
+      return this.getUserDetails ?
+        this.eventData.users.find(u => u.userId === this.getUserDetails.userId)
+        : false;
     },
   },
   methods: {
-    getFormattedDate(dateIn) {
-      const dateObj = new Date(dateIn);
-      return `${dateObj.getDate()}-${dateObj.getMonth()}-${dateObj.getFullYear()} ${dateObj.getHours()}:${dateObj.getMinutes()}`;
+    ...mapActions(['addAttendingUserToEvent', 'removeAttendingUserFromEvent']),
+    attendEvent() {
+      this.addAttendingUserToEvent({
+        eventId: this.eventData.eventId,
+        userInfo: this.getUserDetails,
+        onSuccess: () => window.console.log('added user to event'),
+        onError: () => window.console.log('error adding user to event'),
+      });
+    },
+    removeAttendance() {
+      this.removeAttendingUserFromEvent({
+        eventId: this.eventData.eventId,
+        userInfo: this.getUserDetails,
+        onSuccess: () => window.console.log('removed user from event'),
+        onError: () => window.console.log('error removing user from event'),
+      });
     },
   },
 };

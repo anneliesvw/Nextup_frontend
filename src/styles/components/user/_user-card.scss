@@ -1,0 +1,13 @@
+.usercard-wrapper {
+  height: 60px;
+  width: 250px;
+  @include flexrow;
+  align-items: center;
+  margin: 10px;
+  img {
+    width: 60px;
+  }
+  .username {
+    padding: 10px;
+  }
+}
