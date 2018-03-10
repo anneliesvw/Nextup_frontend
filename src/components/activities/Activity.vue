@@ -10,7 +10,9 @@
             </div>
             <div class="activity-details">
                 <div class="activity-owner">
+                  <router-link :to="{ name: 'Event', params: { id: event.eventId }}">
                     {{ event ? event.name : '' }}
+                  </router-link>
                 </div>
                 <div class="activity-date">
                     {{ startDate }}  |  {{ endDate }}

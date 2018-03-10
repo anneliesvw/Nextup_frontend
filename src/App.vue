@@ -70,6 +70,8 @@ export default {
     AuthService.getUserDetails(() => {
       window.console.log('token verified');
       this.loggedIn = true;
+      this.$store.dispatch('loadGroups');
+      this.$store.dispatch('loadUserDetails');
     }, () => {
       this.logout();
     });

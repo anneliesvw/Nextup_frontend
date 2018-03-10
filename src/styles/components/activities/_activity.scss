@@ -36,9 +36,13 @@
       @include flexcol;
       align-items: flex-end;
       .activity-owner {
-        font-size: 18px;
+        a {
+          text-decoration: none;
+          font-size: 20px;
+          font-family: $title-font-family;
+          color: $brand-gray-9;
+        }
         margin-bottom: 5px;
-        font-family: $title-font-family;
       }
       .activity-date {
         font-family: $title-font-family;
