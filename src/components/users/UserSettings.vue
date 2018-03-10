@@ -1,66 +1,55 @@
 <template>
   <div class="usersettings-container">
-
     <div class="usersettings-wrapper">
 
-      <edit-name v-if="editNameVisible" :isENVisible="true" :userDetails="getUserDetails" @close="closeDialogName">
-      </edit-name>
-      <edit-password v-if="editPasswordVisible" :isEPVisible="true" @close="closeDialogPW">
-      </edit-password>
+    <edit-name v-if="editNameVisible" :isENVisible="true" :userDetails="getUserDetails" @close="closeDialogName">
+    </edit-name>
+    <edit-password v-if="editPasswordVisible" :isEPVisible="true" @close="closeDialogPW">
+    </edit-password>
 
-      <div class="usersettings-img">
-        <div class="usersettings-profilepic"></div>
-      </div>
+    <ImageUploader>
+      
+    </ImageUploader>
 
-      <div class="usersettings-wrap-tab">
-        <el-tabs class="usersettings-tab" tab-position="top" style="height: 200px;">
-
-          <el-tab-pane label="general settings">
-            <div class="usersettings-column">
-              <div class="usersettings-label">Firstname</div>
-              <div class="usersettings-text">{{getUserDetails.person.firstName}}</div>
-              <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button>
-              <div class="usersettings-line" v-for="i in 3" :key="i"></div>
-              <div class="usersettings-label">Lastname</div>
-              <div class="usersettings-text">{{getUserDetails.person.lastName}}</div>
-              <div></div>
-              <!-- <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button> -->
-              <div class="usersettings-line" v-for="i in 3" :key="i"></div>
-              <div class="usersettings-label">Username</div>
-              <div class="usersettings-text">{{getUserDetails.username}}</div>
-              <div></div>
-              <!-- <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button> -->
-              <div class="usersettings-line" v-for="i in 3" :key="i"></div>
-              <div class="usersettings-label">Location</div>
-              <div class="usersettings-text">{{getUserDetails.person.location.name}}</div>
-              <div></div>
-              <!-- <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button> -->
-              <div class="usersettings-line usersettings-password-line" v-for="i in 3" :key="i"></div>
-              <div class="usersettings-label">password</div>
-              <div class="usersettings-text">*******</div>
-              <el-button class="usersettings-button" type="text" @click="openDialogPW">edit</el-button>
+    <div class="usersettings-wrap-tab">
+      <!--div class="usersettings-preference-container">
+            <div v-for="(pref) in getUserDetails.tags" :key="pref.tagId" class="usersettings-preference">
+              <div class="usersettings-pref">{{pref.tagname}} </div>
+              <div class="usersettings-remove" @click="removePreference(pref)">x</div>
             </div>
-          </el-tab-pane>
+      </div-->
+      <div class="usersettings-column">
+        <div class="usersettings-label">Firstname</div>
+        <div class="usersettings-text">{{getUserDetails.person.firstName}}</div>
+        <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button>
+        <div class="usersettings-line" v-for="i in 3" :key="i"></div>
+        <div class="usersettings-label">Lastname</div>
+        <div class="usersettings-text">{{getUserDetails.person.lastName}}</div>
+        <div></div>
+        <!-- <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button> -->
+        <div class="usersettings-line" v-for="i in 3" :key="i"></div>
+        <div class="usersettings-label">Username</div>
+        <div class="usersettings-text">{{getUserDetails.username}}</div>
+        <div></div>
+        <!-- <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button> -->
+        <div class="usersettings-line" v-for="i in 3" :key="i"></div>
+        <div class="usersettings-label">Location</div>
+        <div class="usersettings-text">{{getUserDetails.person.location.name}}</div>
+        <div></div>
 
-          <el-tab-pane label="groups">
-            <group-item v-for="group in getGroups" :key="group.id" :groupName="group.name"></group-item>
-          </el-tab-pane>
-
-          <el-tab-pane label="preferences">
-            <el-input class="usersettings-pref-input" v-model="newPreferenceText" v-on:keyup.enter.native="saveTag" placeholder="+ preference"></el-input>
-            <div class="usersettings-preference-container">
-              <div v-for="(pref) in getUserDetails.tags" :key="pref.tagId" class="usersettings-preference">
-                <div class="usersettings-pref">{{pref.tagname}} </div>
-                <div class="usersettings-remove" @click="removePreference(pref)">x</div>
-              </div>
-            </div>
-          </el-tab-pane>
-
-
-        </el-tabs>
+        <div class="usersettings-line" v-for="i in 3" :key="i"></div>
+        <div class="usersettings-label">Preferences</div>
+        <div class="usersettings-text"><el-tag v-for="tag in getUserDetails.tags" :key="tag">{{tag.tagname}}</el-tag></div>
+        <div></div>
+        <!-- <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button> -->
+        <div class="usersettings-line usersettings-password-line" v-for="i in 3" :key="i"></div>
+        <div class="usersettings-label">password</div>
+        <div class="usersettings-text">*******</div>
+        <el-button class="usersettings-button" type="text" @click="openDialogPW">edit</el-button>
       </div>
-
     </div>
+
+  </div>
   </div>
 </template>
 <script>
@@ -68,12 +57,14 @@ import { mapGetters } from 'vuex';
 import EditName from './dialogs/EditName.vue';
 import EditPassword from './dialogs/EditPassword.vue';
 import GroupItem from './groupItem.vue';
+import ImageUploader from '../ImageUploader.vue';
 
 export default {
   components: {
     EditName,
     EditPassword,
     GroupItem,
+    ImageUploader,
   },
 
   data() {

@@ -4,6 +4,7 @@ import GroupsApi from '../services/groupservice';
 import UserApi from '../services/userservice';
 import AuthApi from '../services/authservice';
 import EventApi from '../services/eventservice';
+import InvitationApi from '../services/invitationservice';
 
 const logger = window.console;
 Vue.use(Vuex);
@@ -16,12 +17,14 @@ export default new Vuex.Store({
     personalEvents: [],
     suggestedEvents: [],
     userDetails: null,
+    invitations: [],
   },
   getters: {
     getLoginAttempt: state => state.loginAttempt,
     getGroups: state => state.groups,
     getGroupById: state => id => state.groups.find(g => g.groupId === id),
     getUserDetails: state => state.userDetails,
+    getInvitations: state => state.invitations,
     getGroupEvents: state => {
       const events = [];
       state.groups.map(g => g.events.map(e => events.push(e)));
@@ -79,13 +82,21 @@ export default new Vuex.Store({
         return g;
       });
     },
+    setInvitations: (state, invitations) => {
+      state.invitations = invitations;
+    },
+    removeInvite: (state, inviteId) => {
+      const inviteIndex = state.invitations.findIndex(i => i.id === inviteId);
+      state.invitations.splice(inviteIndex, 1);
+    },
   },
   actions: {
     setLoginAttempt: ({ commit }, payload) => {
       commit('setLoginAttempt', payload);
     },
-    loadGroups: ({ commit }) => {
+    loadGroups: ({ commit, state }) => {
       GroupsApi.getGroups(
+        state.userDetails.userId,
         res => {
           commit('setGroups', res.data);
         },
@@ -269,11 +280,13 @@ export default new Vuex.Store({
         },
       );
     },
-    loadUserDetails: ({ commit }) => {
+    loadUserDetails: ({ commit, dispatch }) => {
       AuthApi.getUserDetails(
         res => {
           logger.log('Current user details succesfully loaded.');
           commit('setUserDetails', res.data);
+          dispatch('loadInvitations');
+          dispatch('loadGroups');
         },
         err => {
           logger.log('Unable to load current user details', err);
@@ -304,6 +317,45 @@ export default new Vuex.Store({
         },
         err => {
           logger.log(`Unable to remove user (${payload.userInfo.userId}) from event (${payload.eventId})`, err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    loadInvitations: ({ commit }) => {
+      InvitationApi.loadInvitations(
+        res => {
+          logger.log('Invitations succesfully loaded.');
+          commit('setInvitations', res.data);
+        },
+        err => {
+          logger.log('Unable to load invitations', err);
+        },
+      );
+    },
+    acceptInvite: ({ commit }, payload) => {
+      InvitationApi.acceptInvite(
+        payload.inviteId,
+        () => {
+          logger.log('Invite succesfully accepted.');
+          commit('removeInvite', payload.inviteId);
+          if (payload.onSuccess) payload.onSuccess();
+        },
+        err => {
+          logger.log('Unable to accept invite', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    ignoreInvite: ({ commit }, payload) => {
+      InvitationApi.ignoreInvite(
+        payload.inviteId,
+        () => {
+          logger.log('Invite succesfully ignored.');
+          commit('removeInvite', payload.inviteId);
+          if (payload.onSuccess) payload.onSuccess();
+        },
+        err => {
+          logger.log('Unable to ingore invite', err);
           if (payload.onError) payload.onError(err);
         },
       );

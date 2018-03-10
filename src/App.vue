@@ -1,6 +1,6 @@
 <template>
   <div class="site-wrapper">
-    <Navigation v-if="loggedIn"></Navigation>
+    <Navigation v-if="userdetailsLoaded != null && loggedIn"></Navigation>
     <div class="site-main">
       <div class="site-content">
         <router-view></router-view>
@@ -27,8 +27,28 @@ export default {
     Navigation,
     ChatMenu,
   },
+  computed: {
+    userdetailsLoaded() {
+      return this.$store.getters.getUserDetails;
+    },
+  },
+  watch: {
+    loggedIn(newvalue) {
+      if (newvalue) {
+        this.$store.dispatch('loadUserDetails');
+        /* this.$store.dispatch('loadInvitations');
+        this.$store.dispatch('loadGroups'); */
+      }
+    },
+  },
   methods: {
     ...mapActions(['setLoginAttempt']),
+    logout() {
+      localStorage.removeItem('NEXTUP_TOKEN');
+      this.loggedIn = false;
+      window.console.log('logging out');
+      this.$router.push('Register');
+    },
     tryLogin(loginInfo) {
       AuthService.tryLogin(
         loginInfo.username,
@@ -53,17 +73,16 @@ export default {
       this.$store.dispatch('loadGroups');
       this.$store.dispatch('loadUserDetails');
     }, () => {
-      localStorage.removeItem('NEXTUP_TOKEN');
-      this.loggedIn = false;
-      window.console.log('token could not be verified');
-      this.$router.push('Register');
+      this.logout();
     });
   },
   beforeDestroy() {
     LoginEvents.bus.$off(LoginEvents.TRY_LOGIN, this.tryLogin);
+    LoginEvents.bus.$off(LoginEvents.LOGOUT, this.logout);
   },
   mounted() {
     LoginEvents.bus.$on(LoginEvents.TRY_LOGIN, this.tryLogin);
+    LoginEvents.bus.$on(LoginEvents.LOGOUT, this.logout);
   },
 };
 </script>

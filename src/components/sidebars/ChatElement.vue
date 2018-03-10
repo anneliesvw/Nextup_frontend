@@ -4,7 +4,7 @@
       <img src="https://i.imgur.com/iO1VTVZ.png" :alt="group.name">
     </div>
     <div class="notification" v-if="notifications>0">1</div>
-    <div>{{group.name}}</div>
+    <div class="chat-group-name">{{group.name}}</div>
     <div class="chat-arrow" v-if="active" />
     <div class="chat-window" v-if="active">
       <div id="messagebox" class="messages">
