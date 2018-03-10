@@ -7,7 +7,7 @@
     <edit-password v-if="editPasswordVisible" :isEPVisible="true" @close="closeDialogPW">
     </edit-password>
 
-    <ImageUploader>
+    <ImageUploader imageType="users">
       
     </ImageUploader>
 
