@@ -62,6 +62,13 @@ export default new Vuex.Store({
       const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
       if (groupIndex >= 0) state.groups[groupIndex].polls.push(payload.pollInfo);
     },
+    updatePoll: (state, payload) => {
+      const groupIndex = state.groups.findIndex(g => payload.group === g.groupId);
+      if (groupIndex >= 0) {
+        const index = state.groups[groupIndex].polls.findIndex(p => payload.pollId === p.pollId);
+        if (index >= 0) Vue.set(state.groups[groupIndex].polls, index, payload);
+      }
+    },
     addEventToGroup: (state, payload) => {
       const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
       if (groupIndex >= 0) state.groups[groupIndex].events.push(payload.eventInfo);
@@ -232,7 +239,7 @@ export default new Vuex.Store({
         payload.poll,
         res => {
           logger.log('poll succesfully updated');
-          commit('updateGroup', res.data);
+          commit('updatePoll', payload.poll);
           if (payload.onSuccess) payload.onSuccess(res);
         },
         err => {
