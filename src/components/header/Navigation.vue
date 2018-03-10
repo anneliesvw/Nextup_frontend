@@ -53,7 +53,9 @@
             <router-link class="app-header-nav" to="/Settings"><el-dropdown-item>Profile settings</el-dropdown-item></router-link>
             <el-dropdown-item>Preferences</el-dropdown-item>
             <el-dropdown-item>Help & Feedback</el-dropdown-item>
-            <el-dropdown-item :divided="true">Logout</el-dropdown-item>
+            <el-dropdown-item :divided="true">
+              <span @click="doLogout">Logout</span>
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -61,9 +63,14 @@
 </template>
 
 <script>
+import LoginEvents from '../../events/loginevents';
 
 export default {
   methods: {
+    doLogout() {
+      window.console.log('doLogout');
+      LoginEvents.bus.$emit(LoginEvents.LOGOUT);
+    },
     acceptInvite(i) {
       const payload = {
         inviteId: i.id,
