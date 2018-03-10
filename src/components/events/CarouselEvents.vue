@@ -2,7 +2,7 @@
 <div>
   <detail-event v-if="dialogVisible" :isVisible="true" @close="closeDialog">
     </detail-event>
-    <carousel :clickable="true" class="discover-carousel" :perPageCustom="[[768, 2], [1024, 4], [1920,5]]" :paginationEnabled="false" :navigationEnabled="true">
+    <carousel :clickable="true" class="discover-carousel" :perPageCustom="[[768, 2], [1024, 3], [1920,4]]" :paginationEnabled="false" :navigationEnabled="true">
           <slide v-on:click.native="openDialog" class="discover-tile" v-for="i in 10" :key="i">
             <!--carousel-event ></carousel-event-->
             <activity
