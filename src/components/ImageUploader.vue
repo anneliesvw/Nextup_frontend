@@ -1,6 +1,9 @@
 <template>
   <div class="image-uploader">
-    <div class="image-upload-graphic" :style="backgroundImage">
+    <div :class="{
+        'image-upload-graphic': true,
+        'has-graphic': this.value ? true : false,
+      }" :style="backgroundImage">
       <input class="upload-input" type="file" @change="uploadImage"/>
       <div class="image-upload-circle">
         <i class="fas fa-camera camera-icon" v-if="!isLoading"></i>

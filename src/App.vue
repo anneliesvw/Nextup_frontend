@@ -1,7 +1,7 @@
 <template>
   <div class="site-wrapper">
     <Navigation v-if="userdetailsLoaded != null && loggedIn"></Navigation>
-    <div class="site-main">
+    <div class="site-main" v-if="userdetailsLoaded != null || !loggedIn">
       <div class="site-content">
         <router-view></router-view>
       </div>
