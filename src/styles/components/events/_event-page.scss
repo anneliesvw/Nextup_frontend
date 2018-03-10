@@ -1,8 +1,12 @@
 .event-wrapper {
-  @include flexrow;
+  @include flexcol;
   background-color: $brand-blue-1;
+  flex: 1;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .event-content {
+  border-radius: 4px;
   @include defaultshadow;
   min-width: 600px;
   width: 40%;
