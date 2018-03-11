@@ -37,7 +37,7 @@
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="$emit('close')">Cancel</el-button>
-      <el-button type="primary" @click="onCreateEvent">Create Event</el-button>
+      <el-button class="create-event-btn" type="primary" @click="onCreateEvent">Create Event</el-button>
     </span>
   </el-dialog>
 </template>
@@ -45,7 +45,6 @@
 <script>
 import ImageUploader from '../ImageUploader.vue';
 import PatternGenerator from '../../services/patterngenerator';
-
 
 export default {
   props: ['isVisible', 'activeGroup'],
@@ -103,7 +102,7 @@ export default {
         onError: () => {
           this.$notify({
             title: 'Unable To Create Event',
-            message: 'Failed to created event',
+            message: 'Failed to create event',
             type: 'error',
             duration: 2000,
           });

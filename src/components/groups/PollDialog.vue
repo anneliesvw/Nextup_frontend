@@ -1,7 +1,7 @@
 <template>
   <el-dialog :title="this.poll.name" class="update-poll-dialog" :visible.sync="dialogVisible">
     <div class="update-poll-form">
-      <el-button type="danger" @click="deletePoll">Delete Poll</el-button>
+      <el-button type="danger" class="delete-poll-btn" @click="deletePoll">Delete Poll</el-button>
       <el-form label-position="top" class="create-event">
         <el-form-item label="Title">
           <el-input v-model="dataPoll.name"></el-input>
@@ -33,7 +33,7 @@
         <el-form-item label="Description">
           <el-input v-model="dataPoll.description" type="textarea" :autosize="{minRows: 4, maxRows: 5}"></el-input>
         </el-form-item>
-        <el-button type="success" @click="updatePoll">Update Poll</el-button>
+        <el-button type="success" class="update-poll-btn" @click="updatePoll">Update Poll</el-button>
       </el-form>
     </div>
   </el-dialog>

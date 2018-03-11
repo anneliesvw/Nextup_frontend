@@ -7,14 +7,14 @@ import AuthApi from '../services/authservice';
 const logger = window.console;
 Vue.use(Vuex);
 
-const state = {
-  debug: true,
-  loginAttempt: '',
-  groups: [],
-  personalEvents: [],
-  suggestedEvents: [],
-  userDetails: null,
-};
+// const state = {
+//   debug: true,
+//   loginAttempt: '',
+//   groups: [],
+//   personalEvents: [],
+//   suggestedEvents: [],
+//   userDetails: null,
+// };
 
 export const mutations = {
   setLoginAttempt: (state, payload) => {
@@ -248,26 +248,48 @@ export const actions = {
   },
 };
 
-const getters = {
-  getLoginAttempt: state => state.loginAttempt,
-  getGroups: state => state.groups,
-  getGroupById: state => id => state.groups.find(g => g.groupId === id),
-  getUserDetails: state => state.userDetails,
-  getGroupEvents: state => {
-    const events = [];
-    state.groups.map(g => g.events.map(e => events.push(e)));
-    return events;
-  },
-  getEventById: (state, getters) => id =>
-    state.personalEvents
-      .concat(state.suggestedEvents)
-      .concat(getters.getGroupEvents)
-      .find(e => parseInt(e.eventId, 10) === parseInt(id, 10)),
-};
+// const getters = {
+//   getLoginAttempt: state => state.loginAttempt,
+//   getGroups: state => state.groups,
+//   getGroupById: state => id => state.groups.find(g => g.groupId === id),
+//   getUserDetails: state => state.userDetails,
+//   getGroupEvents: state => {
+//     const events = [];
+//     state.groups.map(g => g.events.map(e => events.push(e)));
+//     return events;
+//   },
+//   getEventById: (state, getters) => id =>
+//     state.personalEvents
+//       .concat(state.suggestedEvents)
+//       .concat(getters.getGroupEvents)
+//       .find(e => parseInt(e.eventId, 10) === parseInt(id, 10)),
+// };
 
 export default new Vuex.Store({
-  state,
-  getters,
+  state: {
+    debug: true,
+    loginAttempt: '',
+    groups: [],
+    personalEvents: [],
+    suggestedEvents: [],
+    userDetails: null,
+  },
+  getters: {
+    getLoginAttempt: state => state.loginAttempt,
+    getGroups: state => state.groups,
+    getGroupById: state => id => state.groups.find(g => g.groupId === id),
+    getUserDetails: state => state.userDetails,
+    getGroupEvents: state => {
+      const events = [];
+      state.groups.map(g => g.events.map(e => events.push(e)));
+      return events;
+    },
+    getEventById: (state, getters) => id =>
+      state.personalEvents
+        .concat(state.suggestedEvents)
+        .concat(getters.getGroupEvents)
+        .find(e => parseInt(e.eventId, 10) === parseInt(id, 10)),
+  },
   mutations,
   actions,
 });

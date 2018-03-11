@@ -34,7 +34,7 @@
             <el-form-item label="Description">
               <el-input v-model="description" type="textarea" :autosize="{minRows: 4, maxRows: 5}"></el-input>
             </el-form-item>
-            <el-button type="primary" @click="savePoll">Create poll</el-button>
+            <el-button class="create-poll-btn" type="primary" @click="savePoll">Create poll</el-button>
         </div>
       </el-form>
     </div>
@@ -42,7 +42,6 @@
 </template>
 
 <script>
-
 export default {
   props: ['isVisible', 'activeGroup'],
   data() {
@@ -111,7 +110,6 @@ export default {
       this.$emit('close');
     },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
