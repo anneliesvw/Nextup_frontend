@@ -93,6 +93,14 @@ export default new Vuex.Store({
       const inviteIndex = state.invitations.findIndex(i => i.id === inviteId);
       state.invitations.splice(inviteIndex, 1);
     },
+    updateEvent: (state, payload) => {
+      window.console.log(payload);
+      state.groups = state.groups.map(g => {
+        const eventIndex = g.events.findIndex(e => e.eventId === payload.eventId);
+        g.events[eventIndex] = payload;
+        return g;
+      });
+    },
   },
   actions: {
     setLoginAttempt: ({ commit }, payload) => {
@@ -364,6 +372,22 @@ export default new Vuex.Store({
         err => {
           logger.log('Unable to ingore invite', err);
           if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    updateEvent: ({ commit }, payload) => {
+      EventApi.updateEvent(
+        payload.eventId,
+        payload.eventData,
+        res => {
+          window.console.log(res);
+          logger.log('Updated event');
+          commit('updateEvent', res.data);
+          if (payload.onSuccess) payload.onSuccess();
+        },
+        err => {
+          logger.log('Unable to update event', err);
+          if (payload.onError) payload.onError();
         },
       );
     },

@@ -9,20 +9,25 @@ const getHeader = () => ({
   },
 });
 
-const getEvent = (eventId, onSucces, onError) => {
-  axios.get(`${EVENTS_URL}/${eventId}`, null, getHeader()).then(onSucces, onError);
+const getEvent = (eventId, onSuccess, onError) => {
+  axios.get(`${EVENTS_URL}/${eventId}`, null, getHeader()).then(onSuccess, onError);
 };
 
-const addAttendingUserToEvent = (eventId, onSucces, onError) => {
-  axios.post(`${EVENTS_URL}/${eventId}/attend`, null, getHeader()).then(onSucces, onError);
+const addAttendingUserToEvent = (eventId, onSuccess, onError) => {
+  axios.post(`${EVENTS_URL}/${eventId}/attend`, null, getHeader()).then(onSuccess, onError);
 };
 
-const removeAttendingUserFromEvent = (eventId, onSucces, onError) => {
-  axios.post(`${EVENTS_URL}/${eventId}/notgoing`, null, getHeader()).then(onSucces, onError);
+const removeAttendingUserFromEvent = (eventId, onSuccess, onError) => {
+  axios.post(`${EVENTS_URL}/${eventId}/notgoing`, null, getHeader()).then(onSuccess, onError);
+};
+
+const updateEvent = (eventId, eventData, onSuccess, onError) => {
+  axios.put(`${EVENTS_URL}/${eventId}`, eventData, getHeader()).then(onSuccess, onError);
 };
 
 export default {
   getEvent,
   addAttendingUserToEvent,
   removeAttendingUserFromEvent,
+  updateEvent,
 };

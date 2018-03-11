@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="Create Event" :visible.sync="showCreateEvent">
+  <el-dialog :title="updatingEvent ? 'Update Event' : 'Create Event'" :visible.sync="showCreateEvent">
     <div class="create-event-form">
       <el-form label-position="top" class="create-event">
         <ImageUploader
@@ -37,7 +37,8 @@
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="$emit('close')">Cancel</el-button>
-      <el-button type="primary" @click="onCreateEvent">Create Event</el-button>
+      <el-button type="primary" @click="onUpdateEvent" v-if="updatingEvent">Update Event</el-button>
+      <el-button type="primary" @click="onCreateEvent" v-else>Create Event</el-button>
     </span>
   </el-dialog>
 </template>
@@ -48,7 +49,7 @@ import PatternGenerator from '../../services/patterngenerator';
 
 
 export default {
-  props: ['isVisible', 'activeGroup'],
+  props: ['isVisible', 'activeGroup', 'eventData'],
   components: {
     ImageUploader,
   },
@@ -85,6 +86,9 @@ export default {
         }
       },
     },
+    updatingEvent() {
+      return this.eventData;
+    },
   },
   methods: {
     onCreateEvent() {
@@ -112,6 +116,13 @@ export default {
       };
       this.$store.dispatch('addEventToGroup', payload);
     },
+    onUpdateEvent() {
+      this.$store.dispatch('updateEvent', {
+        eventData: this.eventInfo,
+        eventId: this.eventData.eventId,
+      });
+      this.$emit('close');
+    },
     onSetLocation(place) {
       this.eventInfo.location = {
         latitude: place.geometry.location.lat(),
@@ -119,6 +130,11 @@ export default {
         name: place.formatted_address,
       };
     },
+  },
+  mounted() {
+    if (this.updatingEvent) {
+      this.eventInfo = this.eventData;
+    }
   },
 };
 </script>

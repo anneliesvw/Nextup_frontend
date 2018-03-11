@@ -3,8 +3,12 @@
     <div class="event-content">
       <banner :title="eventData.name" :image="backgroundImage">
         <div>
-          <el-button type="primary" @click="attendEvent" v-if="!isUserAttending">Attend event</el-button>
+          <el-button type="primary" @click="attendEvent" v-if="!isUserAttending">Attend</el-button>
           <el-button type="success" @click="removeAttendance" v-if="isUserAttending">Attending</el-button>
+          <el-button type="info" class="admin-edit" v-if="isAdmin" @click="editing = !editing">
+            <i class="fas fa-edit"></i>
+            Edit
+          </el-button>
         </div>
       </banner>
       <generic-title>General Info</generic-title>
@@ -34,6 +38,7 @@
       <div class="event-members event-generic">
         <user-card v-for="user in eventData.users" :key="user.userId" :user="user"></user-card>
       </div>
+      <create-event :event-data="editableObject" :isVisible="true" v-if="editing" @close="editing = false"></create-event>
     </div>
   </div>
 </template>
@@ -45,19 +50,22 @@ import GenericTitle from '../layout_misc/GenericTitle.vue';
 import Banner from '../layout_misc/Banner.vue';
 import PatternGenerator from '../../services/patterngenerator';
 import UserCard from '../users/UserCard.vue';
+import CreateEvent from '../events/CreateEvent.vue';
 
 export default {
   components: {
     GenericTitle,
     Banner,
     UserCard,
+    CreateEvent,
   },
   data() {
     return {
+      editing: false,
     };
   },
   computed: {
-    ...mapGetters(['getEventById', 'getUserDetails']),
+    ...mapGetters(['getEventById', 'getUserDetails', 'getGroupById']),
     eventData() {
       return this.getEventById(parseInt(this.$route.params.id, 10));
     },
@@ -74,6 +82,24 @@ export default {
       return this.getUserDetails ?
         this.eventData.users.find(u => u.userId === this.getUserDetails.userId)
         : false;
+    },
+    isAdmin() {
+      return this.getUserDetails ?
+        this.getUserDetails.userId === this.getGroupById(this.eventData.groupOwner.groupId)
+          .owner.userId
+        : false;
+    },
+    editableObject() {
+      // isPrivate vs private zzzzz
+      return {
+        name: this.eventData.name,
+        isPrivate: this.eventData.private,
+        location: this.eventData.location,
+        startDate: new Date(this.eventData.startDate),
+        endDate: new Date(this.eventData.endDate),
+        description: this.eventData.description,
+        eventId: this.eventData.eventId,
+      };
     },
   },
   methods: {
