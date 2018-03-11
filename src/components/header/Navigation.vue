@@ -2,9 +2,9 @@
     <div class="app-header">
       <div class="title">Next Up</div>
       <div class="links">
-        <router-link :to="{name: 'Default'}" exact>{{ $t("navigation.activities", this.$store.state.language)}}</router-link>
-        <router-link to="/MyGroups">{{ $t("navigation.groups", this.$store.state.language)}}</router-link>
-        <router-link to="/Activities">{{ $t("navigation.discover", this.$store.state.language)}}</router-link>
+        <router-link :to="{name: 'Default'}" exact>{{ $t("navigation.activities")}}</router-link>
+        <router-link to="/MyGroups">{{ $t("navigation.groups")}}</router-link>
+        <router-link to="/Activities">{{ $t("navigation.discover")}}</router-link>
       </div>
 
       <div class="invitation-info">
@@ -58,11 +58,11 @@
                 <i class="fab fa-pied-piper-alt"></i>
               </div>
             </div>
-            <router-link class="app-header-nav" to="/Settings"><el-dropdown-item>{{$t("settings.profile", this.$store.state.language)}}</el-dropdown-item></router-link>
-            <el-dropdown-item>{{$t("settings.preferences", this.$store.state.language)}}</el-dropdown-item>
-            <el-dropdown-item>{{$t("settings.help", this.$store.state.language)}}</el-dropdown-item>
+            <router-link class="app-header-nav" to="/Settings"><el-dropdown-item>{{$t("settings.profile")}}</el-dropdown-item></router-link>
+            <el-dropdown-item>{{$t("settings.preferences")}}</el-dropdown-item>
+            <el-dropdown-item>{{$t("settings.help")}}</el-dropdown-item>
             <el-dropdown-item :divided="true">
-              <span @click="doLogout">{{$t("settings.logout", this.$store.state.language)}}</span>
+              <span @click="doLogout">{{$t("settings.logout")}}</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>

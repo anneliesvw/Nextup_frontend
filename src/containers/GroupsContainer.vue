@@ -12,7 +12,7 @@
         <div class="group-wrapper">
           <div class="group-add" @click="openDialog">
             <i class="fas fa-plus"></i>
-            <span>{{$t("groups.create", this.$store.state.language)}}</span>
+            <span>{{$t("groups.create")}}</span>
           </div>
         </div>
         <Group 

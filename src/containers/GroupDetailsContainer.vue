@@ -48,22 +48,22 @@
     <div class="group-wall" v-if="activeGroup">
       <banner :title="activeGroup.name" :image="bannerImage">
         <div class="banner-buttons">
-            <el-button type="primary" @click="dialogVisible = true">{{$t("groups.invite", this.$store.state.language)}}</el-button> 
+            <el-button type="primary" @click="dialogVisible = true">{{$t("groups.invite")}}</el-button> 
             <!-- TODO: BELANGRIJK!! -->
             <!-- Degene die leave group uitwerkt zet deze lijn code bij de onsuccess aub, de chat dankt u -->
             <!-- this.$socket.emit('leaveroom', `${GROUPID}_${NAME}`); -->
             <!-- met juiste waarden voor id en name -->
             <!-- <el-button type="danger">Leave Group</el-button> -->
             <!-- beste maker van de chat, dit zou niet mogen bepaalt worden door de frontend, is backend logica. Martin Fowler dankt u -->
-            <el-button type="danger" @click="deleteGroup">{{$t("groups.delete", this.$store.state.language)}}</el-button>
+            <el-button type="danger" @click="deleteGroup">{{$t("groups.delete")}}</el-button>
           </div>
       </banner>
       <div class="group-panels">
-        <InfoPanel :title="$t('events.title', this.$store.state.language)"
+        <InfoPanel :title="$t('events.title')"
           :events="activeGroup.events"
           @showEventDialog="eventDialogVisible = true">
         </InfoPanel>
-        <PollInfoPanel :title="$t('polls.title', this.$store.state.language)"
+        <PollInfoPanel :title="$t('polls.title')"
           :polls="activeGroup.polls" 
           @showPollDetail="showPollDetail($event)" 
           @showCreatePoll="setPollDialogVisible"

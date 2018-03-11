@@ -27,7 +27,7 @@ Vue.use(VueGoogleMaps, {
 });
 
 /* eslint-disable */
-const app = new Vue({
+export const app = new Vue({
   router,
   store,
   i18n,

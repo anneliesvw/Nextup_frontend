@@ -1,7 +1,7 @@
 <template>
   <div class="group-sidebar">
     <div class="sidebar-title">
-      {{$t("groups.sidebar.title", this.$store.state.language)}}
+      {{$t("groups.sidebar.title")}}
     </div>
     <div class="group-links">
       <template v-for="group in groups">
@@ -16,7 +16,7 @@
       </template>
     </div>
     <div class="group-buttons">
-      <el-button type="primary" @click="() => this.$emit('createClicked')">{{$t("groups.create", this.$store.state.language)}}</el-button>
+      <el-button type="primary" @click="() => this.$emit('createClicked')">{{$t("groups.create")}}</el-button>
     </div>
   </div>
 </template>
