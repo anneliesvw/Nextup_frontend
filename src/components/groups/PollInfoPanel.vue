@@ -8,7 +8,7 @@
         <div class="group-wrapper">
           <div class="group-add" @click="showCreatePoll">
             <i class="fas fa-plus"></i>
-            <span>Create poll</span>
+            <span>{{$t("polls.create", this.$store.state.language)}}</span>
           </div>
         </div>
         <Poll v-for="poll in this.polls" :poll="poll" :key="poll.pollId" @showPollDetail="showPollDetail($event)" @showVotePoll="showVotePoll($event)"></Poll>

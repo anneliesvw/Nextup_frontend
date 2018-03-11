@@ -3,5 +3,35 @@
     "activities": "My Activities",
     "groups": "My Groups",
     "discover": "Discover Activities"
+  },
+  "settings": {
+    "profile": "Profile settings",
+    "preferences": "Preferences",
+    "help": "Help & Feedback",
+    "logout": "Logout"
+  },
+  "discover": {
+    "main": "Discover activities",
+    "location": "Location",
+    "interests": "Interests"
+  },
+  "sidebar": {
+    "title": "Groups"
+  },
+  "groups": {
+    "create": "Create group",
+    "invite": "Invite others",
+    "delete": "Delete group",
+    "sidebar": {
+      "title": "My Groups"
+    }
+  },
+  "events": {
+    "title": "Events",
+    "create": "Create event"
+  },
+  "polls": {
+    "title": "Polls",
+    "create": "Create poll"
   }
 }

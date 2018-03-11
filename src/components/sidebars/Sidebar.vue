@@ -1,7 +1,7 @@
 <template>
 	<div class="app-sidebar">
 		<div class="groups">
-			<div class="groups-header">Groups</div>
+			<div class="groups-header">{{$t("sidebar.title", this.$store.state.language)}}</div>
 			<ol>
 				<li v-for="group in groups" :key="group.groupId">
 					<span>{{ group.name }}</span> 

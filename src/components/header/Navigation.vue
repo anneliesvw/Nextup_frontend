@@ -50,11 +50,11 @@
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <router-link class="app-header-nav" to="/Settings"><el-dropdown-item>Profile settings</el-dropdown-item></router-link>
-            <el-dropdown-item>Preferences</el-dropdown-item>
-            <el-dropdown-item>Help & Feedback</el-dropdown-item>
+            <router-link class="app-header-nav" to="/Settings"><el-dropdown-item>{{$t("settings.profile", this.$store.state.language)}}</el-dropdown-item></router-link>
+            <el-dropdown-item>{{$t("settings.preferences", this.$store.state.language)}}</el-dropdown-item>
+            <el-dropdown-item>{{$t("settings.help", this.$store.state.language)}}</el-dropdown-item>
             <el-dropdown-item :divided="true">
-              <span @click="doLogout">Logout</span>
+              <span @click="doLogout">{{$t("settings.logout", this.$store.state.language)}}</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>

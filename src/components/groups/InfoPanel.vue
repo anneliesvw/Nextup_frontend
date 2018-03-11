@@ -9,7 +9,7 @@
         <div class="group-wrapper">
           <div class="group-add" @click="() => this.$emit('showEventDialog', true)">
             <i class="fas fa-plus"></i>
-            <span>Create event</span>
+            <span>{{$t("events.create", this.$store.state.language)}}</span>
           </div>
         </div>
         <Activity 
