@@ -12,7 +12,8 @@
             <poll-option 
               v-for="pollOption in poll.pollOptions"
               :key="pollOption.id"
-              :option="pollOption">
+              :option="pollOption"
+              :totalVoters="totalVoters">
             </poll-option>
           </el-radio-group>
         </div>
@@ -40,6 +41,13 @@
       PollOption,
     },
     computed: {
+      totalVoters() {
+        let voters = 0;
+        this.poll.pollOptions.forEach(o => {
+          voters += o.voters.length;
+        });
+        return voters;
+      },
       date() {
         return moment(this.poll.deadline).format('HH:mm DD/MM/YYYY');
       },

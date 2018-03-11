@@ -6,7 +6,9 @@
           {{option.description}}
         </div>
         <div class="percentage">
-          <div class="fill" :style="'width: 35%;'">
+          <div class="fill" :style="{
+            width: `${percentage}%`,
+          }">
 
           </div>
         </div>
@@ -21,9 +23,14 @@
   import AvatarList from '../layout_misc/AvatarList.vue';
 
   export default {
-    props: ['option'],
+    props: ['option', 'totalVoters'],
     components: {
       AvatarList,
+    },
+    computed: {
+      percentage() {
+        return (this.option.voters.length / this.totalVoters) * 100;
+      },
     },
   };
 </script>
