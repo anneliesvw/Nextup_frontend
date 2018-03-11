@@ -47,8 +47,8 @@ $header-padding: 25px;
 	}
 	.user-info {
 		@include flexrow;
-		// padding-right: 2*$header-padding;
-		padding-right: $header-padding;
+		padding-right: 2*$header-padding;
+		// padding-right: $header-padding;
 		align-items: center;
 		cursor: pointer;
 		.avatar {
@@ -92,7 +92,16 @@ $header-padding: 25px;
 .change-language {
   display: flex;
 	align-items: center;
-	padding-right: 2*$header-padding;
+	justify-content: center;
+	// padding-right: 2*$header-padding;
 	color: $brand-gray-6;
 	cursor: pointer;
+}
+
+.language-picker {
+	padding: 0 20px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
 }

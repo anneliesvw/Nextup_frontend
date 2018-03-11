@@ -120,9 +120,8 @@ export default new Vuex.Store({
         }
       }
     },
-    changeLanguage: state => {
-      if (state.language === 'nl') state.language = 'en';
-      else state.language = 'nl';
+    changeLanguage: (state, lang) => {
+      state.language = lang;
     },
   },
   actions: {
@@ -416,8 +415,8 @@ export default new Vuex.Store({
         },
       );
     },
-    changeLanguage: ({ commit }) => {
-      commit('changeLanguage');
+    changeLanguage: ({ commit }, lang) => {
+      commit('changeLanguage', lang);
     },
   },
 });
