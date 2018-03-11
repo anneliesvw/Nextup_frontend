@@ -23,6 +23,7 @@
     border-top: 1px solid $brand-gray-1;
     padding: 12px;
     @include flexrow;
+    align-items: center;
     .activity-toggle {
       @include flexcol;
       justify-content: center;

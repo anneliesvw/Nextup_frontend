@@ -98,6 +98,14 @@ const addEventToGroup = (groupId, event, onSucces, onError) => {
   ).then(onSucces, onError);
 };
 
+const voteOnPoll = (groupId, pollId, pollOptionId, onSuccess, onError) => {
+  axios.put(
+    `${GROUPS_URL}/${groupId}/polls/${pollId}/${pollOptionId}`,
+    null,
+    getHeader(),
+  ).then(onSuccess, onError);
+};
+
 export default {
   getGroups,
   getGroup,
@@ -111,5 +119,6 @@ export default {
   updatePollFromGroup,
   getEventsFromGroup,
   addEventToGroup,
+  voteOnPoll,
 };
 
