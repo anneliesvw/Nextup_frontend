@@ -50,6 +50,14 @@
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
+            <div class="language-picker">
+              <div class="change-language" @click="changeLanguage('nl')">
+                <i class="fab fa-pied-piper"></i>
+              </div>
+              <div class="change-language" @click="changeLanguage('en')">
+                <i class="fab fa-pied-piper-alt"></i>
+              </div>
+            </div>
             <router-link class="app-header-nav" to="/Settings"><el-dropdown-item>{{$t("settings.profile", this.$store.state.language)}}</el-dropdown-item></router-link>
             <el-dropdown-item>{{$t("settings.preferences", this.$store.state.language)}}</el-dropdown-item>
             <el-dropdown-item>{{$t("settings.help", this.$store.state.language)}}</el-dropdown-item>
@@ -58,10 +66,6 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-      </div>
-
-      <div class="change-language" @click="changeLanguage()">
-        <i class="fas fa-language"></i>
       </div>
     </div>
 </template>
@@ -119,8 +123,8 @@ export default {
       };
       this.$store.dispatch('ignoreInvite', payload);
     },
-    changeLanguage() {
-      this.$store.dispatch('changeLanguage');
+    changeLanguage(lang) {
+      this.$store.dispatch('changeLanguage', lang);
     },
   },
   computed: {
