@@ -5,6 +5,7 @@ import UserApi from '../services/userservice';
 import AuthApi from '../services/authservice';
 import EventApi from '../services/eventservice';
 import InvitationApi from '../services/invitationservice';
+import { app } from '../main';
 
 const logger = window.console;
 Vue.use(Vuex);
@@ -122,6 +123,7 @@ export default new Vuex.Store({
     },
     changeLanguage: (state, lang) => {
       state.language = lang;
+      app.$i18n.locale = lang;
     },
   },
   actions: {
