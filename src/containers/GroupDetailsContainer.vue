@@ -67,6 +67,7 @@
           @showPollDetail="showPollDetail($event)" 
           @showCreatePoll="setPollDialogVisible"
           @showVotePoll="showVotePoll($event)"
+          :groupDetails="activeGroup"
         >
         </PollInfoPanel>
       </div>

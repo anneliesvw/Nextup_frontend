@@ -11,7 +11,12 @@
             <span>Create poll</span>
           </div>
         </div>
-        <Poll v-for="poll in this.polls" :poll="poll" :key="poll.pollId" @showPollDetail="showPollDetail($event)" @showVotePoll="showVotePoll($event)"></Poll>
+        <Poll v-for="poll in this.polls" 
+          :poll="poll" :key="poll.pollId" 
+          @showPollDetail="showPollDetail($event)" 
+          @showVotePoll="showVotePoll($event)"
+          :groupId="groupDetails.groupId">
+        </Poll>
       </div>
     </div>
   </div>
@@ -23,7 +28,7 @@
   import GenericTitle from '../layout_misc/GenericTitle.vue';
 
   export default {
-    props: ['title', 'polls'],
+    props: ['title', 'polls', 'groupDetails'],
     components: {
       Activity,
       Poll,
