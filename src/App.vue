@@ -47,7 +47,7 @@ export default {
       localStorage.removeItem('NEXTUP_TOKEN');
       this.loggedIn = false;
       window.console.log('logging out');
-      this.$router.push('Register');
+      this.$router.push('/register');
     },
     tryLogin(loginInfo) {
       AuthService.tryLogin(

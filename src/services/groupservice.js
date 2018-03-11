@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const API_URL = process.env.API_ENDPOINT;
 const GROUPS_URL = `${API_URL}/api/groups`;
+const POLLS_URL = `${API_URL}/api/polls`;
 const INVITATIONS_URL = `${API_URL}/api/invitations`;
 const EVENTS_URL = `${API_URL}/api/events`;
 const USERS_URL = `${API_URL}/api/users`;
@@ -69,7 +70,7 @@ const addPollToGroup = (payload, onSucces, onError) => {
 
 const deletePollFromGroup = (groupId, pollId, onSucces, onError) => {
   axios.delete(
-    `${GROUPS_URL}/${groupId}/polls/${pollId}`,
+    `${POLLS_URL}/${pollId}`,
     getHeader(),
   ).then(onSucces, onError);
 };
@@ -77,7 +78,7 @@ const deletePollFromGroup = (groupId, pollId, onSucces, onError) => {
 const updatePollFromGroup = (groupId, poll, onSucces, onError) => {
   poll.group = groupId;
   axios.put(
-    `${GROUPS_URL}/${groupId}/polls/${poll.pollId}`,
+    `${POLLS_URL}/${poll.pollId}`,
     poll,
     getHeader(),
   ).then(onSucces, onError);
@@ -100,7 +101,7 @@ const addEventToGroup = (groupId, event, onSucces, onError) => {
 
 const voteOnPoll = (groupId, pollId, pollOptionId, onSuccess, onError) => {
   axios.put(
-    `${GROUPS_URL}/${groupId}/polls/${pollId}/${pollOptionId}`,
+    `${POLLS_URL}/${pollId}/pollOptions/${pollOptionId}`,
     null,
     getHeader(),
   ).then(onSuccess, onError);

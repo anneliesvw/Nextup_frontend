@@ -1,6 +1,6 @@
 <template>
   <div class="avatar-list"> 
-    <div v-for="user in showAll ? this.users : this.users.slice(0,5)" :key="user.userId">
+    <div v-for="user in this.users.slice(0,5)" :key="user.userId">
       <el-tooltip class="item" effect="dark" :content="user.person.firstName" placement="top-start">
       <div class="avatar-circle"></div>
       </el-tooltip>
