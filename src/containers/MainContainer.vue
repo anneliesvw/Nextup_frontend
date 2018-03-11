@@ -49,8 +49,9 @@ export default {
   },
   methods: {
     filterGroup(groupId) {
+      window.console.log(groupId);
       const groupIndex = this.groups.findIndex(g => g === groupId);
-      if (groupIndex >= 0) this.groups.splice(groupIndex, 1);
+      if (groupIndex < 0) this.groups.splice(groupIndex, 1);
       else this.groups.push(groupId);
     },
   },
