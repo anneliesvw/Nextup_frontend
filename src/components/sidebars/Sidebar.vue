@@ -5,7 +5,7 @@
 			<ol>
 				<li v-for="group in groups" :key="group.groupId">
 					<span>{{ group.name }}</span> 
-					<el-checkbox :checked="true"></el-checkbox>
+					<el-checkbox :checked="true" @change="() => filterGroup(group.groupId)"></el-checkbox>
 				</li>
 			</ol>
 		</div>
@@ -17,6 +17,11 @@ export default {
   computed: {
     groups() {
       return this.$store.getters.getGroups;
+    },
+  },
+  methods: {
+    filterGroup(groupId) {
+      this.$emit('filterGroup', groupId);
     },
   },
 };

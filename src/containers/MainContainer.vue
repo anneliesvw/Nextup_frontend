@@ -1,6 +1,6 @@
 <template>
     <div class="main-container">
-      <Sidebar></Sidebar>
+      <Sidebar @filterGroup="filterGroup($event)"></Sidebar>
       <div class="dashboard-container">
         <!--calendar-list></calendar-list-->
         <!-- <location-tracker></location-tracker> -->
@@ -32,10 +32,26 @@ export default {
     LocationTracker,
     GenericTitle,
   },
+  data() {
+    return {
+      groups: [],
+    };
+  },
+  mounted() {
+    this.groups = this.$store.getters.getGroups.map(g => g.groupId);
+  },
   computed: {
     events() {
       const events = this.$store.getters.getGroupEvents;
-      return events.sort((a, b) => a.startDate > b.startDate);
+      return events.filter(e => this.groups.findIndex(g => g === e.groupOwner.groupId) >= 0)
+        .sort((a, b) => a.startDate > b.startDate);
+    },
+  },
+  methods: {
+    filterGroup(groupId) {
+      const groupIndex = this.groups.findIndex(g => g === groupId);
+      if (groupIndex >= 0) this.groups.splice(groupIndex, 1);
+      else this.groups.push(groupId);
     },
   },
 };
