@@ -4,3 +4,23 @@
   display: grid;
   grid-template-columns: 230px auto;
 }
+
+.dashboard-container {
+  @include flexcol;
+  height: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: white;
+  border-left: 1px solid $brand-blue-4;
+  padding: 25px;
+}
+
+.dashboard-activities {
+  @include flexrow;
+  flex-wrap: wrap;
+}
+
+.dashboard-activity {
+  min-width: calc(100vw/3.8);
+  max-width: calc(100vw/3);
+}
