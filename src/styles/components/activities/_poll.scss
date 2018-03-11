@@ -1,3 +1,75 @@
+.poll-card {
+  .poll-graphic {
+    padding: 15px;
+    .vote-poll-group {
+      padding-left: 0px;
+    }
+    .poll-title {
+      padding: 10px 5px;
+      font-weight: 300;
+      margin-bottom: 5px;
+    }
+    height: 200px;
+    .poll-option {
+      position: relative;
+      padding-right: 50px;
+      @include flexrow;
+      align-items: center;
+      width: 100%;
+      padding-bottom :8px;
+      .el-radio__input {
+        display: flex;
+        align-items: center;
+      }
+      .option-radio {
+        @include flexrow;
+        flex:1;
+        &.is-checked {
+          .el-radio__label {
+            .description {
+              color: $brand-blue-7;
+            }
+          }
+        }
+      }
+
+      .el-radio__label {
+        width: 100%;
+      }
+      .option-details {
+        width: 100%;
+        @include flexcol;
+        .description {
+          margin-bottom: 5px;
+        }
+        .percentage {
+          height: 6px;
+          width: 100%;
+          background: $brand-blue-2;
+          border: 1px solid $brand-blue-1;
+          .fill {
+            background: $brand-blue-7;
+            height: 100%;
+          }
+        }
+        
+      }
+      .avatar-list {
+        position: absolute;
+        max-width: 50px;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      
+        .avatar-circle {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+}
+
 .poll-wrapper {
   display: flex;
   background-color: $brand-gray-1;
