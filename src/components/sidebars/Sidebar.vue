@@ -5,7 +5,7 @@
 			<ol>
 				<li v-for="group in groups" :key="group.groupId">
 					<span>{{ group.name }}</span> 
-					<el-checkbox :checked="true" @change="() => filterGroup(group.groupId)"></el-checkbox>
+					<el-checkbox :checked="true" @change="(e) => filterGroup(e, group.groupId)"></el-checkbox>
 				</li>
 			</ol>
 		</div>
@@ -20,8 +20,12 @@ export default {
     },
   },
   methods: {
-    filterGroup(groupId) {
-      this.$emit('filterGroup', groupId);
+    filterGroup(event, groupId) {
+      const payload = {
+        event,
+        groupId,
+      };
+      this.$emit('filterGroup', payload);
     },
   },
 };

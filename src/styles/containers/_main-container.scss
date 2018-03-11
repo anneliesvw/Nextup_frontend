@@ -18,9 +18,51 @@
 .dashboard-activities {
   @include flexrow;
   flex-wrap: wrap;
+  width: 100%;
+  margin-top: 10px;
+  .dashboard-activity {
+    min-width: 33%;
+    max-width: 33%;
+  }
+  .event-wrapper {
+    max-width: 33%;
+    min-width: 33%;
+    padding: 12px;
+    cursor: pointer;
+    .event-add {
+      @include flexcol;
+      background: $brand-blue-1;
+      border-radius: 4px;
+      border-style: dashed;
+      border: 1px dashed $brand-blue-2;
+      height: 265px;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
+      cursor: pointer;
+      &:hover {
+        background: $brand-blue-2;
+        i,span {
+          color: $brand-blue-5;
+        }
+      }
+      i {
+        opacity: 0.8;
+        margin-bottom: 10px;
+      
+      } 
+      i,
+      span {
+        color: $brand-gray-6;
+      }
+      span {
+        font-family: $title-font-family;
+        text-transform: uppercase;
+        letter-spacing: 0.9px;
+        font-size: 1rem;
+      }
+    }
+  }
 }
 
-.dashboard-activity {
-  min-width: calc(100vw/3.8);
-  max-width: calc(100vw/3);
-}
+
