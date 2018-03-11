@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="Create Poll" :visible.sync="dialogVisible">
+  <el-dialog :title="$t('polls.create', this.$store.state.language)" :visible.sync="dialogVisible">
     <div class="create-event-form">
       <el-form label-position="top" class="create-event">
         <div class="create-event-input">

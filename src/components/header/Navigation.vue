@@ -2,9 +2,9 @@
     <div class="app-header">
       <div class="title">Next Up</div>
       <div class="links">
-        <router-link :to="{name: 'Default'}" exact>My Activities</router-link>
-        <router-link to="/MyGroups">My Groups</router-link>
-        <router-link to="/Activities">Discover Activities</router-link>
+        <router-link :to="{name: 'Default'}" exact>{{ $t("navigation.activities", this.$store.state.language)}}</router-link>
+        <router-link to="/MyGroups">{{ $t("navigation.groups", this.$store.state.language)}}</router-link>
+        <router-link to="/Activities">{{ $t("navigation.discover", this.$store.state.language)}}</router-link>
       </div>
 
       <div class="invitation-info">
@@ -50,14 +50,18 @@
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <router-link class="app-header-nav" to="/Settings"><el-dropdown-item>Profile settings</el-dropdown-item></router-link>
-            <el-dropdown-item>Preferences</el-dropdown-item>
-            <el-dropdown-item>Help & Feedback</el-dropdown-item>
+            <router-link class="app-header-nav" to="/Settings"><el-dropdown-item>{{$t("settings.profile", this.$store.state.language)}}</el-dropdown-item></router-link>
+            <el-dropdown-item>{{$t("settings.preferences", this.$store.state.language)}}</el-dropdown-item>
+            <el-dropdown-item>{{$t("settings.help", this.$store.state.language)}}</el-dropdown-item>
             <el-dropdown-item :divided="true">
-              <span @click="doLogout">Logout</span>
+              <span @click="doLogout">{{$t("settings.logout", this.$store.state.language)}}</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+      </div>
+
+      <div class="change-language" @click="changeLanguage()">
+        <i class="fas fa-language"></i>
       </div>
     </div>
 </template>
@@ -114,6 +118,9 @@ export default {
         },
       };
       this.$store.dispatch('ignoreInvite', payload);
+    },
+    changeLanguage() {
+      this.$store.dispatch('changeLanguage');
     },
   },
   computed: {

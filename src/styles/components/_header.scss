@@ -47,7 +47,8 @@ $header-padding: 25px;
 	}
 	.user-info {
 		@include flexrow;
-		padding-right: 2*$header-padding;
+		// padding-right: 2*$header-padding;
+		padding-right: $header-padding;
 		align-items: center;
 		cursor: pointer;
 		.avatar {
@@ -86,4 +87,12 @@ $header-padding: 25px;
 			background-color: $brand-blue-5;
 		}
 	}
+}
+
+.change-language {
+  display: flex;
+	align-items: center;
+	padding-right: 2*$header-padding;
+	color: $brand-gray-6;
+	cursor: pointer;
 }
