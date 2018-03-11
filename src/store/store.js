@@ -18,6 +18,7 @@ export default new Vuex.Store({
     suggestedEvents: [],
     userDetails: null,
     invitations: [],
+    language: 'en',
   },
   getters: {
     getLoginAttempt: state => state.loginAttempt,
@@ -118,6 +119,10 @@ export default new Vuex.Store({
           }
         }
       }
+    },
+    changeLanguage: state => {
+      if (state.language === 'nl') state.language = 'en';
+      else state.language = 'nl';
     },
   },
   actions: {
@@ -410,6 +415,9 @@ export default new Vuex.Store({
           if (payload.onError) payload.onError(err);
         },
       );
+    },
+    changeLanguage: ({ commit }) => {
+      commit('changeLanguage');
     },
   },
 });

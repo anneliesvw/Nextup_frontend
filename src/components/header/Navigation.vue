@@ -2,9 +2,9 @@
     <div class="app-header">
       <div class="title">Next Up</div>
       <div class="links">
-        <router-link :to="{name: 'Default'}" exact>My Activities</router-link>
-        <router-link to="/MyGroups">My Groups</router-link>
-        <router-link to="/Activities">Discover Activities</router-link>
+        <router-link :to="{name: 'Default'}" exact>{{ $t("navigation.activities", this.$store.state.language)}}</router-link>
+        <router-link to="/MyGroups">{{ $t("navigation.groups", this.$store.state.language)}}</router-link>
+        <router-link to="/Activities">{{ $t("navigation.discover", this.$store.state.language)}}</router-link>
       </div>
 
       <div class="invitation-info">
@@ -58,6 +58,10 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+      </div>
+
+      <div class="change-language" @click="changeLanguage()">
+        <i class="fas fa-language"></i>
       </div>
     </div>
 </template>
@@ -114,6 +118,9 @@ export default {
         },
       };
       this.$store.dispatch('ignoreInvite', payload);
+    },
+    changeLanguage() {
+      this.$store.dispatch('changeLanguage');
     },
   },
   computed: {
