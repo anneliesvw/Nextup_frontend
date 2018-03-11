@@ -1,5 +1,5 @@
 <template>
-  <div class="site-wrapper">
+  <div class="site-wrapper" id="app-wrap">
     <Navigation v-if="userdetailsLoaded != null && loggedIn"></Navigation>
     <div class="site-main" v-if="userdetailsLoaded != null || !loggedIn">
       <div class="site-content">
