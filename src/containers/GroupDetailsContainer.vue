@@ -30,6 +30,13 @@
       :activeGroup="this.activeGroup"
       @close="closePollDetail">
     </PollDialog>
+    <VotePollDialog
+      :poll="this.pollDetail"
+      v-if="votePollVisible"
+      :isVisible="true"
+      :activeGroup="this.activeGroup"
+      @close="closeVotePoll"
+    ></VotePollDialog>
 
     <div class="sidebar-wrapper">
       <GroupSidebar
@@ -58,7 +65,9 @@
         </InfoPanel>
         <PollInfoPanel title="Polls" :polls="activeGroup.polls" 
           @showPollDetail="showPollDetail($event)" 
-          @showCreatePoll="setPollDialogVisible">
+          @showCreatePoll="setPollDialogVisible"
+          @showVotePoll="showVotePoll($event)"
+        >
         </PollInfoPanel>
       </div>
     </div>
@@ -87,6 +96,7 @@ import CreateEvent from '../components/events/CreateEvent.vue';
 import CreatePoll from '../components/groups/CreatePoll.vue';
 import PollDialog from '../components/groups/PollDialog.vue';
 import Banner from '../components/layout_misc/Banner.vue';
+import VotePollDialog from '../components/groups/VotePollDialog.vue';
 
 export default {
   components: {
@@ -100,6 +110,7 @@ export default {
     CreatePoll,
     PollDialog,
     Banner,
+    VotePollDialog,
   },
   computed: {
     bannerPlaceholder() {
@@ -123,6 +134,7 @@ export default {
       eventDialogVisible: false,
       pollDialogVisible: false,
       pollDetailVisible: false,
+      votePollVisible: false,
       pollDetail: '',
     };
   },
@@ -147,6 +159,9 @@ export default {
     },
     closePollDetail() {
       this.pollDetailVisible = false;
+    },
+    closeVotePoll() {
+      this.votePollVisible = false;
     },
     onGroupSelected(group) {
       this.$router.push(`/group/detail/${group.groupId}`);
@@ -183,6 +198,10 @@ export default {
     },
     showPollDetail(poll) {
       this.pollDetailVisible = true;
+      this.pollDetail = poll;
+    },
+    showVotePoll(poll) {
+      this.votePollVisible = true;
       this.pollDetail = poll;
     },
   },

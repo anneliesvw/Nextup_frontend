@@ -1,10 +1,13 @@
 <template>
-  <div class="activity-wrapper" @click="() => this.$emit('showPollDetail', this.poll)">
+  <div class="activity-wrapper" @click="() => this.$emit('showVotePoll', this.poll)">
       <div class="activity-container">
         <div class="activity-graphic" :style="backgroundPattern">
 
         </div>
         <div class="activity-bottom">
+          <div class="edit-button" @click.stop @click="() => this.$emit('showPollDetail', this.poll)">
+            <i class="fas fa-pencil-alt"></i>
+          </div>
           <div class="activity-toggle">
                 <el-switch v-model="poll.closed" active-color="#ff4949" inactive-color="#13ce66" disabled>
                 </el-switch>

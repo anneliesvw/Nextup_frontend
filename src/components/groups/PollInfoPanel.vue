@@ -11,7 +11,7 @@
             <span>Create poll</span>
           </div>
         </div>
-        <Poll v-for="poll in this.polls" :poll="poll" :key="poll.pollId" @showPollDetail="showPollDetail($event)"></Poll>
+        <Poll v-for="poll in this.polls" :poll="poll" :key="poll.pollId" @showPollDetail="showPollDetail($event)" @showVotePoll="showVotePoll($event)"></Poll>
       </div>
     </div>
   </div>
@@ -38,6 +38,9 @@
       },
       showPollDetail(poll) {
         this.$emit('showPollDetail', poll);
+      },
+      showVotePoll(poll) {
+        this.$emit('showVotePoll', poll);
       },
     },
   };

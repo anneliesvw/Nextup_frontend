@@ -100,6 +100,25 @@ export default new Vuex.Store({
       const inviteIndex = state.invitations.findIndex(i => i.id === inviteId);
       state.invitations.splice(inviteIndex, 1);
     },
+    addVoteToPollOption: (state, payload) => {
+      const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
+      if (groupIndex >= 0) {
+        const group = state.groups[groupIndex];
+        const pollIndex = group.polls.findIndex(p => payload.pollId === p.pollId);
+        if (pollIndex >= 0) {
+          const poll = group.polls[pollIndex];
+          poll.pollOptions.forEach(p => {
+            const userIndex = p.voters.findIndex(v => v.userId === state.userDetails.userId);
+            if (userIndex >= 0) p.voters.splice(userIndex, 1);
+          });
+          const index = poll.pollOptions.findIndex(p => payload.pollOptionId === p.id);
+          if (index >= 0) {
+            const pollOption = poll.pollOptions[index];
+            pollOption.voters.push(state.userDetails);
+          }
+        }
+      }
+    },
   },
   actions: {
     setLoginAttempt: ({ commit }, payload) => {
@@ -370,6 +389,24 @@ export default new Vuex.Store({
         },
         err => {
           logger.log('Unable to ingore invite', err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    voteOnPoll: ({ commit }, payload) => {
+      logger.log(payload);
+      GroupsApi.voteOnPoll(
+        payload.groupId,
+        payload.pollId,
+        payload.pollOptionId,
+        () => {
+          logger.log('Voted succesfully');
+          commit('addVoteToPollOption', payload);
+          // commit('updateGroup', payload.group);
+          if (payload.onSuccess) payload.onSuccess();
+        },
+        err => {
+          logger.log('Voting failed');
           if (payload.onError) payload.onError(err);
         },
       );
