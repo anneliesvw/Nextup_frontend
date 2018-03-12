@@ -3,7 +3,6 @@
       <CreateEvent
         v-if="eventDialogVisible"
         :isVisible="true"
-        :activeGroup="activeGroup"
         :isUserEvent="true"
         @close="closeEventDialog">
       </CreateEvent>
@@ -58,9 +57,11 @@ export default {
   },
   computed: {
     events() {
-      const events = this.$store.getters.getGroupEvents;
-      return events.filter(e => this.groups.findIndex(g => g === e.groupOwner.groupId) >= 0)
+      let events = this.$store.getters.getGroupEvents;
+      events = events.filter(e => this.groups.findIndex(g => g === e.groupOwner.groupId) >= 0)
         .sort((a, b) => a.startDate > b.startDate);
+      events = events.concat(this.$store.getters.getUserEvents);
+      return events;
     },
   },
   methods: {

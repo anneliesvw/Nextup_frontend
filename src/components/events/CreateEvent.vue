@@ -80,7 +80,18 @@ import TagApi from '../../services/tagservice';
 const logger = window.console;
 
 export default {
-  props: ['isVisible', 'activeGroup', 'eventData'],
+  props: {
+    isVisible: Boolean,
+    activeGroup: {
+      type: Object,
+      default: () => {},
+    },
+    eventData: Object,
+    isUserEvent: {
+      type: Boolean,
+      default: false,
+    },
+  },
   components: {
     ImageUploader,
   },
@@ -125,11 +136,14 @@ export default {
     updatingEvent() {
       return this.eventData;
     },
+    userDetails() {
+      return this.$store.getters.getUserDetails;
+    },
   },
   methods: {
     onCreateEvent() {
       const payload = {
-        groupId: this.activeGroup.groupId,
+        // groupId: this.activeGroup.groupId,
         eventInfo: this.eventInfo,
         onSuccess: res => {
           this.$notify({
@@ -150,7 +164,13 @@ export default {
           this.$emit('close');
         },
       };
-      this.$store.dispatch('addEventToGroup', payload);
+      if (this.isUserEvent) {
+        payload.groupId = this.userDetails.userId;
+        this.$store.dispatch('addEventToUser', payload);
+      } else {
+        payload.groupId = this.activeGroup.groupId;
+        this.$store.dispatch('addEventToGroup', payload);
+      }
     },
     onUpdateEvent() {
       this.$store.dispatch('updateEvent', {

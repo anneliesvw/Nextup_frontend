@@ -8,9 +8,6 @@
         }" 
         :style="backgroundPattern">
         </div>
-        <div class="activity-remove" v-if="deletable === true" @click.stop="removeActivity()">
-          <i class="fas fa-trash-alt"></i>
-        </div>
         <div class="activity-bottom">
             <div class="activity-toggle">
                 <input type="checkbox">
@@ -29,12 +26,11 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
 import moment from 'moment';
 import PatternGenerator from '../../services/patterngenerator';
 
 export default {
-  props: ['event', 'deletable'],
+  props: ['event'],
   computed: {
     startDate() {
       return moment(this.event.startDate).format('DD/MM/YYYY HH:mm');
@@ -59,24 +55,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['removeEventFromGroup']),
-    removeActivity() {
-      this.$confirm('This will permanently delete the event. Continue?', 'Warning', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
-        type: 'warning',
-      }).then(() => {
-        this.removeEventFromGroup({
-          groupId: this.event.groupOwner.groupId,
-          eventId: this.event.eventId,
-        });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: 'Delete canceled',
-        });
-      });
-    },
     openEvent() {
       this.$router.push(`/events/${this.event.eventId}`);
     },
