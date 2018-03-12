@@ -3,8 +3,8 @@
     <div class="event-content">
       <banner :title="eventData.name" :image="backgroundImage">
         <div>
-          <el-button type="primary" @click="attendEvent" v-if="!isUserAttending">Attend</el-button>
-          <el-button type="success" @click="removeAttendance" v-if="isUserAttending">Attending</el-button>
+          <el-button type="primary" @click="attendEvent" v-if="!isUserAttending && this.eventData.groupOwner">Attend</el-button>
+          <el-button type="success" @click="removeAttendance" v-if="isUserAttending && this.eventData.groupOwner">Attending</el-button>
           <el-button type="info" class="admin-edit" v-if="isAdmin" @click="editing = !editing">
             <i class="fas fa-edit"></i>
             Edit
@@ -43,9 +43,11 @@
       <div class="event-description event-generic">
         {{ eventData.description }}
       </div>
-      <generic-title>Attending members</generic-title>
-      <div class="event-members event-generic">
-        <user-card v-for="user in eventData.users" :key="user.userId" :user="user"></user-card>
+      <div v-if="this.eventData.groupOwner">
+        <generic-title>Attending members</generic-title>
+        <div class="event-members event-generic">
+          <user-card v-for="user in eventData.users" :key="user.userId" :user="user"></user-card>
+        </div>
       </div>
       <create-event :event-data="editableObject" :isVisible="true" v-if="editing" @close="editing = false"></create-event>
     </div>
@@ -88,12 +90,13 @@ export default {
       return moment(this.eventData.endDate).format('DD/MM/YYYY HH:mm');
     },
     isUserAttending() {
-      return this.getUserDetails ?
+      return this.getUserDetails && this.eventData.groupOwner ?
         this.eventData.users.find(u => u.userId === this.getUserDetails.userId)
         : false;
     },
     isAdmin() {
-      return this.getUserDetails ?
+      if (!this.eventData.groupOwner) return true;
+      return this.getUserDetails && this.eventData.groupOwner ?
         this.getUserDetails.userId === this.getGroupById(this.eventData.groupOwner.groupId)
           .owner.userId
         : false;
@@ -124,17 +127,24 @@ export default {
       });
     },
     removeActivity() {
-      window.console.log(this.eventData);
       this.$confirm('This will permanently delete the event. Continue?', 'Warning', {
         confirmButtonText: 'OK',
         cancelButtonText: 'Cancel',
         type: 'warning',
       }).then(() => {
-        this.$store.dispatch('removeEventFromGroup', {
-          groupId: this.eventData.groupOwner.groupId,
-          eventId: this.eventData.eventId,
-        });
-        this.$router.push('/mygroups');
+        if (this.eventData.groupOwner) {
+          this.$store.dispatch('removeEventFromGroup', {
+            groupId: this.eventData.groupOwner.groupId,
+            eventId: this.eventData.eventId,
+          });
+          this.$router.push('/mygroups');
+        } else {
+          this.$store.dispatch('removeEventFromUser', {
+            groupId: this.getUserDetails.userId,
+            eventId: this.eventData.eventId,
+          });
+          this.$router.push('/');
+        }
       }).catch(() => {
         this.$message({
           type: 'info',

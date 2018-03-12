@@ -35,6 +35,11 @@ export default new Vuex.Store({
       }
       return events;
     },
+    getUserEvents: state => {
+      const events = [];
+      state.userDetails.ownedEvents.map(e => events.push(e));
+      return events;
+    },
     getGroupEvents: state => {
       const events = [];
       state.groups.map(g => g.events.map(e => events.push(e)));
@@ -43,7 +48,9 @@ export default new Vuex.Store({
     getEventById: (state, getters) => id => {
       const events = state.personalEvents
         .concat(state.suggestedEvents)
-        .concat(getters.getGroupEvents);
+        .concat(getters.getGroupEvents)
+        .concat(state.userDetails ? state.userDetails.ownedEvents : []);
+      logger.log(events);
       return events.find(e => parseInt(e.eventId, 10) === parseInt(id, 10));
     }
     ,
@@ -97,7 +104,7 @@ export default new Vuex.Store({
       if (groupIndex >= 0) state.groups[groupIndex].events.push(payload.eventInfo);
     },
     addEventToUser: (state, payload) => {
-      state.userDetails.events.push(payload.eventInfo);
+      state.userDetails.ownedEvents.push(payload.eventInfo);
     },
     removeEventFromGroup: (state, payload) => {
       const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
@@ -105,6 +112,10 @@ export default new Vuex.Store({
         .events
         .findIndex(e => e.eventId === payload.eventId);
       if (eventIndex >= 0) state.groups[groupIndex].events.splice(eventIndex, 1);
+    },
+    removeEventFromUser: (state, payload) => {
+      const index = state.userDetails.ownedEvents.findIndex(e => payload.eventId === e.eventId);
+      if (index >= 0) state.userDetails.ownedEvents.splice(index, 1);
     },
     updateUser: (state, payload) => {
       state.userDetails = payload;
@@ -401,6 +412,22 @@ export default new Vuex.Store({
         () => {
           logger.log(`Removed event ${payload.eventId}`);
           commit('removeEventFromGroup', { groupId: payload.groupId, eventId: payload.eventId });
+          if (payload.onSuccess) payload.onSuccess();
+        },
+        err => {
+          logger.log(`Error while removing event with id ${payload.eventId}`, err);
+          if (payload.onError) payload.onError();
+        },
+      );
+    },
+    removeEventFromUser: ({ commit }, payload) => {
+      logger.log(payload);
+      EventApi.deleteEventFromUser(
+        payload.groupId,
+        payload.eventId,
+        () => {
+          logger.log(`Removed event ${payload.eventId}`);
+          commit('removeEventFromUser', { userId: payload.groupId, eventId: payload.eventId });
           if (payload.onSuccess) payload.onSuccess();
         },
         err => {

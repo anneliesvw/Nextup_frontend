@@ -33,10 +33,15 @@ const addEventToUser = (userId, event, onSucces, onError) => {
   ).then(onSucces, onError);
 };
 
+const deleteEventFromUser = (userId, eventId, onSuccess, onError) => {
+  axios.delete(`${EVENTS_URL}/user/${userId}/event/${eventId}`, getHeader()).then(onSuccess, onError);
+};
+
 export default {
   getEvent,
   addAttendingUserToEvent,
   removeAttendingUserFromEvent,
   updateEvent,
   addEventToUser,
+  deleteEventFromUser,
 };

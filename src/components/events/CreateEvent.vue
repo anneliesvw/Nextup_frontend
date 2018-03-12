@@ -84,7 +84,7 @@ export default {
     isVisible: Boolean,
     activeGroup: {
       type: Object,
-      default: {},
+      default: () => {},
     },
     eventData: Object,
     isUserEvent: {
