@@ -26,13 +26,6 @@
           <el-switch v-model="dataPoll.closed" active-color="#ff4949" inactive-color="#13ce66" active-text="Closed" inactive-text="Open">
           </el-switch>
         </el-form-item>
-        <el-form-item label="Deadline">
-          <el-date-picker v-model="dataPoll.deadline" type="datetime" start-placeholder="Deadline" format="HH:mm dd/MM/yyyy">
-          </el-date-picker>                
-        </el-form-item>    
-        <el-form-item label="Description">
-          <el-input v-model="dataPoll.description" type="textarea" :autosize="{minRows: 4, maxRows: 5}"></el-input>
-        </el-form-item>
         <el-button type="success" @click="updatePoll">Update Poll</el-button>
       </el-form>
     </div>
@@ -107,8 +100,8 @@ export default {
       this.options.push(addOption);
     },
     removeOption(option) {
-      const index = this.options.indexOf(option);
-      this.options.splice(index, 1);
+      const index = this.options.findIndex(o => o.id === option.id);
+      if (index >= 0) this.options.splice(index, 1);
     },
   },
   computed: {

@@ -197,6 +197,7 @@ export default {
         },
       };
       this.$store.dispatch('deleteGroup', payload);
+      this.$router.push('/MyGroups');
     },
     showPollDetail(poll) {
       this.pollDetailVisible = true;
