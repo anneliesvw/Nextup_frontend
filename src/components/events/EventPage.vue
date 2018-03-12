@@ -29,6 +29,11 @@
         <div v-if="!eventData.private">Public event</div>
         <i class="fas fa-user-secret" v-if="eventData.private"></i>
         <div v-if="eventData.private">Private event</div>
+        <i class="fas fa-tags"></i>
+        <div v-if="eventData.tags.length > 0">
+          <el-tag v-for="tag in eventData.tags" :key="tag.tagname">{{tag.tagname}}</el-tag>
+        </div>
+        <span v-else>No tags</span>
       </div>
       <generic-title>Description</generic-title>
       <div class="event-description event-generic">

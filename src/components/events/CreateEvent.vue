@@ -33,6 +33,34 @@
             <el-form-item label="Description">
               <el-input type="textarea" :autosize="{minRows: 4, maxRows: 5}" v-model="eventInfo.description"></el-input>
             </el-form-item>
+            <el-form-item label="Tags">
+              <el-tag
+                :key="tag.tagname"
+                v-for="tag in eventInfo.tags"
+                closable
+                :disable-transitions="false"
+                @close="handleClose(tag)">
+                {{tag.tagname}}
+              </el-tag>
+              <el-autocomplete
+                class="input-new-tag"
+                v-if="inputVisible"
+                v-model="inputValue.tagname"
+                :fetch-suggestions="querySearch"
+                :trigger-on-focus="false"
+                ref="saveTagInput"
+                size="mini"
+                @keyup.enter.native="handleInputConfirm"
+                @select="handleSelect"
+              >
+                <i
+                  class="el-icon-close el-input__icon"
+                  slot="suffix"
+                  @click="handleCloseEdit">
+                </i>
+              </el-autocomplete>
+              <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+        </el-form-item>
         </div>
       </el-form>
     </div>
@@ -47,7 +75,9 @@
 <script>
 import ImageUploader from '../ImageUploader.vue';
 import PatternGenerator from '../../services/patterngenerator';
+import TagApi from '../../services/tagservice';
 
+const logger = window.console;
 
 export default {
   props: ['isVisible', 'activeGroup', 'eventData'],
@@ -64,11 +94,15 @@ export default {
         startDate: null,
         endDate: null,
         description: null,
+        tags: [],
       },
       dateValue: '',
       dynamicTags: [],
       inputVisible: false,
-      inputValue: '',
+      inputValue: {
+        tagId: null,
+        tagname: '',
+      },
       participantsValue: 0,
       price: '',
       valuta: '',
@@ -131,6 +165,45 @@ export default {
         longitude: place.geometry.location.lng(),
         name: place.formatted_address,
       };
+    },
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick(() => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+    handleClose(tag) {
+      this.eventInfo.tags.splice(this.eventInfo.tags.indexOf(tag), 1);
+    },
+    handleInputConfirm() {
+      const { inputValue } = this;
+      if (inputValue.tagname) {
+        this.eventInfo.tags.push(inputValue);
+      }
+      this.inputVisible = false;
+      this.inputValue = {};
+    },
+    querySearch(queryString, cb) {
+      TagApi.getTags(
+        queryString,
+        res => {
+          logger.log('Similar tags succesfully loaded.');
+          const results = [];
+          if (res.data !== '') res.data.forEach(e => results.push({ id: e.tagId, value: e.tagname }));
+          cb(results);
+        },
+        err => {
+          logger.log('Unable to load similar tags', err);
+        },
+      );
+    },
+    handleSelect(item) {
+      this.inputValue = { tagId: item.id, tagname: item.value };
+      this.handleInputConfirm();
+    },
+    handleCloseEdit() {
+      this.inputVisible = false;
+      this.inputValue = {};
     },
   },
   mounted() {
