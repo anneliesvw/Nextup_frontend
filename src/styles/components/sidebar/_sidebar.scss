@@ -1,36 +1,55 @@
 .app-sidebar {
 	padding: 15px;
-	@include defaultshadow;
+	padding-top: 40px;
 	background: white;
 }
 .groups-header {
 	font-size: 1.2em;
-	padding-top: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	align-self: center;
-	font-weight: 200;
-	//text-transform: uppercase;
+	font-weight: 400;
+	font-family: $title-font-family;
+	text-transform: uppercase;
+	color: $brand-blue-7;
+	border-bottom: 1px solid $brand-blue-2;
+	width: 100%;
+	text-align: center;
+	//margin-bottom: 10px;
 }
 .groups {
+	border: 1px solid $brand-blue-2;
 	@include flexcol;
+	@include defaultshadow;
+	background: white;
+	border-radius: 4px;
 	align-items: stretch;
 	width: 100%;
-	ol {
-		list-style: none;
-		padding: 0;
-		li {
-			cursor: pointer;
-			min-width: 90%;
-			border-bottom: solid 1px $brand-gray-1;
-			padding: 20px 10px;
-			width: 100%;
-			text-align: center;
+	.checkboxes {
+		.el-checkbox {
 			@include flexrow;
-			justify-content: space-between;
-			transition: 1s ease border-bottom;
-			&:hover {
-				//border-bottom: solid 2px $brand-blue-7;
-				background: lighten($brand-gray-1, 10);
+			align-items: center;
+			margin: 0px;
+			padding: 10px;
+			width: 100%;
+			border-bottom: 1px solid $brand-blue-2;
+			
+			
+			&.is-checked {
+				background: $brand-blue-1;
+				.el-checkbox__label {
+					color: $brand-blue-7;
+				}
+				.el-checkbox__input {
+					@include flexcol;
+					justify-content: center;
+					.el-checkbox__inner {
+						background: $brand-blue-7;
+						border-color: $brand-blue-6;
+					}
+				}
 			}
 		}
 	}
+	
 }

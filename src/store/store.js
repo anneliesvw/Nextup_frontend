@@ -175,6 +175,7 @@ export default new Vuex.Store({
       });
     },
     updateUserEvent: (state, payload) => {
+      window.console.log(payload);
       const index = state.userDetails.ownedEvents.findIndex(e => payload.eventId === e.eventId);
       if (index >= 0) state.userDetails.ownedEvents[index] = payload;
     },
@@ -440,19 +441,17 @@ export default new Vuex.Store({
         },
       );
     },
-    loadUserDetails: ({ commit, dispatch }) => {
-      AuthApi.getUserDetails(
-        res => {
-          logger.log('Current user details succesfully loaded.');
-          commit('setUserDetails', res.data);
-          dispatch('loadInvitations');
-          dispatch('loadGroups');
-        },
-        err => {
-          logger.log('Unable to load current user details', err);
-        },
-      );
-    },
+    loadUserDetails: ({ commit, dispatch }) => AuthApi.getUserDetails(
+      res => {
+        logger.log('Current user details succesfully loaded.');
+        commit('setUserDetails', res.data);
+        dispatch('loadInvitations');
+        dispatch('loadGroups');
+      },
+      err => {
+        logger.log('Unable to load current user details', err);
+      },
+    ),
     addAttendingUserToEvent: ({ commit }, payload) => {
       EventApi.addAttendingUserToEvent(
         payload.eventId,
