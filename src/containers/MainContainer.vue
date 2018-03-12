@@ -58,9 +58,9 @@ export default {
   computed: {
     events() {
       let events = this.$store.getters.getGroupEvents;
-      events = events.filter(e => this.groups.findIndex(g => g === e.groupOwner.groupId) >= 0)
-        .sort((a, b) => a.startDate > b.startDate);
+      events = events.filter(e => this.groups.findIndex(g => g === e.groupOwner.groupId) >= 0);
       events = events.concat(this.$store.getters.getUserEvents);
+      events.sort((a, b) => a.startDate > b.startDate);
       return events;
     },
   },
