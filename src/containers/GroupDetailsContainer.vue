@@ -46,25 +46,25 @@
       </GroupSidebar>
     </div>
     <div class="group-wall" v-if="activeGroup">
-      <banner :title="activeGroup.name" :image="bannerImage">
+      <banner :title="activeGroup.name" :image="bannerImage" :editable="editing" @titleChanged="changeTitle($event)">
         <div class="banner-buttons">
             <el-button type="primary" @click="dialogVisible = true">{{$t("groups.invite")}}</el-button> 
-            <!-- TODO: BELANGRIJK!! -->
-            <!-- Degene die leave group uitwerkt zet deze lijn code bij de onsuccess aub, de chat dankt u -->
-            <!-- this.$socket.emit('leaveroom', `${GROUPID}_${NAME}`); -->
-            <!-- met juiste waarden voor id en name -->
-            <!-- <el-button type="danger">Leave Group</el-button> -->
-            <!-- beste maker van de chat, dit zou niet mogen bepaalt worden door de frontend, is backend logica. Martin Fowler dankt u -->
-            <el-button type="danger" @click="deleteGroup">{{$t("groups.delete")}}</el-button>
+            <el-button type="danger" @click="deleteGroup" v-if="editing">{{$t("groups.delete")}}</el-button>
+            <el-button type="info" class="admin-edit" v-if="isAdmin && !editing" @click="editing = !editing">
+              <i class="fas fa-edit"></i>
+                Edit Group
+            </el-button>
+            <el-button type="success" @click="saveGroup()" v-if="editing">Save Changes</el-button>
           </div>
       </banner>
       <div class="group-panels">
         <InfoPanel :title="$t('events.title')"
           :events="activeGroup.events"
+          :admin="isAdmin"
+          :editing="editing"
           @showEventDialog="eventDialogVisible = true">
         </InfoPanel>
-        <PollInfoPanel :title="$t('polls.title')"
-          :polls="activeGroup.polls" 
+        <PollInfoPanel :title="$t('polls.title')" :polls="activeGroup.polls" :admin="isAdmin"
           @showPollDetail="showPollDetail($event)" 
           @showCreatePoll="setPollDialogVisible"
           @showVotePoll="showVotePoll($event)"
@@ -87,6 +87,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import GroupSidebar from '../components/sidebars/GroupSidebar.vue';
 import MemberDialog from '../components/groups/MemberDialog.vue';
 import InfoPanel from '../components/groups/InfoPanel.vue';
@@ -115,6 +116,7 @@ export default {
     VotePollDialog,
   },
   computed: {
+    ...mapGetters(['getUserDetails']),
     bannerPlaceholder() {
       return {
         backgroundImage: this.activeGroup.avatarUrl ?
@@ -128,6 +130,11 @@ export default {
     activeGroup() {
       return this.$store.getters.getGroupById(parseInt(this.$route.params.groupId, 10));
     },
+    isAdmin() {
+      return this.getUserDetails ?
+        this.getUserDetails.userId === this.activeGroup.owner.userId
+        : false;
+    },
   },
   data() {
     return {
@@ -138,9 +145,12 @@ export default {
       pollDetailVisible: false,
       votePollVisible: false,
       pollDetail: '',
+      editing: false,
+      newTitle: '',
     };
   },
   methods: {
+    ...mapActions(['updateGroup']),
     closeDialog() {
       this.dialogVisible = false;
     },
@@ -202,6 +212,15 @@ export default {
     showPollDetail(poll) {
       this.pollDetailVisible = true;
       this.pollDetail = poll;
+    },
+    changeTitle(val) {
+      this.newTitle = val;
+    },
+    saveGroup() {
+      this.editing = false;
+      const groupInfo = { ...this.activeGroup };
+      if (this.newTitle !== '') groupInfo.name = this.newTitle;
+      this.updateGroup({ groupInfo });
     },
     showVotePoll(poll) {
       this.votePollVisible = true;

@@ -5,7 +5,7 @@
         {{this.title}}
       </generic-title>
       <div class="panel-body">
-        <div class="group-wrapper">
+        <div class="group-wrapper" v-if="admin === true">
           <div class="group-add" @click="showCreatePoll">
             <i class="fas fa-plus"></i>
             <span>{{$t("polls.create")}}</span>
@@ -28,7 +28,7 @@
   import GenericTitle from '../layout_misc/GenericTitle.vue';
 
   export default {
-    props: ['title', 'polls', 'groupDetails'],
+    props: ['title', 'polls', 'admin', 'groupDetails'],
     components: {
       Activity,
       Poll,

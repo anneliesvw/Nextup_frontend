@@ -7,7 +7,24 @@
   @include defaultshadow;
   //border-radius: 4px;
   border: 1px solid $brand-gray-1;
+  position: relative;
   //min-width: 33%;
+  .activity-remove {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 28px;
+    height: 28px;
+    @include flexrow;
+    justify-content: center;
+    align-items: center;
+    background-color: $brand-red-4;
+    border-radius: 3px;
+    .fa-trash-alt {
+      color: $brand-gray-9;
+    }
+  }
   .activity-graphic {
     background-color: $brand-blue-5;
     background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/3d/London_Bridge_%289691084663%29.jpg');

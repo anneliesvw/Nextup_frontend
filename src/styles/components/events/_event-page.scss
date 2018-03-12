@@ -15,6 +15,11 @@
   margin-right: auto;
   background-color: white;
   padding: 5px;
+  .admin-edit {
+     .fa-edit {
+       padding-right: 5px;
+     }
+  }
   .event-generic {
     margin: 20px 20px;
   }
@@ -23,7 +28,7 @@
     grid-template-columns: 25px auto;
     grid-gap: 10px;
   }
-  .fa-calendar-alt, .fa-users, .fa-map-marker, .fa-bullhorn {
+  .fa-calendar-alt, .fa-users, .fa-map-marker, .fa-bullhorn, .fa-user-secret {
     color: $brand-blue-7;
     @include flexrow;
     justify-content: center;

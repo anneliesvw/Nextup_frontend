@@ -87,6 +87,13 @@ export default new Vuex.Store({
       const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
       if (groupIndex >= 0) state.groups[groupIndex].events.push(payload.eventInfo);
     },
+    removeEventFromGroup: (state, payload) => {
+      const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
+      const eventIndex = state.groups[groupIndex]
+        .events
+        .findIndex(e => e.eventId === payload.eventId);
+      if (eventIndex >= 0) state.groups[groupIndex].events.splice(eventIndex, 1);
+    },
     updateUser: (state, payload) => {
       state.userDetails = payload;
     },
@@ -137,6 +144,13 @@ export default new Vuex.Store({
       state.language = lang;
       app.$i18n.locale = lang;
     },
+    updateEvent: (state, payload) => {
+      state.groups = state.groups.map(g => {
+        const eventIndex = g.events.findIndex(e => e.eventId === payload.eventId);
+        g.events[eventIndex] = payload;
+        return g;
+      });
+    },
   },
   actions: {
     setLoginAttempt: ({ commit }, payload) => {
@@ -148,7 +162,7 @@ export default new Vuex.Store({
         res => {
           commit('setGroups', res.data);
         },
-        err => window.console.log('failed to load groups.', err),
+        err => logger.log('failed to load groups.', err),
       );
     },
     addGroup: ({ commit }, payload) => {
@@ -176,6 +190,21 @@ export default new Vuex.Store({
         err => {
           logger.log('unable to delete group', err);
           if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    updateGroup: ({ commit }, payload) => {
+      GroupsApi.updateGroup(
+        payload.groupInfo.groupId,
+        payload.groupInfo,
+        res => {
+          logger.log(`Updated group ${res.data}`);
+          commit('updateGroup', res.data);
+          if (payload.onSuccess) payload.onSuccess();
+        },
+        err => {
+          logger.log('Unable to update group', err);
+          if (payload.onError) payload.onError();
         },
       );
     },
@@ -334,6 +363,21 @@ export default new Vuex.Store({
         },
       );
     },
+    removeEventFromGroup: ({ commit }, payload) => {
+      GroupsApi.deleteEventFromGroup(
+        payload.groupId,
+        payload.eventId,
+        () => {
+          logger.log(`Removed event ${payload.eventId}`);
+          commit('removeEventFromGroup', { groupId: payload.groupId, eventId: payload.eventId });
+          if (payload.onSuccess) payload.onSuccess();
+        },
+        err => {
+          logger.log(`Error while removing event with id ${payload.eventId}`, err);
+          if (payload.onError) payload.onError();
+        },
+      );
+    },
     loadUserDetails: ({ commit, dispatch }) => {
       AuthApi.getUserDetails(
         res => {
@@ -411,6 +455,21 @@ export default new Vuex.Store({
         err => {
           logger.log('Unable to ingore invite', err);
           if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    updateEvent: ({ commit }, payload) => {
+      EventApi.updateEvent(
+        payload.eventId,
+        payload.eventData,
+        res => {
+          logger.log('Updated event');
+          commit('updateEvent', res.data);
+          if (payload.onSuccess) payload.onSuccess();
+        },
+        err => {
+          logger.log('Unable to update event', err);
+          if (payload.onError) payload.onError();
         },
       );
     },
