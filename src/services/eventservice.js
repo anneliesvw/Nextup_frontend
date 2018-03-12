@@ -25,9 +25,18 @@ const updateEvent = (eventId, eventData, onSuccess, onError) => {
   axios.put(`${EVENTS_URL}/${eventId}`, eventData, getHeader()).then(onSuccess, onError);
 };
 
+const addEventToUser = (userId, event, onSucces, onError) => {
+  axios.post(
+    `${EVENTS_URL}/user/${userId}`,
+    event,
+    getHeader(),
+  ).then(onSucces, onError);
+};
+
 export default {
   getEvent,
   addAttendingUserToEvent,
   removeAttendingUserFromEvent,
   updateEvent,
+  addEventToUser,
 };

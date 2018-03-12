@@ -9,6 +9,10 @@
             <i class="fas fa-edit"></i>
             Edit
           </el-button>
+          <el-button type="danger" class="admin-edit" v-if="isAdmin" @click="removeActivity()">
+            <i class="fas fa-trash"></i>
+            Delete
+          </el-button>
         </div>
       </banner>
       <generic-title>General Info</generic-title>
@@ -117,6 +121,25 @@ export default {
         userInfo: this.getUserDetails,
         onSuccess: () => window.console.log('removed user from event'),
         onError: () => window.console.log('error removing user from event'),
+      });
+    },
+    removeActivity() {
+      window.console.log(this.eventData);
+      this.$confirm('This will permanently delete the event. Continue?', 'Warning', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      }).then(() => {
+        this.$store.dispatch('removeEventFromGroup', {
+          groupId: this.eventData.groupOwner.groupId,
+          eventId: this.eventData.eventId,
+        });
+        this.$router.push('/mygroups');
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: 'Delete canceled',
+        });
       });
     },
   },

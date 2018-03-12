@@ -27,16 +27,25 @@ export default new Vuex.Store({
     getGroupById: state => id => state.groups.find(g => g.groupId === id),
     getUserDetails: state => state.userDetails,
     getInvitations: state => state.invitations,
+    getAllEvents: state => {
+      const events = [];
+      state.groups.map(g => g.events.map(e => events.push(e)));
+      if (state.userDetails.ownedEvents) {
+        state.userDetails.ownedEvents.forEach(e => events.push(e));
+      }
+      return events;
+    },
     getGroupEvents: state => {
       const events = [];
       state.groups.map(g => g.events.map(e => events.push(e)));
       return events;
     },
-    getEventById: (state, getters) => id =>
-      state.personalEvents
+    getEventById: (state, getters) => id => {
+      const events = state.personalEvents
         .concat(state.suggestedEvents)
-        .concat(getters.getGroupEvents)
-        .find(e => parseInt(e.eventId, 10) === parseInt(id, 10))
+        .concat(getters.getGroupEvents);
+      return events.find(e => parseInt(e.eventId, 10) === parseInt(id, 10));
+    }
     ,
   },
   mutations: {
@@ -86,6 +95,9 @@ export default new Vuex.Store({
     addEventToGroup: (state, payload) => {
       const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
       if (groupIndex >= 0) state.groups[groupIndex].events.push(payload.eventInfo);
+    },
+    addEventToUser: (state, payload) => {
+      state.userDetails.events.push(payload.eventInfo);
     },
     removeEventFromGroup: (state, payload) => {
       const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
@@ -359,6 +371,25 @@ export default new Vuex.Store({
         },
         err => {
           logger.log(`error whilst adding event to group with id ${payload.groupId}`, err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    addEventToUser: ({ commit }, payload) => {
+      logger.log(payload);
+      EventApi.addEventToUser(
+        payload.groupId,
+        payload.eventInfo,
+        res => {
+          logger.log(`event successfully added to user ${payload.groupId}`);
+          commit('addEventToUser', {
+            userId: payload.groupId,
+            eventInfo: res.data,
+          });
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log(`error whilst adding event to user with id ${payload.groupId}`, err);
           if (payload.onError) payload.onError(err);
         },
       );
