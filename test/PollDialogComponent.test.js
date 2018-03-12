@@ -22,10 +22,8 @@
 //     const wrapper = shallow(PollDialogComp, {
 //       store,
 //       localVue,
-//       props: {
-//         isVisible: true,
-//         activeGroup: { groupId: 1, users: [{ userId: 1 }] },
-//         poll: {
+//       data: {
+//         dataPoll: {
 //           pollId: 1,
 //           name: 'TestPoll',
 //           pollOptions: [
@@ -33,36 +31,23 @@
 //             { id: 2, description: 'Test option 2' },
 //           ],
 //         },
-//       },
-//       data() {
-//         return {
-//           dataPoll: { name: 'TestPoll' },
-//           options: [
-//             { id: 1, description: 'Test option 1' },
-//             { id: 2, description: 'Test option 2' },
-//           ],
-
-//           newOption: '',
-//         };
+//         options: [{ id: 1, description: 'Test option 1' }, { id: 2, description: 'Test option 2' }],
+//         newOption: '',
 //       },
 //     });
-//     // wrapper.setProps({
-//     //   isVisible: true,
-//     //   activeGroup: { groupId: 1, users: [{ userId: 1 }] },
-//     //   poll: {
-//     //     pollId: 1,
-//     //     name: 'TestPoll',
-//     //     pollOptions: [
-//     //       { id: 1, description: 'Test option 1' },
-//     //       { id: 2, description: 'Test option 2' },
-//     //     ],
-//     //   },
-//     // });
-//     // wrapper.setData({ dataPoll: wrapper.vm._props.poll });
-//     console.log(wrapper.vm.dataPoll);
-//     wrapper.find('.delete-poll-btn').trigger('click');
-//     expect(actions.removePoll.mock.calls).toHaveLength(1);
+//     wrapper.setProps({
+//       isVisible: true,
+//       activeGroup: { groupId: 1, users: [{ userId: 1 }] },
+//       poll: {
+//         pollId: 1,
+//         name: 'TestPoll',
+//         pollOptions: [
+//           { id: 1, description: 'Test option 1' },
+//           { id: 2, description: 'Test option 2' },
+//         ],
+//       },
+//     });
 //     wrapper.find('.update-poll-btn').trigger('click');
-//     expect(actions.updatePoll.mock.calls).toHaveLength(1);
+//     expect(actions.updateUser.mock.calls).toHaveLength(1);
 //   });
 // });
