@@ -6,7 +6,7 @@
       </div> -->
       <generic-title> {{ this.title }} </generic-title>
       <div class="panel-body">
-        <div class="group-wrapper">
+        <div class="group-wrapper" v-if="admin === true">
           <div class="group-add" @click="() => this.$emit('showEventDialog', true)">
             <i class="fas fa-plus"></i>
             <span>Create event</span>
@@ -15,7 +15,8 @@
         <Activity 
           v-for="event in events" 
           :key="event.eventId" 
-          :event="event"></Activity>
+          :event="event"
+          :deletable="editing"></Activity>
       </div>
     </div>
   </div>
@@ -26,7 +27,7 @@
   import GenericTitle from '../layout_misc/GenericTitle.vue';
   
   export default {
-    props: ['title', 'events'],
+    props: ['title', 'events', 'admin', 'editing'],
     components: {
       Activity,
       GenericTitle,

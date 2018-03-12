@@ -35,6 +35,10 @@ const deleteGroup = (groupInfo, onSucces, onError) => {
   ).then(onSucces, onError);
 };
 
+const updateGroup = (groupId, groupInfo, onSuccess, onError) => {
+  axios.put(`${GROUPS_URL}/${groupId}`, groupInfo, getHeader()).then(onSuccess, onError);
+};
+
 const addUserToGroup = (username, groupId, onSucces, onError) => {
   axios.post(
     `${INVITATIONS_URL}/group/${groupId}`,
@@ -98,10 +102,15 @@ const addEventToGroup = (groupId, event, onSucces, onError) => {
   ).then(onSucces, onError);
 };
 
+const deleteEventFromGroup = (groupId, eventId, onSuccess, onError) => {
+  axios.delete(`${EVENTS_URL}/group/${groupId}/event/${eventId}`, getHeader()).then(onSuccess, onError);
+};
+
 export default {
   getGroups,
   getGroup,
   createGroup,
+  updateGroup,
   addUserToGroup,
   deleteUserFromGroup,
   deleteGroup,
@@ -111,5 +120,6 @@ export default {
   updatePollFromGroup,
   getEventsFromGroup,
   addEventToGroup,
+  deleteEventFromGroup,
 };
 
