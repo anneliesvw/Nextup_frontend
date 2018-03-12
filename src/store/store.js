@@ -174,6 +174,10 @@ export default new Vuex.Store({
         return g;
       });
     },
+    updateUserEvent: (state, payload) => {
+      const index = state.userDetails.ownedEvents.findIndex(e => payload.eventId === e.eventId);
+      if (index >= 0) state.userDetails.ownedEvents[index] = payload;
+    },
   },
   actions: {
     setLoginAttempt: ({ commit }, payload) => {
@@ -523,6 +527,22 @@ export default new Vuex.Store({
         res => {
           logger.log('Updated event');
           commit('updateEvent', res.data);
+          if (payload.onSuccess) payload.onSuccess();
+        },
+        err => {
+          logger.log('Unable to update event', err);
+          if (payload.onError) payload.onError();
+        },
+      );
+    },
+    updateUserEvent: ({ commit, getters }, payload) => {
+      EventApi.updateUserEvent(
+        getters.getUserDetails.userId,
+        payload.eventId,
+        payload.eventData,
+        res => {
+          logger.log('Updated event');
+          commit('updateUserEvent', res.data);
           if (payload.onSuccess) payload.onSuccess();
         },
         err => {

@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import ImageUploader from '../ImageUploader.vue';
 import PatternGenerator from '../../services/patterngenerator';
 import TagApi from '../../services/tagservice';
@@ -86,7 +87,6 @@ export default {
       type: Object,
       default: () => {},
     },
-    eventData: Object,
     isUserEvent: {
       type: Boolean,
       default: false,
@@ -114,12 +114,13 @@ export default {
         tagId: null,
         tagname: '',
       },
-      participantsValue: 0,
-      price: '',
-      valuta: '',
     };
   },
   computed: {
+    ...mapGetters(['getEventById']),
+    eventData() {
+      return this.getEventById(parseInt(this.$route.params.id, 10));
+    },
     backgroundImage() {
       return PatternGenerator.generateImage(this.eventInfo.title || '');
     },
@@ -173,10 +174,17 @@ export default {
       }
     },
     onUpdateEvent() {
-      this.$store.dispatch('updateEvent', {
-        eventData: this.eventInfo,
-        eventId: this.eventData.eventId,
-      });
+      if (!this.eventData.groupOwner) {
+        this.$store.dispatch('updateUserEvent', {
+          eventData: this.eventInfo,
+          eventId: this.eventData.eventId,
+        });
+      } else {
+        this.$store.dispatch('updateEvent', {
+          eventData: this.eventInfo,
+          eventId: this.eventData.eventId,
+        });
+      }
       this.$emit('close');
     },
     onSetLocation(place) {
@@ -228,7 +236,7 @@ export default {
   },
   mounted() {
     if (this.updatingEvent) {
-      this.eventInfo = this.eventData;
+      this.eventInfo = { ...this.eventData };
     }
   },
 };
