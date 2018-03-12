@@ -28,10 +28,10 @@
     grid-template-columns: 25px auto;
     grid-gap: 10px;
   }
-  .fa-calendar-alt, .fa-users, .fa-map-marker, .fa-bullhorn, .fa-user-secret {
+  .fa-calendar-alt, .fa-users, .fa-map-marker, .fa-bullhorn, .fa-user-secret, .fa-tags {
     color: $brand-blue-7;
     @include flexrow;
     justify-content: center;
+    align-items: center;
   }
-  
 }
