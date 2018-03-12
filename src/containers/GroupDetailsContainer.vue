@@ -30,6 +30,13 @@
       :activeGroup="this.activeGroup"
       @close="closePollDetail">
     </PollDialog>
+    <VotePollDialog
+      :poll="this.pollDetail"
+      v-if="votePollVisible"
+      :isVisible="true"
+      :activeGroup="this.activeGroup"
+      @close="closeVotePoll"
+    ></VotePollDialog>
 
     <div class="sidebar-wrapper">
       <GroupSidebar
@@ -41,24 +48,28 @@
     <div class="group-wall" v-if="activeGroup">
       <banner :title="activeGroup.name" :image="bannerImage">
         <div class="banner-buttons">
-            <el-button type="primary" @click="dialogVisible = true">Invite Others</el-button> 
+            <el-button type="primary" @click="dialogVisible = true">{{$t("groups.invite")}}</el-button> 
             <!-- TODO: BELANGRIJK!! -->
             <!-- Degene die leave group uitwerkt zet deze lijn code bij de onsuccess aub, de chat dankt u -->
             <!-- this.$socket.emit('leaveroom', `${GROUPID}_${NAME}`); -->
             <!-- met juiste waarden voor id en name -->
             <!-- <el-button type="danger">Leave Group</el-button> -->
             <!-- beste maker van de chat, dit zou niet mogen bepaalt worden door de frontend, is backend logica. Martin Fowler dankt u -->
-            <el-button type="danger" @click="deleteGroup">Delete Group</el-button>
+            <el-button type="danger" @click="deleteGroup">{{$t("groups.delete")}}</el-button>
           </div>
       </banner>
       <div class="group-panels">
-        <InfoPanel title="Events" 
+        <InfoPanel :title="$t('events.title')"
           :events="activeGroup.events"
           @showEventDialog="eventDialogVisible = true">
         </InfoPanel>
-        <PollInfoPanel title="Polls" :polls="activeGroup.polls" 
+        <PollInfoPanel :title="$t('polls.title')"
+          :polls="activeGroup.polls" 
           @showPollDetail="showPollDetail($event)" 
-          @showCreatePoll="setPollDialogVisible">
+          @showCreatePoll="setPollDialogVisible"
+          @showVotePoll="showVotePoll($event)"
+          :groupDetails="activeGroup"
+        >
         </PollInfoPanel>
       </div>
     </div>
@@ -87,6 +98,7 @@ import CreateEvent from '../components/events/CreateEvent.vue';
 import CreatePoll from '../components/groups/CreatePoll.vue';
 import PollDialog from '../components/groups/PollDialog.vue';
 import Banner from '../components/layout_misc/Banner.vue';
+import VotePollDialog from '../components/groups/VotePollDialog.vue';
 
 export default {
   components: {
@@ -100,6 +112,7 @@ export default {
     CreatePoll,
     PollDialog,
     Banner,
+    VotePollDialog,
   },
   computed: {
     bannerPlaceholder() {
@@ -123,6 +136,7 @@ export default {
       eventDialogVisible: false,
       pollDialogVisible: false,
       pollDetailVisible: false,
+      votePollVisible: false,
       pollDetail: '',
     };
   },
@@ -147,6 +161,9 @@ export default {
     },
     closePollDetail() {
       this.pollDetailVisible = false;
+    },
+    closeVotePoll() {
+      this.votePollVisible = false;
     },
     onGroupSelected(group) {
       this.$router.push(`/group/detail/${group.groupId}`);
@@ -180,9 +197,14 @@ export default {
         },
       };
       this.$store.dispatch('deleteGroup', payload);
+      this.$router.push('/MyGroups');
     },
     showPollDetail(poll) {
       this.pollDetailVisible = true;
+      this.pollDetail = poll;
+    },
+    showVotePoll(poll) {
+      this.votePollVisible = true;
       this.pollDetail = poll;
     },
   },

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="Create Poll" :visible.sync="dialogVisible">
+  <el-dialog :title="$t('polls.create')" :visible.sync="dialogVisible">
     <div class="create-event-form">
       <el-form label-position="top" class="create-event">
         <div class="create-event-input">
@@ -24,15 +24,8 @@
             </div>
 
             <el-form-item label="Visible for members">
-              <el-switch v-model="isClosed" active-color="#ff4949" inactive-color="#13ce66" active-text="Closed" inactive-text="Open">
+              <el-switch v-model="isClosed" active-color="#ff4949" inactive-color="#13ce66" active-text="No" inactive-text="Yes">
               </el-switch>
-            </el-form-item>
-            <el-form-item label="Deadline">
-              <el-date-picker v-model="deadline" type="datetime" placeholder="Deadline" format="HH:mm dd/MM/yyyy">
-              </el-date-picker>                
-            </el-form-item>    
-            <el-form-item label="Description">
-              <el-input v-model="description" type="textarea" :autosize="{minRows: 4, maxRows: 5}"></el-input>
             </el-form-item>
             <el-button type="primary" @click="savePoll">Create poll</el-button>
         </div>
@@ -49,8 +42,6 @@ export default {
     return {
       title: '',
       isClosed: '',
-      deadline: '',
-      description: '',
       options: [],
       newOption: '',
       dateValue: '',
@@ -75,6 +66,7 @@ export default {
         // date: this.dateValue,
       };
       this.options.push(addOption);
+      this.newOption = '';
     },
     removeOption(option) {
       const index = this.options.indexOf(option);
@@ -85,8 +77,6 @@ export default {
         poll: {
           groupId: this.activeGroup.groupId,
           name: this.title,
-          description: this.description,
-          deadline: this.deadline,
           closed: this.isClosed,
           pollOptions: this.options,
         },

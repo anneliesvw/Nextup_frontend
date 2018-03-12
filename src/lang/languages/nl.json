@@ -1,0 +1,37 @@
+{
+  "navigation": {
+    "activities": "Mijn Activiteiten",
+    "groups": "Mijn Groupen",
+    "discover": "Ontdek Activiteiten"
+  },
+  "settings": {
+    "profile": "Profiel instellingen",
+    "preferences": "Voorkeuren",
+    "help": "Help & Feedback",
+    "logout": "Afmelden"
+  },
+  "discover": {
+    "main": "Ontdek activiteiten",
+    "location": "Locatie",
+    "interests": "Interesses"
+  },
+  "sidebar": {
+    "title": "Groepen"
+  },
+  "groups": {
+    "create": "Maak groep",
+    "invite": "Nodig anderen uit",
+    "delete": "Verwijder groep",
+    "sidebar": {
+      "title": "Mijn groepen"
+    }
+  },
+  "events": {
+    "title": "Evenementen",
+    "create": "Maak evenement"
+  },
+  "polls": {
+    "title": "Polls",
+    "create": "Maak poll"
+  }
+}

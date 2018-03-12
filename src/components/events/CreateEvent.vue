@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="Create Event" :visible.sync="showCreateEvent">
+  <el-dialog :title="$t('events.create')" :visible.sync="showCreateEvent">
     <div class="create-event-form">
       <el-form label-position="top" class="create-event">
         <ImageUploader

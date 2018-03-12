@@ -5,6 +5,7 @@ import UserApi from '../services/userservice';
 import AuthApi from '../services/authservice';
 import EventApi from '../services/eventservice';
 import InvitationApi from '../services/invitationservice';
+import { app } from '../main';
 
 const logger = window.console;
 Vue.use(Vuex);
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     suggestedEvents: [],
     userDetails: null,
     invitations: [],
+    language: 'en',
   },
   getters: {
     getLoginAttempt: state => state.loginAttempt,
@@ -51,9 +53,9 @@ export default new Vuex.Store({
       const groupIndex = state.groups.findIndex(g => group.groupId === g.groupId);
       if (groupIndex >= 0) Vue.set(state.groups, groupIndex, group);
     },
-    deleteGroup: (state, group) => {
-      const index = state.groups.indexOf(group);
-      state.groups.splice(index, 1);
+    deleteGroup: (state, groupId) => {
+      const index = state.groups.findIndex(g => g.groupId === groupId);
+      if (index >= 0) state.groups.splice(index, 1);
     },
     setUserDetails: (state, payload) => {
       state.userDetails = payload;
@@ -63,10 +65,22 @@ export default new Vuex.Store({
       if (groupIndex >= 0) state.groups[groupIndex].polls.push(payload.pollInfo);
     },
     updatePoll: (state, payload) => {
+      window.console.log(payload);
+      payload.pollOptions.forEach(p => {
+        if (p.voters == null) p.voters = [];
+      });
       const groupIndex = state.groups.findIndex(g => payload.group === g.groupId);
       if (groupIndex >= 0) {
         const index = state.groups[groupIndex].polls.findIndex(p => payload.pollId === p.pollId);
         if (index >= 0) Vue.set(state.groups[groupIndex].polls, index, payload);
+      }
+    },
+    removePoll: (state, payload) => {
+      const groupIndex = state.groups.findIndex(g => g.groupId === payload.groupId);
+      if (groupIndex >= 0) {
+        const group = state.groups[groupIndex];
+        const pollIndex = group.polls.findIndex(p => p.pollId === payload.pollId);
+        if (pollIndex >= 0) state.groups[groupIndex].polls.splice(pollIndex, 1);
       }
     },
     addEventToGroup: (state, payload) => {
@@ -99,6 +113,29 @@ export default new Vuex.Store({
     removeInvite: (state, inviteId) => {
       const inviteIndex = state.invitations.findIndex(i => i.id === inviteId);
       state.invitations.splice(inviteIndex, 1);
+    },
+    addVoteToPollOption: (state, payload) => {
+      const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
+      if (groupIndex >= 0) {
+        const group = state.groups[groupIndex];
+        const pollIndex = group.polls.findIndex(p => payload.pollId === p.pollId);
+        if (pollIndex >= 0) {
+          const poll = group.polls[pollIndex];
+          poll.pollOptions.forEach(p => {
+            const userIndex = p.voters.findIndex(v => v.userId === state.userDetails.userId);
+            if (userIndex >= 0) p.voters.splice(userIndex, 1);
+          });
+          const index = poll.pollOptions.findIndex(p => payload.pollOptionId === p.id);
+          if (index >= 0) {
+            const pollOption = poll.pollOptions[index];
+            pollOption.voters.push(state.userDetails);
+          }
+        }
+      }
+    },
+    changeLanguage: (state, lang) => {
+      state.language = lang;
+      app.$i18n.locale = lang;
     },
   },
   actions: {
@@ -133,7 +170,7 @@ export default new Vuex.Store({
         payload.groupInfo,
         res => {
           logger.log('group succesfully deleted');
-          commit('deleteGroup', res.data);
+          commit('deleteGroup', payload.groupInfo);
           if (payload.onSuccess) payload.onSuccess(res);
         },
         err => {
@@ -222,10 +259,13 @@ export default new Vuex.Store({
       GroupsApi.deletePollFromGroup(
         payload.groupId,
         payload.pollId,
-        res => {
+        () => {
           logger.log('poll succesfully deleted');
-          commit('updateGroup', res.data);
-          if (payload.onSuccess) payload.onSuccess(res);
+          commit('removePoll', {
+            pollId: payload.pollId,
+            groupId: payload.groupId,
+          });
+          if (payload.onSuccess) payload.onSuccess();
         },
         err => {
           logger.log('unable to remove poll', err);
@@ -373,6 +413,27 @@ export default new Vuex.Store({
           if (payload.onError) payload.onError(err);
         },
       );
+    },
+    voteOnPoll: ({ commit }, payload) => {
+      logger.log(payload);
+      GroupsApi.voteOnPoll(
+        payload.groupId,
+        payload.pollId,
+        payload.pollOptionId,
+        () => {
+          logger.log('Voted succesfully');
+          commit('addVoteToPollOption', payload);
+          // commit('updateGroup', payload.group);
+          if (payload.onSuccess) payload.onSuccess();
+        },
+        err => {
+          logger.log('Voting failed');
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
+    changeLanguage: ({ commit }, lang) => {
+      commit('changeLanguage', lang);
     },
   },
 });
