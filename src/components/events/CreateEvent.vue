@@ -13,7 +13,7 @@
               <el-input placeholder="Enter title here" v-model="eventInfo.name"></el-input>
             </el-form-item>
             <el-form-item label="Accessibility">
-              <el-switch v-model="eventInfo.isPrivate" active-text="Private" inactive-text="Public">
+              <el-switch v-model="eventInfo.private" active-text="Private" inactive-text="Public">
               </el-switch>
             </el-form-item>
             <el-form-item label="Start Date">
@@ -59,7 +59,7 @@ export default {
       eventInfo: {
         name: '',
         avatarUrl: null,
-        isPrivate: false,
+        private: false,
         location: null,
         startDate: null,
         endDate: null,

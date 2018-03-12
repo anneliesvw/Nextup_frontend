@@ -90,16 +90,10 @@ export default {
         : false;
     },
     editableObject() {
-      // isPrivate vs private zzzzz
-      return {
-        name: this.eventData.name,
-        isPrivate: this.eventData.private,
-        location: this.eventData.location,
-        startDate: new Date(this.eventData.startDate),
-        endDate: new Date(this.eventData.endDate),
-        description: this.eventData.description,
-        eventId: this.eventData.eventId,
-      };
+      const obj = { ...this.eventData };
+      obj.startDate = new Date(this.eventData.startDate);
+      obj.endDate = new Date(this.eventData.endDate);
+      return obj;
     },
   },
   methods: {
