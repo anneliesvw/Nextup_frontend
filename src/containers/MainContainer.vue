@@ -6,7 +6,24 @@
         :isUserEvent="true"
         @close="closeEventDialog">
       </CreateEvent>
-      <Sidebar @filterGroup="filterGroup($event)"></Sidebar>
+      <!--Sidebar @filterGroup="filterGroup($event)"></Sidebar-->
+      <div class="app-sidebar">
+        <div class="groups">
+          <div class="groups-header">
+            {{$t("sidebar.title")}}
+          </div>
+          <div class="checkboxes">
+            <el-checkbox-group v-model="groups">
+                <el-checkbox 
+                  v-for="group in allGroups" 
+                  :key="group.groupId"
+                  :label="group.groupId">
+                  {{group.name}}
+                </el-checkbox>
+              </el-checkbox-group>
+          </div>
+        </div>
+      </div>
       <div class="dashboard-container">
         <!--calendar-list></calendar-list-->
         <!-- <location-tracker></location-tracker> -->
@@ -62,6 +79,9 @@ export default {
       events = events.concat(this.$store.getters.getUserEvents);
       events.sort((a, b) => a.startDate > b.startDate);
       return events;
+    },
+    allGroups() {
+      return this.$store.getters.getGroups;
     },
   },
   methods: {
