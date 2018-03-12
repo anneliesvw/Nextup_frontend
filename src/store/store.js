@@ -53,9 +53,9 @@ export default new Vuex.Store({
       const groupIndex = state.groups.findIndex(g => group.groupId === g.groupId);
       if (groupIndex >= 0) Vue.set(state.groups, groupIndex, group);
     },
-    deleteGroup: (state, group) => {
-      const index = state.groups.indexOf(group);
-      state.groups.splice(index, 1);
+    deleteGroup: (state, groupId) => {
+      const index = state.groups.findIndex(g => g.groupId === groupId);
+      if (index >= 0) state.groups.splice(index, 1);
     },
     setUserDetails: (state, payload) => {
       state.userDetails = payload;
@@ -65,10 +65,22 @@ export default new Vuex.Store({
       if (groupIndex >= 0) state.groups[groupIndex].polls.push(payload.pollInfo);
     },
     updatePoll: (state, payload) => {
+      window.console.log(payload);
+      payload.pollOptions.forEach(p => {
+        if (p.voters == null) p.voters = [];
+      });
       const groupIndex = state.groups.findIndex(g => payload.group === g.groupId);
       if (groupIndex >= 0) {
         const index = state.groups[groupIndex].polls.findIndex(p => payload.pollId === p.pollId);
         if (index >= 0) Vue.set(state.groups[groupIndex].polls, index, payload);
+      }
+    },
+    removePoll: (state, payload) => {
+      const groupIndex = state.groups.findIndex(g => g.groupId === payload.groupId);
+      if (groupIndex >= 0) {
+        const group = state.groups[groupIndex];
+        const pollIndex = group.polls.findIndex(p => p.pollId === payload.pollId);
+        if (pollIndex >= 0) state.groups[groupIndex].polls.splice(pollIndex, 1);
       }
     },
     addEventToGroup: (state, payload) => {
@@ -158,7 +170,7 @@ export default new Vuex.Store({
         payload.groupInfo,
         res => {
           logger.log('group succesfully deleted');
-          commit('deleteGroup', res.data);
+          commit('deleteGroup', payload.groupInfo);
           if (payload.onSuccess) payload.onSuccess(res);
         },
         err => {
@@ -247,10 +259,13 @@ export default new Vuex.Store({
       GroupsApi.deletePollFromGroup(
         payload.groupId,
         payload.pollId,
-        res => {
+        () => {
           logger.log('poll succesfully deleted');
-          commit('updateGroup', res.data);
-          if (payload.onSuccess) payload.onSuccess(res);
+          commit('removePoll', {
+            pollId: payload.pollId,
+            groupId: payload.groupId,
+          });
+          if (payload.onSuccess) payload.onSuccess();
         },
         err => {
           logger.log('unable to remove poll', err);
