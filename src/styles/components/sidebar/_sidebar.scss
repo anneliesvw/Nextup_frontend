@@ -34,6 +34,10 @@
 			width: 100%;
 			border-bottom: 1px solid $brand-blue-2;
 			
+			.el-checkbox__input {
+				@include flexcol;
+				justify-content: center;
+			}
 			
 			&.is-checked {
 				background: $brand-blue-1;
