@@ -1,5 +1,5 @@
 <template>
-  <div class="activity-wrapper">
+  <div class="activity-wrapper" @click="openEvent">
       <div class="activity-container">
         <div 
         :class="{
@@ -8,7 +8,7 @@
         }" 
         :style="backgroundPattern">
         </div>
-        <div class="activity-remove" v-if="deletable === true" @click="removeActivity()">
+        <div class="activity-remove" v-if="deletable === true" @click.stop="removeActivity()">
           <i class="fas fa-trash-alt"></i>
         </div>
         <div class="activity-bottom">
@@ -17,9 +17,7 @@
             </div>
             <div class="activity-details">
                 <div class="activity-owner">
-                  <router-link :to="{ name: 'Event', params: { id: event.eventId }}">
-                    {{ event ? event.name : '' }}
-                  </router-link>
+                  {{ event ? event.name : '' }}
                 </div>
                 <div class="activity-date">
                     {{ startDate }}  |  {{ endDate }}
@@ -78,6 +76,9 @@ export default {
           message: 'Delete canceled',
         });
       });
+    },
+    openEvent() {
+      this.$router.push(`/events/${this.event.eventId}`);
     },
   },
 };

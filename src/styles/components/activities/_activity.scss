@@ -1,6 +1,7 @@
 .activity-wrapper {
   min-width: 33%;
   padding: 12px;
+  cursor: pointer;
 }
 .activity-container {
   @include flexcol;
