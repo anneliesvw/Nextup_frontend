@@ -12,7 +12,7 @@
         <div class="group-wrapper">
           <div class="group-add" @click="openDialog">
             <i class="fas fa-plus"></i>
-            <span>Create group</span>
+            <span>{{$t("groups.create")}}</span>
           </div>
         </div>
         <Group 

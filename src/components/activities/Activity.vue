@@ -1,10 +1,16 @@
 <template>
   <div class="activity-wrapper">
       <div class="activity-container">
+        <div 
+        :class="{
+          'activity-graphic': true,
+          'has-graphic': this.event.avatarUrl ? true : false
+        }" 
+        :style="backgroundPattern">
+
         <div class="activity-remove" v-if="deletable === true" @click="removeActivity()">
           <i class="fas fa-trash-alt"></i>
         </div>
-        <div class="activity-graphic" :style="backgroundPattern">
         </div>
         <div class="activity-bottom">
             <div class="activity-toggle">
@@ -30,11 +36,21 @@ import { mapActions } from 'vuex';
 import moment from 'moment';
 import PatternGenerator from '../../services/patterngenerator';
 
-export default {
-  props: ['event', 'deletable'],
-  computed: {
-    startDate() {
-      return moment(this.event.startDate).format('DD/MM/YYYY HH:mm');
+  export default {
+    props: ['event'],
+    computed: {
+      startDate() {
+        return moment(this.event.startDate).format('DD/MM/YYYY HH:mm');
+      },
+      endDate() {
+        return moment(this.event.endDate).format('DD/MM/YYYY HH:mm');
+      },
+      backgroundPattern() {
+        const pattern = PatternGenerator.generateImage(`${Math.random() * 2345}`);
+        return {
+          backgroundImage: pattern,
+        };
+      },
     },
     endDate() {
       return moment(this.event.endDate).format('DD/MM/YYYY HH:mm');

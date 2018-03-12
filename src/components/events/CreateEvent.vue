@@ -5,6 +5,7 @@
         <ImageUploader
           :placeHolder="backgroundImage"
           imageType="events"
+          v-model="eventInfo.avatarUrl"
         >         
         </ImageUploader>
         <div class="create-event-input">
@@ -57,6 +58,7 @@ export default {
     return {
       eventInfo: {
         name: '',
+        avatarUrl: null,
         isPrivate: false,
         location: null,
         startDate: null,

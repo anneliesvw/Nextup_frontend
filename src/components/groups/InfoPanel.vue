@@ -9,7 +9,7 @@
         <div class="group-wrapper" v-if="admin === true">
           <div class="group-add" @click="() => this.$emit('showEventDialog', true)">
             <i class="fas fa-plus"></i>
-            <span>Create event</span>
+            <span>{{$t("events.create")}}</span>
           </div>
         </div>
         <Activity 

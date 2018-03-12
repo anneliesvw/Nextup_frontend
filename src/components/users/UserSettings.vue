@@ -7,7 +7,10 @@
     <edit-password v-if="editPasswordVisible" :isEPVisible="true" @close="closeDialogPW">
     </edit-password>
 
-    <ImageUploader>
+    <ImageUploader 
+      imageType="users"
+      v-model="userAvatar"
+    >
       
     </ImageUploader>
 
@@ -22,22 +25,18 @@
         <div class="usersettings-label">Firstname</div>
         <div class="usersettings-text">{{getUserDetails.person.firstName}}</div>
         <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button>
-        <div class="usersettings-line" v-for="i in 3" :key="i"></div>
         <div class="usersettings-label">Lastname</div>
         <div class="usersettings-text">{{getUserDetails.person.lastName}}</div>
         <div></div>
         <!-- <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button> -->
-        <div class="usersettings-line" v-for="i in 3" :key="i"></div>
         <div class="usersettings-label">Username</div>
         <div class="usersettings-text">{{getUserDetails.username}}</div>
         <div></div>
         <!-- <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button> -->
-        <div class="usersettings-line" v-for="i in 3" :key="i"></div>
         <div class="usersettings-label">Location</div>
         <div class="usersettings-text">{{getUserDetails.person.location.name}}</div>
         <div></div>
 
-        <div class="usersettings-line" v-for="i in 3" :key="i"></div>
         <div class="usersettings-label">Preferences</div>
         <div class="usersettings-text"><el-tag v-for="tag in getUserDetails.tags" :key="tag">{{tag.tagname}}</el-tag></div>
         <div></div>
@@ -58,6 +57,7 @@ import EditName from './dialogs/EditName.vue';
 import EditPassword from './dialogs/EditPassword.vue';
 import GroupItem from './groupItem.vue';
 import ImageUploader from '../ImageUploader.vue';
+// import UserService from '../../services/userservice';
 
 export default {
   components: {
@@ -66,13 +66,40 @@ export default {
     GroupItem,
     ImageUploader,
   },
-
   data() {
     return {
+      userAvatar: this.$store.getters.getUserDetails.person.avatarUrl,
       editNameVisible: false,
       editPasswordVisible: false,
       newPreferenceText: '',
     };
+  },
+  watch: {
+    userAvatar(newValue) {
+      const userInfo = JSON.parse(JSON.stringify(this.getUserDetails));
+      userInfo.person.avatarUrl = newValue;
+      window.console.log(userInfo);
+      const payload = {
+        user: userInfo,
+        onSuccess: () => {
+          this.$notify({
+            title: 'User Updated',
+            message: 'User successfully updated.',
+            type: 'success',
+            duration: 2000,
+          });
+        },
+        onError: () => {
+          this.$notify({
+            title: 'Unable To Update User',
+            message: 'Unable to update User.',
+            type: 'error',
+            duration: 2000,
+          });
+        },
+      };
+      this.$store.dispatch('updateUser', payload);
+    },
   },
   methods: {
     openDialogName() {

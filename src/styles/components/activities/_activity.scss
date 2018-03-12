@@ -34,12 +34,20 @@
     //border-top-left-radius: 3px;
     //background-size: cover;
     background-position: center;
+    &.has-graphic {
+      background-size: contain;
+      background-repeat: repeat;
+      background-size: 120%;
+      background-color: white;
+    }
+    
   }
   .activity-bottom {
     background: white;
     border-top: 1px solid $brand-gray-1;
     padding: 12px;
     @include flexrow;
+    align-items: center;
     .activity-toggle {
       @include flexcol;
       justify-content: center;

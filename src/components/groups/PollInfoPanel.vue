@@ -8,10 +8,15 @@
         <div class="group-wrapper" v-if="admin === true">
           <div class="group-add" @click="showCreatePoll">
             <i class="fas fa-plus"></i>
-            <span>Create poll</span>
+            <span>{{$t("polls.create")}}</span>
           </div>
         </div>
-        <Poll v-for="poll in this.polls" :poll="poll" :key="poll.pollId" @showPollDetail="showPollDetail($event)"></Poll>
+        <Poll v-for="poll in this.polls" 
+          :poll="poll" :key="poll.pollId" 
+          @showPollDetail="showPollDetail($event)" 
+          @showVotePoll="showVotePoll($event)"
+          :groupId="groupDetails.groupId">
+        </Poll>
       </div>
     </div>
   </div>
@@ -23,7 +28,7 @@
   import GenericTitle from '../layout_misc/GenericTitle.vue';
 
   export default {
-    props: ['title', 'polls', 'admin'],
+    props: ['title', 'polls', 'admin', 'groupDetails'],
     components: {
       Activity,
       Poll,
@@ -38,6 +43,9 @@
       },
       showPollDetail(poll) {
         this.$emit('showPollDetail', poll);
+      },
+      showVotePoll(poll) {
+        this.$emit('showVotePoll', poll);
       },
     },
   };

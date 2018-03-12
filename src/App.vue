@@ -1,7 +1,7 @@
 <template>
   <div class="site-wrapper">
     <Navigation v-if="userdetailsLoaded != null && loggedIn"></Navigation>
-    <div class="site-main">
+    <div class="site-main" v-if="userdetailsLoaded != null || !loggedIn">
       <div class="site-content">
         <router-view></router-view>
       </div>
@@ -47,7 +47,7 @@ export default {
       localStorage.removeItem('NEXTUP_TOKEN');
       this.loggedIn = false;
       window.console.log('logging out');
-      this.$router.push('Register');
+      this.$router.push('/register');
     },
     tryLogin(loginInfo) {
       AuthService.tryLogin(
