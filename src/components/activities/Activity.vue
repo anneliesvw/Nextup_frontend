@@ -39,7 +39,8 @@ export default {
       return moment(this.event.endDate).format('DD/MM/YYYY HH:mm');
     },
     backgroundPattern() {
-      const pattern = PatternGenerator.generateImage(`${Math.random() * 2345}`);
+      const pattern = this.event.avatarUrl ?
+        `url(${process.env.OBJECT_STORE}/${this.event.avatarUrl})` : PatternGenerator.generateImage(`${Math.random() * 2345}`);
       return {
         backgroundImage: pattern,
       };
