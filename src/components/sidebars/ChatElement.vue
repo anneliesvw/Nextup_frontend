@@ -26,8 +26,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import ChatService from './../../services/chatservice';
 
 export default {
+  mounted() {
+    ChatService.connectToRoom('3_booooooo');
+    ChatService.subscribeToEvents('3_booooooo', msg => window.console.log('message socket2', msg));
+  },
   props: ['group', 'activechat'],
   sockets: {
     savedmessage(val) {
