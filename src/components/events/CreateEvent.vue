@@ -33,6 +33,34 @@
             <el-form-item label="Description">
               <el-input type="textarea" :autosize="{minRows: 4, maxRows: 5}" v-model="eventInfo.description"></el-input>
             </el-form-item>
+            <el-form-item label="Tags">
+              <el-tag
+                :key="tag.tagname"
+                v-for="tag in eventInfo.tags"
+                closable
+                :disable-transitions="false"
+                @close="handleClose(tag)">
+                {{tag.tagname}}
+              </el-tag>
+              <el-autocomplete
+                class="input-new-tag"
+                v-if="inputVisible"
+                v-model="inputValue.tagname"
+                :fetch-suggestions="querySearch"
+                :trigger-on-focus="false"
+                ref="saveTagInput"
+                size="mini"
+                @keyup.enter.native="handleInputConfirm"
+                @select="handleSelect"
+              >
+                <i
+                  class="el-icon-close el-input__icon"
+                  slot="suffix"
+                  @click="handleCloseEdit">
+                </i>
+              </el-autocomplete>
+              <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+        </el-form-item>
         </div>
       </el-form>
     </div>
@@ -45,12 +73,25 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import ImageUploader from '../ImageUploader.vue';
 import PatternGenerator from '../../services/patterngenerator';
+import TagApi from '../../services/tagservice';
 
+const logger = window.console;
 
 export default {
-  props: ['isVisible', 'activeGroup', 'eventData'],
+  props: {
+    isVisible: Boolean,
+    activeGroup: {
+      type: Object,
+      default: () => {},
+    },
+    isUserEvent: {
+      type: Boolean,
+      default: false,
+    },
+  },
   components: {
     ImageUploader,
   },
@@ -64,17 +105,22 @@ export default {
         startDate: null,
         endDate: null,
         description: null,
+        tags: [],
       },
       dateValue: '',
       dynamicTags: [],
       inputVisible: false,
-      inputValue: '',
-      participantsValue: 0,
-      price: '',
-      valuta: '',
+      inputValue: {
+        tagId: null,
+        tagname: '',
+      },
     };
   },
   computed: {
+    ...mapGetters(['getEventById']),
+    eventData() {
+      return this.getEventById(parseInt(this.$route.params.id, 10));
+    },
     backgroundImage() {
       return PatternGenerator.generateImage(this.eventInfo.title || '');
     },
@@ -91,11 +137,14 @@ export default {
     updatingEvent() {
       return this.eventData;
     },
+    userDetails() {
+      return this.$store.getters.getUserDetails;
+    },
   },
   methods: {
     onCreateEvent() {
       const payload = {
-        groupId: this.activeGroup.groupId,
+        // groupId: this.activeGroup.groupId,
         eventInfo: this.eventInfo,
         onSuccess: res => {
           this.$notify({
@@ -116,13 +165,26 @@ export default {
           this.$emit('close');
         },
       };
-      this.$store.dispatch('addEventToGroup', payload);
+      if (this.isUserEvent) {
+        payload.groupId = this.userDetails.userId;
+        this.$store.dispatch('addEventToUser', payload);
+      } else {
+        payload.groupId = this.activeGroup.groupId;
+        this.$store.dispatch('addEventToGroup', payload);
+      }
     },
     onUpdateEvent() {
-      this.$store.dispatch('updateEvent', {
-        eventData: this.eventInfo,
-        eventId: this.eventData.eventId,
-      });
+      if (!this.eventData.groupOwner) {
+        this.$store.dispatch('updateUserEvent', {
+          eventData: this.eventInfo,
+          eventId: this.eventData.eventId,
+        });
+      } else {
+        this.$store.dispatch('updateEvent', {
+          eventData: this.eventInfo,
+          eventId: this.eventData.eventId,
+        });
+      }
       this.$emit('close');
     },
     onSetLocation(place) {
@@ -132,10 +194,49 @@ export default {
         name: place.formatted_address,
       };
     },
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick(() => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+    handleClose(tag) {
+      this.eventInfo.tags.splice(this.eventInfo.tags.indexOf(tag), 1);
+    },
+    handleInputConfirm() {
+      const { inputValue } = this;
+      if (inputValue.tagname) {
+        this.eventInfo.tags.push(inputValue);
+      }
+      this.inputVisible = false;
+      this.inputValue = {};
+    },
+    querySearch(queryString, cb) {
+      TagApi.getTags(
+        queryString,
+        res => {
+          logger.log('Similar tags succesfully loaded.');
+          const results = [];
+          if (res.data !== '') res.data.forEach(e => results.push({ id: e.tagId, value: e.tagname }));
+          cb(results);
+        },
+        err => {
+          logger.log('Unable to load similar tags', err);
+        },
+      );
+    },
+    handleSelect(item) {
+      this.inputValue = { tagId: item.id, tagname: item.value };
+      this.handleInputConfirm();
+    },
+    handleCloseEdit() {
+      this.inputVisible = false;
+      this.inputValue = {};
+    },
   },
   mounted() {
     if (this.updatingEvent) {
-      this.eventInfo = this.eventData;
+      this.eventInfo = { ...this.eventData };
     }
   },
 };

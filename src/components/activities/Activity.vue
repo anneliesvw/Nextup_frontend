@@ -1,5 +1,5 @@
 <template>
-  <div class="activity-wrapper">
+  <div class="activity-wrapper" @click="openEvent">
       <div class="activity-container">
         <div 
         :class="{
@@ -8,18 +8,13 @@
         }" 
         :style="backgroundPattern">
         </div>
-        <div class="activity-remove" v-if="deletable === true" @click="removeActivity()">
-          <i class="fas fa-trash-alt"></i>
-        </div>
         <div class="activity-bottom">
             <div class="activity-toggle">
                 <input type="checkbox">
             </div>
             <div class="activity-details">
                 <div class="activity-owner">
-                  <router-link :to="{ name: 'Event', params: { id: event.eventId }}">
-                    {{ event ? event.name : '' }}
-                  </router-link>
+                  {{ event ? event.name : '' }}
                 </div>
                 <div class="activity-date">
                     {{ startDate }}  |  {{ endDate }}
@@ -31,12 +26,11 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
 import moment from 'moment';
 import PatternGenerator from '../../services/patterngenerator';
 
 export default {
-  props: ['event', 'deletable'],
+  props: ['event'],
   computed: {
     startDate() {
       return moment(this.event.startDate).format('DD/MM/YYYY HH:mm');
@@ -45,7 +39,8 @@ export default {
       return moment(this.event.endDate).format('DD/MM/YYYY HH:mm');
     },
     backgroundPattern() {
-      const pattern = PatternGenerator.generateImage(`${Math.random() * 2345}`);
+      const pattern = this.event.avatarUrl ?
+        `url(${process.env.OBJECT_STORE}/${this.event.avatarUrl})` : PatternGenerator.generateImage(`${Math.random() * 2345}`);
       return {
         backgroundImage: pattern,
       };
@@ -61,23 +56,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['removeEventFromGroup']),
-    removeActivity() {
-      this.$confirm('This will permanently delete the event. Continue?', 'Warning', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
-        type: 'warning',
-      }).then(() => {
-        this.removeEventFromGroup({
-          groupId: this.event.groupOwner.groupId,
-          eventId: this.event.eventId,
-        });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: 'Delete canceled',
-        });
-      });
+    openEvent() {
+      this.$router.push(`/events/${this.event.eventId}`);
     },
   },
 };

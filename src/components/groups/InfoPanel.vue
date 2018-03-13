@@ -16,7 +16,7 @@
           v-for="event in events" 
           :key="event.eventId" 
           :event="event"
-          :deletable="editing"></Activity>
+        ></Activity>
       </div>
     </div>
   </div>

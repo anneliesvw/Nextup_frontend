@@ -17,7 +17,7 @@
         </el-form-item>
         <el-form-item label="Preferences">
           <el-tag
-            :key="tag"
+            :key="tag.tagname"
             v-for="tag in userInfo.tags"
             closable
             :disable-transitions="false"
@@ -27,7 +27,7 @@
           <el-autocomplete
             class="input-new-tag"
             v-if="inputVisible"
-            v-model="inputValue"
+            v-model="inputValue.tagname"
             :fetch-suggestions="querySearch"
             :trigger-on-focus="false"
             ref="saveTagInput"
@@ -64,7 +64,10 @@ export default {
       originalState: this.userDetails,
       userInfo: { ...this.userDetails },
       inputVisible: false,
-      inputValue: '',
+      inputValue: {
+        tagId: null,
+        tagname: '',
+      },
     };
   },
   computed: {
@@ -126,19 +129,20 @@ export default {
 
     handleInputConfirm() {
       const { inputValue } = this;
-      if (inputValue) {
-        this.userInfo.tags.push({ tagname: inputValue });
+      if (inputValue.tagname) {
+        this.userInfo.tags.push(inputValue);
       }
       this.inputVisible = false;
-      this.inputValue = '';
+      this.inputValue = {};
     },
     querySearch(queryString, cb) {
       TagApi.getTags(
         queryString,
         res => {
           logger.log('Similar tags succesfully loaded.');
+          logger.log(res.data);
           const results = [];
-          res.data.forEach(e => results.push({ value: e.tagname }));
+          if (res.data !== '') res.data.forEach(e => results.push({ id: e.tagId, value: e.tagname }));
           cb(results);
         },
         err => {
@@ -147,12 +151,12 @@ export default {
       );
     },
     handleSelect(item) {
-      this.inputValue = item.value;
+      this.inputValue = { tagId: item.id, tagname: item.value };
       this.handleInputConfirm();
     },
     handleCloseEdit() {
       this.inputVisible = false;
-      this.inputValue = '';
+      this.inputValue = {};
     },
   },
 };

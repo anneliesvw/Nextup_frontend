@@ -1,9 +1,9 @@
 <template>
-  <div class="site-wrapper">
+  <div class="site-wrapper" v-if="loadingDone">
     <Navigation v-if="userdetailsLoaded != null && loggedIn"></Navigation>
-    <div class="site-main" v-if="userdetailsLoaded != null || !loggedIn">
+    <div class="site-main">
       <div class="site-content">
-        <router-view></router-view>
+        <router-view v-if="loadingDone"></router-view>
       </div>
       <chat-menu v-if="loggedIn"></chat-menu>
     </div>
@@ -21,6 +21,7 @@ export default {
   data() {
     return {
       loggedIn: false,
+      loadingDone: false,
     };
   },
   components: {
@@ -67,6 +68,17 @@ export default {
     },
   },
   beforeCreate() {
+    const that = this;
+    this.$store.dispatch('loadUserDetails').then(() => {
+      window.console.log('token verified');
+      this.loggedIn = true;
+      this.$store.dispatch('loadGroups');
+      that.loadingDone = true;
+    }).catch(() => {
+      that.logout();
+      that.loadingDone = true;
+    });
+    /*
     AuthService.getUserDetails(() => {
       window.console.log('token verified');
       this.loggedIn = true;
@@ -75,6 +87,7 @@ export default {
     }, () => {
       this.logout();
     });
+    */
   },
   beforeDestroy() {
     LoginEvents.bus.$off(LoginEvents.TRY_LOGIN, this.tryLogin);
