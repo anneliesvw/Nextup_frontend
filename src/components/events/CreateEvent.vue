@@ -117,9 +117,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getEventById']),
+    // ...mapGetters(['getEventById']),
     eventData() {
-      return this.getEventById(parseInt(this.$route.params.id, 10));
+      return this.$store.getters.getEventById(
+        parseInt(this.$route.params.id, 10)
+      );
     },
     backgroundImage() {
       return PatternGenerator.generateImage(this.eventInfo.title || '');
@@ -217,12 +219,15 @@ export default {
         res => {
           logger.log('Similar tags succesfully loaded.');
           const results = [];
-          if (res.data !== '') res.data.forEach(e => results.push({ id: e.tagId, value: e.tagname }));
+          if (res.data !== '')
+            res.data.forEach(e =>
+              results.push({ id: e.tagId, value: e.tagname })
+            );
           cb(results);
         },
         err => {
           logger.log('Unable to load similar tags', err);
-        },
+        }
       );
     },
     handleSelect(item) {
