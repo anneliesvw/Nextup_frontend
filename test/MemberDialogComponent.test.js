@@ -18,7 +18,7 @@ describe('MemberDialogComp', () => {
     });
   });
 
-  it('dispatches an action when a button is clicked', () => {
+  it('dispatches addUserToGroup when a button is clicked', () => {
     const wrapper = shallow(MemberDialogComp, {
       store,
       localVue,
@@ -27,6 +27,14 @@ describe('MemberDialogComp', () => {
     wrapper.find('.appended-input').trigger('click');
     wrapper.find('.appended-input').trigger('click');
     expect(actions.addUserToGroup.mock.calls).toHaveLength(2);
+  });
+
+  it('dispatches deleteUserFromGroup when a button is clicked', () => {
+    const wrapper = shallow(MemberDialogComp, {
+      store,
+      localVue,
+    });
+    wrapper.setProps({ activeGroup: { groupId: 1, users: [{ userId: 1 }] } });
     wrapper.find('.member-remove').trigger('click');
     expect(actions.deleteUserFromGroup.mock.calls).toHaveLength(1);
   });
