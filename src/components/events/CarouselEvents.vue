@@ -22,7 +22,6 @@
 <script>
 import { Carousel, Slide } from 'vue-carousel';
 import carouselEvent from './CarouselEvent.vue';
-import DetailEvent from './../groups/detailEvent.vue';
 import Activity from '../activities/Activity.vue';
 
 export default {
@@ -30,7 +29,6 @@ export default {
     Carousel,
     Slide,
     carouselEvent,
-    DetailEvent,
     Activity,
   },
   data() {

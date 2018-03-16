@@ -1,6 +1,9 @@
 <template>
   <div class="activity-wrapper" @click="openEvent">
       <div class="activity-container">
+        <div class="activity-group" v-if="event.groupOwner && event.groupOwner.name">
+          <el-tag type="primary" size="small">{{event.groupOwner.name}}</el-tag>
+        </div>
         <div 
         :class="{
           'activity-graphic': true,
@@ -9,18 +12,20 @@
         :style="backgroundPattern">
         </div>
         <div class="activity-bottom">
-            <div class="activity-toggle">
-                <input type="checkbox">
-            </div>
             <div class="activity-details">
-                <div class="activity-owner">
-                  {{ event ? event.name : '' }}
+                <div class="activity-title">
+                  <div class="activity-name">
+                    {{ event ? event.name : '' }}
+                  </div>
                 </div>
                 <div class="activity-date">
-                    {{ startDate }}  |  {{ endDate }}
+                  {{ startDate }}    |    {{ endDate }}
                 </div>
-            
             </div>
+            <!--div class="activity-toggle">
+                <el-button type="primary" size="small" @click.prevent.stop>Attend</el-button>
+            </div-->
+            
         </div>
     </div>
   </div>

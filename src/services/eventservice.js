@@ -3,9 +3,10 @@ import axios from 'axios';
 const API_URL = process.env.API_ENDPOINT;
 const EVENTS_URL = `${API_URL}/api/events`;
 
+const getBearer = () => `Bearer ${localStorage.getItem('NEXTUP_TOKEN')}`;
 const getHeader = () => ({
   headers: {
-    Authorization: `Bearer ${localStorage.getItem('NEXTUP_TOKEN')}`,
+    Authorization: getBearer(),
   },
 });
 
@@ -41,6 +42,15 @@ const deleteEventFromUser = (userId, eventId, onSuccess, onError) => {
   axios.delete(`${EVENTS_URL}/user/${userId}/event/${eventId}`, getHeader()).then(onSuccess, onError);
 };
 
+const getByFilterObject = (filterObject, onSuccess, onError) => {
+  window.console.log(filterObject);
+  axios.post(
+    `${EVENTS_URL}/public_events`,
+    filterObject,
+    getHeader(),
+  ).then(onSuccess, onError);
+};
+
 export default {
   getEvent,
   addAttendingUserToEvent,
@@ -49,4 +59,5 @@ export default {
   addEventToUser,
   deleteEventFromUser,
   updateUserEvent,
+  getByFilterObject,
 };
