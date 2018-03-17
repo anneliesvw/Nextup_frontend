@@ -13,14 +13,6 @@
   import ChatElement from './ChatElement.vue';
 
   export default {
-    sockets: {
-      connect() {
-        window.console.log('socket connected');
-      },
-      chatmessage(val) {
-        window.console.log(`received chatmessage event from socket ${val}`);
-      },
-    },
     data() {
       return {
         activechat: -1,

@@ -73,7 +73,6 @@
         const payload = {
           groupInfo: this.groupInfo,
           onSuccess: res => {
-            this.$socket.emit('createroom', { roomname: `${res.data.groupId}_${res.data.name}`, messages: [] });
             this.$notify({
               title: 'Group Created',
               message: `Group '${res.data.name}' successfully created.`,

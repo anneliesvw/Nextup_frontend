@@ -30,8 +30,17 @@ import ChatService from './../../services/chatservice';
 
 export default {
   mounted() {
-    ChatService.connectToRoom('3_booooooo');
-    ChatService.subscribeToEvents('3_booooooo', msg => window.console.log('message socket2', msg));
+    ChatService.subscribeToEvents(
+      this.group.groupId,
+      messages => {
+        window.console.log('received saved messages in room', this.group.groupId, messages);
+        messages.forEach(msg => this.addMessage(msg));
+      },
+      msg => {
+        window.console.log('received chat message', msg);
+        this.addMessage(msg.message);
+      },
+    );
   },
   props: ['group', 'activechat'],
   sockets: {
@@ -66,9 +75,20 @@ export default {
     },
   },
   methods: {
+    // submitMessage() {
+    //   this.$socket.emit('chatmessage', {
+    //     room: `${this.group.groupId}_${this.group.name}`,
+    //     message: {
+    //       from: this.getUserDetails.userId,
+    //       text: this.text,
+    //     },
+    //   });
+    //   this.text = '';
+    // },
     submitMessage() {
-      this.$socket.emit('chatmessage', {
-        room: `${this.group.groupId}_${this.group.name}`,
+      window.console.log('sending chat message', this.text);
+      ChatService.sendMessage({
+        roomname: this.group.groupId,
         message: {
           from: this.getUserDetails.userId,
           text: this.text,
@@ -85,11 +105,11 @@ export default {
     getUserById(id) {
       return this.group.users.filter(u => u.userId === parseInt(id, 10));
     },
-    addMessage(messageObject) {
+    addMessage(message) {
       this.messages.push({
-        myMessage: messageObject.message.from === this.getUserDetails.userId,
-        text: messageObject.message.text,
-        name: this.getUserById(messageObject.message.from)[0] ? this.getUserById(messageObject.message.from)[0].person.firstName : 'unknown',
+        myMessage: message.from === this.getUserDetails.userId,
+        text: message.text,
+        name: this.getUserById(message.from)[0] ? this.getUserById(message.from)[0].person.firstName : 'unknown',
       });
     },
     setMyselfActive() {
