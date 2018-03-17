@@ -12,7 +12,7 @@
       @include flexrow;
       flex-wrap: wrap;
       background: white;
-      justify-content: flex-start;
+      justify-content: space-between;
       .event-filter {
         //background: $brand-blue-7;
         background: transparent;
@@ -27,6 +27,22 @@
           border-radius: 4px;
           min-width: 350px;
           border: 1px solid $brand-gray-1;
+        }
+        .distance-slider {
+          @include flexrow;
+          font-family: $title-font-family;
+          text-transform: uppercase;
+          font-size: 12px;
+          align-items: center;
+          .el-slider {
+            flex: 1;
+            padding-right: 5px;
+            padding-left: 15px;
+            .el-slider__runway {
+              margin: 8px 0px;
+            }
+          }
+          
         }
       }
       .filter-label {

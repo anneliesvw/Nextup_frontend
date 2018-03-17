@@ -21,6 +21,9 @@
                 <div class="activity-date">
                   {{ startDate }}    |    {{ endDate }}
                 </div>
+                <div class="activity-location">
+                  {{event.location.name}}
+                </div>
             </div>
             <!--div class="activity-toggle">
                 <el-button type="primary" size="small" @click.prevent.stop>Attend</el-button>

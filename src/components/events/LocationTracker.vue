@@ -22,10 +22,8 @@
         </gmap-marker>
         <gmap-marker
           :position="eventLocation"
-          :icon="{
-            url: getCircle,
-            fillColor: 'blue',
-          }">
+          :label="'E'"
+          >
         </gmap-marker>
       </gmap-map>
 
@@ -35,9 +33,13 @@
 </template>
 
 <script>
+  import LocationSharingService from '../../services/locationsharingservice';
+
   export default {
+    props: ['eventId'],
     data() {
       return {
+        subscription: null,
         currentUser: null,
         eventLocation: {
           lat: 50.0,
@@ -120,16 +122,18 @@
       hideTitle() {
         this.currentUser = null;
       },
-      moveSome() {
-        window.console.log('movin on');
-        this.locations.forEach(l => {
-          l.location.longitude += 0.01;
-          l.location.latitude += 0.01;
-        });
-      },
     },
     mounted() {
-      setInterval(this.moveSome, 1000);
+      // TODO: LocationSharing
+      LocationSharingService.connectionPromise.then(d => {
+        window.console.log(d);
+        this.subscription = LocationSharingService.subscribeToEvent(this.eventId, msg => {
+          window.console.log(msg);
+        });
+      });
+    },
+    beforeDestroy() {
+      this.subscription.unsubscribe();
     },
   };
 </script>

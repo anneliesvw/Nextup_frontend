@@ -23,6 +23,14 @@
                 @place_changed="onSetLocation"
                 :value="locationValue">
             </gmap-autocomplete>
+            <div class="distance-slider">
+              Max Distance
+              <el-slider 
+                :max="500"
+                v-model="filterObject.maxDistance"
+                :format-tooltip="formatDistanceToolTip">
+              </el-slider>
+            </div>
           </div>
         </div>
         <div class="date-filter event-filter">
@@ -114,6 +122,7 @@ export default {
       events: null,
       locationValue: '',
       filterObject: {
+        maxDistance: null,
         tags: [],
         earliestDate: null,
         latestDate: null,
@@ -126,9 +135,13 @@ export default {
     };
   },
   methods: {
+    formatDistanceToolTip(value) {
+      return `${value} km`;
+    },
     clearLocation() {
       this.filterObject.locationFilter = null;
       this.locationValue = '';
+      this.filterObject.maxDistance = 0;
     },
     clearTags() {
       this.filterObject.tags = [];
