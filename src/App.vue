@@ -16,6 +16,7 @@ import LoginEvents from './events/loginevents';
 import Navigation from './components/header/Navigation.vue';
 import AuthService from './services/authservice';
 import ChatMenu from './components/sidebars/ChatMenu.vue';
+import LocationService from './services/locationsharingservice';
 
 export default {
   data() {
@@ -94,6 +95,7 @@ export default {
     LoginEvents.bus.$off(LoginEvents.LOGOUT, this.logout);
   },
   mounted() {
+    window.console.log(LocationService);
     LoginEvents.bus.$on(LoginEvents.TRY_LOGIN, this.tryLogin);
     LoginEvents.bus.$on(LoginEvents.LOGOUT, this.logout);
   },

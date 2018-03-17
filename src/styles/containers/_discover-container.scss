@@ -1,4 +1,100 @@
-.discover-dialog-img {
+.discover-events {
+  flex: 1;
+  @include flexcol;
+  background: $brand-blue-1;
+  .discover-filters {
+    padding: 20px;
+    .filter-container {
+      border: 1px solid $brand-blue-1;
+      padding: 5px;
+      border-radius: 4px;
+      @include defaultshadow;
+      @include flexrow;
+      flex-wrap: wrap;
+      background: white;
+      justify-content: space-between;
+      .event-filter {
+        //background: $brand-blue-7;
+        background: transparent;
+        padding: 10px;
+        @include flexcol;
+        border-radius: 4px;
+        justify-content: flex-start;
+        align-items: center;
+        input.google-maps-autocomplete {
+          padding: 10px;
+          font-size: 14px;
+          border-radius: 4px;
+          min-width: 350px;
+          border: 1px solid $brand-gray-1;
+        }
+        .distance-slider {
+          @include flexrow;
+          font-family: $title-font-family;
+          text-transform: uppercase;
+          font-size: 12px;
+          align-items: center;
+          .el-slider {
+            flex: 1;
+            padding-right: 5px;
+            padding-left: 15px;
+            .el-slider__runway {
+              margin: 8px 0px;
+            }
+          }
+          
+        }
+      }
+      .filter-label {
+        position: relative;
+        padding-right: 60px;
+        color: $brand-blue-7;
+        font-family: $title-font-family;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        padding-bottom: 4px;
+        width: 100%;
+        text-align: left;
+        font-weight: 500;
+        border-bottom: 1px solid $brand-blue-7;
+        .clear-filter {
+          border: 1px solid $brand-blue-7;
+          color: white;
+          font-family: $title-font-family;
+          position: absolute;
+          right: 0px;
+          background: $brand-blue-7;
+          top: 0px;
+          font-size: 12px;
+          border-radius: 4px;
+          padding: 2px 5px;
+          &:hover {
+            cursor: pointer;
+            color: $brand-blue-7;
+            background: $brand-blue-1;
+          }
+          
+        }
+
+      }
+    }
+    
+  }
+  .discover-results {
+    flex: 1;
+    @include flexcol;
+    align-items: center;
+    width: 100%;
+    background: $brand-blue-1;
+    .results-wrapper {
+      @include flexrow;
+      flex-wrap: wrap;
+      //align-items: center;
+      //justify-content: center;
+    }
+  }
+}
+/*.discover-dialog-img {
   height: 250px;
   background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/3d/London_Bridge_%289691084663%29.jpg');
   background-size: cover;
@@ -93,4 +189,4 @@ $moveRight: 100% * ($growFactor - 1);
 
 .discover-tile:hover ~ .discover-tile {
   transform: translate3d($moveRight, 0, 0);
-}
+}*/
