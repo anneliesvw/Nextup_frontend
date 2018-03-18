@@ -87,7 +87,7 @@
         window.console.log(d);
         this.subscription = LocationSharingService.subscribeToEvent(this.event.eventId, msg => {
           window.console.log(msg);
-          this.locations = JSON.parse(msg.body);
+          this.$set(this, 'locations', JSON.parse(msg.body));
         });
       });
     },
