@@ -56,8 +56,8 @@
           user: l.user,
           id: l.id,
           position: {
-            lat: l.location.longitude,
-            lng: l.location.latitude,
+            lat: l.location.latitude,
+            lng: l.location.longitude,
           },
         }));
       },
