@@ -41,50 +41,7 @@
       return {
         subscription: null,
         currentUser: null,
-        locations: [
-          {
-            id: 1,
-            location: {
-              longitude: 51.00001,
-              latitude: 50.02,
-            },
-            user: {
-              username: 'mahenvermeulen@msn.com',
-              person: {
-                firstName: 'mahen',
-                lastName: 'vermeulen',
-              },
-            },
-          },
-          {
-            id: 2,
-            location: {
-              longitude: 50.01,
-              latitude: 50.4000002,
-            },
-            user: {
-              username: 'mahenvermeulen@msn.com',
-              person: {
-                firstName: 'annelies',
-                lastName: 'van wallendael',
-              },
-            },
-          },
-          {
-            id: 3,
-            location: {
-              longitude: 50.04,
-              latitude: 50.0000005,
-            },
-            user: {
-              username: 'mahenvermeulen@msn.com',
-              person: {
-                firstName: 'matthias',
-                lastName: 'goossens',
-              },
-            },
-          },
-        ],
+        locations: [],
       };
     },
     computed: {
@@ -139,7 +96,3 @@
     },
   };
 </script>
-
-<style scoped>
-
-</style>
