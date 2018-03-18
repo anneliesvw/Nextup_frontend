@@ -36,15 +36,11 @@
   import LocationSharingService from '../../services/locationsharingservice';
 
   export default {
-    props: ['eventId'],
+    props: ['event'],
     data() {
       return {
         subscription: null,
         currentUser: null,
-        eventLocation: {
-          lat: 50.0,
-          lng: 50.0,
-        },
         locations: [
           {
             id: 1,
@@ -92,6 +88,12 @@
       };
     },
     computed: {
+      eventLocation() {
+        return {
+          lat: this.event.location.latitude,
+          lng: this.event.location.longitude,
+        };
+      },
       markers() {
         return this.locations.map(l => ({
           user: l.user,
@@ -124,11 +126,11 @@
       },
     },
     mounted() {
-      // TODO: LocationSharing
       LocationSharingService.connectionPromise.then(d => {
         window.console.log(d);
-        this.subscription = LocationSharingService.subscribeToEvent(this.eventId, msg => {
+        this.subscription = LocationSharingService.subscribeToEvent(this.event.eventId, msg => {
           window.console.log(msg);
+          this.locations = msg;
         });
       });
     },

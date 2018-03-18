@@ -41,7 +41,7 @@
       </div>
       <generic-title>Event Location</generic-title>
       <div class="event-generic event-location-tracker">
-        <location-tracker :eventId="eventData.eventId"></location-tracker>
+        <location-tracker :event="eventData"></location-tracker>
       </div>
       <generic-title>Description</generic-title>
       <div class="event-description event-generic">
