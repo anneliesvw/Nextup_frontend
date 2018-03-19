@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="6">
+
+  <testsuite name="group"
+    errors="0" failures="0" hostname="" id="" package="group" skipped="0"
+    tests="6" time="25.18" timestamp="Mon, 19 Mar 2018 18:35:25 GMT">
+  
+    <testcase name="login" classname="group" time="10.52" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="createGroup" classname="group" time="4.418" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="updateGroup" classname="group" time="2.270" assertions="6">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="createEvent" classname="group" time="5.354" assertions="9">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="deleteEvent" classname="group" time="1.115" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="deleteGroup" classname="group" time="1.503" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+
+  
+
+  
+  </testsuite>
+</testsuites>

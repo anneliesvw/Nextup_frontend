@@ -5,7 +5,6 @@
   "custom_assertions_path" : "",
   "page_objects_path" : "",
   "globals_path" : "",
-
   "selenium" : {
     "start_process" : true,
     "server_path" : "node_modules/selenium-standalone/.selenium/selenium-server/3.8.1-server.jar",
@@ -20,6 +19,15 @@
   },
 
   "test_settings" : {
+    "mocha_tests" : {
+      "test_runner" : {
+        "type" : "mocha",
+        "options" : {
+          "ui" : "tdd",
+          "reporter" : "list"
+        }
+      }
+    },
     "default" : {
       "launch_url" : "http://localhost:8081",
       "selenium_port"  : 4444,

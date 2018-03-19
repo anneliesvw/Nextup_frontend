@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="3">
+
+  <testsuite name="profile"
+    errors="0" failures="0" hostname="" id="" package="profile" skipped="0"
+    tests="3" time="22.77" timestamp="Mon, 19 Mar 2018 18:35:50 GMT">
+  
+    <testcase name="login" classname="profile" time="12.71" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="updateProfile" classname="profile" time="3.909" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="updatePassword" classname="profile" time="6.148" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+
+  
+
+  
+  </testsuite>
+</testsuites>
