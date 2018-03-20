@@ -26,14 +26,6 @@
         this.activechat = id;
       },
     },
-    watch: {
-      // getGroups(groups) {
-      //   groups.forEach(group => {
-      //     this.$socket.emit('joinroom', `${group.groupId}_${group.name}`);
-      //     window.console.log(`joined room ${group.groupId}_${group.name}`);
-      //   });
-      // },
-    },
     components: {
       ChatElement,
     },
