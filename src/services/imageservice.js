@@ -5,7 +5,10 @@ const IMAGES_URL = `${API_URL}/api/images`;
 
 const getConfig = () => {
   const config = {
-    headers: { 'content-type': 'multipart/form-data' },
+    headers: {
+      'content-type': 'multipart/form-data',
+      Authorization: `Bearer ${localStorage.getItem('NEXTUP_TOKEN')}`,
+    },
   };
   return config;
 };
