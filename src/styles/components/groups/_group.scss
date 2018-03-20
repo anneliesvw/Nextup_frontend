@@ -66,9 +66,11 @@
       align-items: center;
       .group-name {
         font-size: 24px;
-        text-transform: uppercase;
+        // text-transform: uppercase;
         margin-bottom: 5px;
         font-family: $title-font-family;
+        color: $brand-blue-7;
+        font-weight: 400;
       }
       .group-notifications {
         @include flexrow;
