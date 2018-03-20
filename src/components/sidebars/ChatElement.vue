@@ -22,7 +22,7 @@
         <!--input type="textarea" class="message-input" v-model="text" @keyup.enter="submitMessage"-->
         <el-input type="textarea" class="message-input" v-model="text" 
           @keyup.enter.native="submitMessage"
-          placeholder="enter your message"
+          :placeholder='$t("chat.input.enterMessage")'
           :rows="2">
 
         </el-input>

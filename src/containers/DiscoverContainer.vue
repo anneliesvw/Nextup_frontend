@@ -4,8 +4,8 @@
       <div class="filter-container">
         <div class="category-filter event-filter">
           <div class="filter-label">
-            Category
-            <button class="clear-filter" @click="clearTags">Clear</button>
+            {{$t("discoverFilter.category")}}
+            <button class="clear-filter" @click="clearTags">{{$t("discoverFilter.clear")}}</button>
           </div>
           <div class="filter-controls">
             <tags-autocomplete v-model="filterObject.tags">
@@ -14,17 +14,18 @@
         </div>
         <div class="location-filter event-filter">
           <div class="filter-label">
-            Location
-            <button class="clear-filter" @click="clearLocation">Clear</button>
+            {{$t("discoverFilter.location")}}
+            <button class="clear-filter" @click="clearLocation">{{$t("discoverFilter.clear")}}</button>
           </div>
           <div class="filter-controls">
             <gmap-autocomplete 
                 class="google-maps-autocomplete"
                 @place_changed="onSetLocation"
-                :value="locationValue">
+                :value="locationValue"
+                :placeholder='$t("discoverFilter.enterLocation")'>
             </gmap-autocomplete>
             <div class="distance-slider">
-              Max Distance
+              {{$t("discoverFilter.maxDistance")}}
               <el-slider 
                 :max="500"
                 v-model="filterObject.maxDistance"
@@ -35,27 +36,27 @@
         </div>
         <div class="date-filter event-filter">
           <div class="filter-label">
-            Date Between
+            {{$t("discoverFilter.date")}}
             <button class="clear-filter" @click="clearDates">
-              Clear
+              {{$t("discoverFilter.clear")}}
             </button>
           </div>
           <div class="filter-control">
             <el-date-picker 
               type="datetime" 
               format="HH:mm dd/MM/yyyy" 
-              placeholder="Earliest date"
+              :placeholder='$t("discoverFilter.earliestDate")'
               v-model="filterObject.earliestDate">
             </el-date-picker>
             <el-date-picker 
               type="datetime" 
               format="HH:mm dd/MM/yyyy" 
-              placeholder="Latest date"
+              :placeholder='$t("discoverFilter.latestDate")'
               v-model="filterObject.latestDate">
             </el-date-picker>   
           </div>
         </div>
-        <el-button type="primary" @click="onGetEvents">Filter Events</el-button>
+        <el-button type="primary" @click="onGetEvents">{{$t("discoverFilter.filterButton")}}</el-button>
       </div>
     </div>
     <div class="discover-results">
@@ -65,10 +66,10 @@
         </Activity>
       </div>
       <EmptyState v-else
-        title="No Events"
+        :title='$t("discoverFilter.emptystate.title")'
         icon="filter"
         size="large"
-        text="Please enter some criteria above to start looking for events">
+        :text='$t("discoverFilter.emptystate.body")'>
       </EmptyState>
     </div>
   </div>
