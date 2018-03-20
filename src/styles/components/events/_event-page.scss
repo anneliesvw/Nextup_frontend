@@ -7,14 +7,18 @@
 }
 .event-content {
   border-radius: 4px;
-  @include defaultshadow;
-  min-width: 600px;
-  width: 40%;
+  //@include defaultshadow;
+  width: 80%;
+  max-width: 1000px;
+  
   @include flexcol;
   margin-left: auto;
   margin-right: auto;
-  background-color: white;
-  padding: 5px;
+  // background-color: white;
+  padding: 30px;
+  .banner-image {
+    margin-bottom: 20px;
+  }
   .admin-edit {
      .fa-edit {
        padding-right: 5px;

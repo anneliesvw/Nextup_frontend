@@ -1,16 +1,16 @@
 <template>
 <!-- https://www.sitepoint.com/6-incredible-svg-pattern-generators/ -->
     <div class="group-wrapper" @click="openGroup">
-      <div class="group-container">
+      <div class="group-container activity-container">
         <div 
           :class="{
-            'group-graphic': true,
+            'activity-graphic': true,
             'has-graphic': this.group.avatarUrl ? true : false,
           }" 
           :style="randomImage">
           
         </div>
-        <div class="group-bottom">
+        <div class="group-bottom activity-bottom">
           <div class="group-details">
             <div class="group-name">
               {{group.name}}
@@ -18,7 +18,7 @@
           </div>
 
           <div class="group-members">
-            <div v-for="item in 5" :key="item" class="group-member-circle" v-bind:style="{'z-index': item, 'right': item*20-20 + 'px'}"></div>
+            <AvatarList :users="group.users" :maxShown="5"></AvatarList>
           </div>
 
 
@@ -30,9 +30,13 @@
 <script>
 // import GeoPattern from 'geopattern';
 import PatternGenerator from '../../services/patterngenerator';
+import AvatarList from '../layout_misc/AvatarList.vue';
 
 export default {
   props: ['group'],
+  components: {
+    AvatarList,
+  },
   data() {
     return {
     };

@@ -36,42 +36,63 @@
   }
   .chat-window {
     @include mediumshadow;
+    @include flexcol;
     position: absolute;
     top: 0;
     left: -275px;
     width: 250px;
     height: 300px;
     border-radius: 4px;
+    padding-top:25px;
     //border: solid 1px $brand-blue-3;
     background-color: white;
+    .window-title {
+      @include flexcol;
+      justify-content: center;
+      height: 25px;
+      position: absolute;
+      width: 100%;
+      top:0;
+      left:0;
+      background-color: $brand-blue-7;
+      font-family: $title-font-family;
+      text-transform: uppercase;
+      color: white;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
     .messages {
       @include flexcol;
-      height: 89%;
+      flex: 1;
       overflow-y: scroll;
+      padding: 0px 7px;
       .message {
-        margin: 5px;
+        margin: 2px;
         max-width: 60%;
         .message-name {
-          font-weight: bold;
+          //font-weight: bold;
+          font-family: $title-font-family;
         }
         .message-content {
           border-radius: 8px;
-          padding: 8px;
+          padding: 6px;
           word-wrap: break-word;
         }
       }
       .message-received{
         align-self: flex-start;
+        text-align: left;
         .message-name {
           text-align: left;
         }
         .message-content{
-          background-color: $brand-blue-7;
+          background-color: $brand-blue-5;
           color: white;
         }
       } 
       .message-sent {
         align-self: flex-end;
+        text-align: left;
         .message-content {
           background-color: $brand-gray-1;
         }
@@ -80,16 +101,21 @@
     .message-box {
       @include flexrow;
       justify-content: center;
-      height: 11%;
+      
       position: relative;
       background: $brand-blue-1;
-      border-top: solid 1px $brand-blue-1;
+      border-top: solid 1px $brand-gray-2;
       .message-input {
-        width: 87%;
-        background: $brand-blue-1;
+        .el-textarea__inner {
+          border: none;
+          font-size: 12px;
+        }
+        width: 100%;
+      
+        background: transparent;
         height: 100%;
         padding: 0;
-        border: none;
+        
       }
     }
   }
