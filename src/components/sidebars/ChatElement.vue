@@ -71,20 +71,10 @@ export default {
       return this.activechat === this.group.groupId;
     },
     avatarUrl() {
-      return this.group.avatarUrl ? `${process.env.OBJECT_STORE}/${this.group.avatarUrl}` : 'https://i.imgur.com/iO1VTVZ.png';
+      return this.group.avatarUrl ? `${process.env.OBJECT_STORE}/${this.group.avatarUrl}` : 'https://rosecdc.org/wp-content/uploads/2014/01/faceholder-group.png';
     },
   },
   methods: {
-    // submitMessage() {
-    //   this.$socket.emit('chatmessage', {
-    //     room: `${this.group.groupId}_${this.group.name}`,
-    //     message: {
-    //       from: this.getUserDetails.userId,
-    //       text: this.text,
-    //     },
-    //   });
-    //   this.text = '';
-    // },
     submitMessage() {
       window.console.log('sending chat message', this.text);
       ChatService.sendMessage({
