@@ -41,7 +41,7 @@
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="$emit('close')">Cancel</el-button>
-      <el-button type="primary" @click="updatePassword">Save</el-button>
+      <el-button class="update-password-btn" type="primary" @click="updatePassword">Save</el-button>
     </span>
   </el-dialog>
 </template>

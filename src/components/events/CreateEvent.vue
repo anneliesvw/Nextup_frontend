@@ -96,9 +96,9 @@
       };
     },
     computed: {
-      ...mapGetters(['getEventById']),
+      // ...mapGetters(['getEventById']),
       eventData() {
-        return this.getEventById(parseInt(this.$route.params.id, 10));
+        return this.$store.getters.getEventById(parseInt(this.$route.params.id, 10));
       },
       backgroundImage() {
         return PatternGenerator.generateImage(this.eventInfo.title || '');
@@ -184,7 +184,7 @@
       },
       handleInputConfirm() {
         const {
-          inputValue
+          inputValue,
         } = this;
         if (inputValue.tagname) {
           this.eventInfo.tags.push(inputValue);
@@ -198,24 +198,23 @@
           res => {
             logger.log('Similar tags succesfully loaded.');
             const results = [];
-            if (res.data !== '')
-              res.data.forEach(e =>
-                results.push({
-                  id: e.tagId,
-                  value: e.tagname
-                })
-              );
-            cb(results);
+            if (res.data !== '') {
+              res.data.forEach(e => results.push({
+                id: e.tagId,
+                value: e.tagname,
+              }));
+              cb(results);
+            }
           },
           err => {
             logger.log('Unable to load similar tags', err);
-          }
+          },
         );
       },
       handleSelect(item) {
         this.inputValue = {
           tagId: item.id,
-          tagname: item.value
+          tagname: item.value,
         };
         this.handleInputConfirm();
       },
@@ -226,7 +225,8 @@
     },
     mounted() {
       if (this.updatingEvent) {
-        this.eventInfo = { ...this.eventData
+        this.eventInfo = {
+          ...this.eventData,
         };
       }
     },
