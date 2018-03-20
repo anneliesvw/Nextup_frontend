@@ -31,9 +31,11 @@ const register = (userInfo, onSuccess, onError) => {
   axios.post(`${API_ENDPOINT}/register`, userInfo).then(onSuccess, onError);
 };
 
-const getUserDetails = (onSuccess, onError) => {
-  axios.get(`${API_ENDPOINT}/me`, getHeader()).then(onSuccess, onError);
-};
+const getUserDetails = (onSuccess, onError) =>
+  axios
+    .get(`${API_ENDPOINT}/me`, getHeader())
+    .then(onSuccess, onError);
+
 
 export default {
   tryLogin,

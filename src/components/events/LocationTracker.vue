@@ -22,10 +22,8 @@
         </gmap-marker>
         <gmap-marker
           :position="eventLocation"
-          :icon="{
-            url: getCircle,
-            fillColor: 'blue',
-          }">
+          :label="'E'"
+          >
         </gmap-marker>
       </gmap-map>
 
@@ -35,68 +33,31 @@
 </template>
 
 <script>
+  import LocationSharingService from '../../services/locationsharingservice';
+
   export default {
+    props: ['event'],
     data() {
       return {
+        subscription: null,
         currentUser: null,
-        eventLocation: {
-          lat: 50.0,
-          lng: 50.0,
-        },
-        locations: [
-          {
-            id: 1,
-            location: {
-              longitude: 51.00001,
-              latitude: 50.02,
-            },
-            user: {
-              username: 'mahenvermeulen@msn.com',
-              person: {
-                firstName: 'mahen',
-                lastName: 'vermeulen',
-              },
-            },
-          },
-          {
-            id: 2,
-            location: {
-              longitude: 50.01,
-              latitude: 50.4000002,
-            },
-            user: {
-              username: 'mahenvermeulen@msn.com',
-              person: {
-                firstName: 'annelies',
-                lastName: 'van wallendael',
-              },
-            },
-          },
-          {
-            id: 3,
-            location: {
-              longitude: 50.04,
-              latitude: 50.0000005,
-            },
-            user: {
-              username: 'mahenvermeulen@msn.com',
-              person: {
-                firstName: 'matthias',
-                lastName: 'goossens',
-              },
-            },
-          },
-        ],
+        locations: [],
       };
     },
     computed: {
+      eventLocation() {
+        return {
+          lat: this.event.location.latitude,
+          lng: this.event.location.longitude,
+        };
+      },
       markers() {
         return this.locations.map(l => ({
           user: l.user,
           id: l.id,
           position: {
-            lat: l.location.longitude,
-            lng: l.location.latitude,
+            lat: l.location.latitude,
+            lng: l.location.longitude,
           },
         }));
       },
@@ -120,20 +81,18 @@
       hideTitle() {
         this.currentUser = null;
       },
-      moveSome() {
-        window.console.log('movin on');
-        this.locations.forEach(l => {
-          l.location.longitude += 0.01;
-          l.location.latitude += 0.01;
-        });
-      },
     },
     mounted() {
-      setInterval(this.moveSome, 1000);
+      LocationSharingService.connectionPromise.then(d => {
+        window.console.log(d);
+        this.subscription = LocationSharingService.subscribeToEvent(this.event.eventId, msg => {
+          window.console.log(msg);
+          this.$set(this, 'locations', JSON.parse(msg.body));
+        });
+      });
+    },
+    beforeDestroy() {
+      this.subscription.unsubscribe();
     },
   };
 </script>
-
-<style scoped>
-
-</style>

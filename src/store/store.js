@@ -27,16 +27,32 @@ export default new Vuex.Store({
     getGroupById: state => id => state.groups.find(g => g.groupId === id),
     getUserDetails: state => state.userDetails,
     getInvitations: state => state.invitations,
+    getAllEvents: state => {
+      const events = [];
+      state.groups.map(g => g.events.map(e => events.push(e)));
+      if (state.userDetails.ownedEvents) {
+        state.userDetails.ownedEvents.forEach(e => events.push(e));
+      }
+      return events;
+    },
+    getUserEvents: state => {
+      const events = [];
+      state.userDetails.ownedEvents.map(e => events.push(e));
+      return events;
+    },
     getGroupEvents: state => {
       const events = [];
       state.groups.map(g => g.events.map(e => events.push(e)));
       return events;
     },
-    getEventById: (state, getters) => id =>
-      state.personalEvents
+    getEventById: (state, getters) => id => {
+      const events = state.personalEvents
         .concat(state.suggestedEvents)
         .concat(getters.getGroupEvents)
-        .find(e => parseInt(e.eventId, 10) === parseInt(id, 10))
+        .concat(state.userDetails ? state.userDetails.ownedEvents : []);
+      logger.log(events);
+      return events.find(e => parseInt(e.eventId, 10) === parseInt(id, 10));
+    }
     ,
   },
   mutations: {
@@ -87,12 +103,19 @@ export default new Vuex.Store({
       const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
       if (groupIndex >= 0) state.groups[groupIndex].events.push(payload.eventInfo);
     },
+    addEventToUser: (state, payload) => {
+      state.userDetails.ownedEvents.push(payload.eventInfo);
+    },
     removeEventFromGroup: (state, payload) => {
       const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
       const eventIndex = state.groups[groupIndex]
         .events
         .findIndex(e => e.eventId === payload.eventId);
       if (eventIndex >= 0) state.groups[groupIndex].events.splice(eventIndex, 1);
+    },
+    removeEventFromUser: (state, payload) => {
+      const index = state.userDetails.ownedEvents.findIndex(e => payload.eventId === e.eventId);
+      if (index >= 0) state.userDetails.ownedEvents.splice(index, 1);
     },
     updateUser: (state, payload) => {
       state.userDetails = payload;
@@ -150,6 +173,11 @@ export default new Vuex.Store({
         g.events[eventIndex] = payload;
         return g;
       });
+    },
+    updateUserEvent: (state, payload) => {
+      window.console.log(payload);
+      const index = state.userDetails.ownedEvents.findIndex(e => payload.eventId === e.eventId);
+      if (index >= 0) state.userDetails.ownedEvents[index] = payload;
     },
   },
   actions: {
@@ -363,6 +391,25 @@ export default new Vuex.Store({
         },
       );
     },
+    addEventToUser: ({ commit }, payload) => {
+      logger.log(payload);
+      EventApi.addEventToUser(
+        payload.groupId,
+        payload.eventInfo,
+        res => {
+          logger.log(`event successfully added to user ${payload.groupId}`);
+          commit('addEventToUser', {
+            userId: payload.groupId,
+            eventInfo: res.data,
+          });
+          if (payload.onSuccess) payload.onSuccess(res);
+        },
+        err => {
+          logger.log(`error whilst adding event to user with id ${payload.groupId}`, err);
+          if (payload.onError) payload.onError(err);
+        },
+      );
+    },
     removeEventFromGroup: ({ commit }, payload) => {
       GroupsApi.deleteEventFromGroup(
         payload.groupId,
@@ -378,19 +425,33 @@ export default new Vuex.Store({
         },
       );
     },
-    loadUserDetails: ({ commit, dispatch }) => {
-      AuthApi.getUserDetails(
-        res => {
-          logger.log('Current user details succesfully loaded.');
-          commit('setUserDetails', res.data);
-          dispatch('loadInvitations');
-          dispatch('loadGroups');
+    removeEventFromUser: ({ commit }, payload) => {
+      logger.log(payload);
+      EventApi.deleteEventFromUser(
+        payload.groupId,
+        payload.eventId,
+        () => {
+          logger.log(`Removed event ${payload.eventId}`);
+          commit('removeEventFromUser', { userId: payload.groupId, eventId: payload.eventId });
+          if (payload.onSuccess) payload.onSuccess();
         },
         err => {
-          logger.log('Unable to load current user details', err);
+          logger.log(`Error while removing event with id ${payload.eventId}`, err);
+          if (payload.onError) payload.onError();
         },
       );
     },
+    loadUserDetails: ({ commit, dispatch }) => AuthApi.getUserDetails(
+      res => {
+        logger.log('Current user details succesfully loaded.');
+        commit('setUserDetails', res.data);
+        dispatch('loadInvitations');
+        dispatch('loadGroups');
+      },
+      err => {
+        logger.log('Unable to load current user details', err);
+      },
+    ),
     addAttendingUserToEvent: ({ commit }, payload) => {
       EventApi.addAttendingUserToEvent(
         payload.eventId,
@@ -465,6 +526,22 @@ export default new Vuex.Store({
         res => {
           logger.log('Updated event');
           commit('updateEvent', res.data);
+          if (payload.onSuccess) payload.onSuccess();
+        },
+        err => {
+          logger.log('Unable to update event', err);
+          if (payload.onError) payload.onError();
+        },
+      );
+    },
+    updateUserEvent: ({ commit, getters }, payload) => {
+      EventApi.updateUserEvent(
+        getters.getUserDetails.userId,
+        payload.eventId,
+        payload.eventData,
+        res => {
+          logger.log('Updated event');
+          commit('updateUserEvent', res.data);
           if (payload.onSuccess) payload.onSuccess();
         },
         err => {
