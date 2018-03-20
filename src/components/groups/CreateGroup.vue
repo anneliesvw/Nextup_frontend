@@ -67,35 +67,31 @@ export default {
         }
       },
     },
-  },
-  methods: {
-    createGroup() {
-      const payload = {
-        groupInfo: this.groupInfo,
-        onSuccess: res => {
-          this.$socket.emit('createroom', {
-            roomname: `${res.data.groupId}_${res.data.name}`,
-            messages: [],
-          });
-          this.$notify({
-            title: 'Group Created',
-            message: `Group '${res.data.name}' successfully created.`,
-            type: 'success',
-            duration: 2000,
-          });
-          this.$emit('close');
-        },
-        onError: () => {
-          this.$notify({
-            title: 'Unable To Create Group',
-            message: 'Unable to create group.',
-            type: 'error',
-            duration: 2000,
-          });
-          this.$emit('close');
-        },
-      };
-      this.$store.dispatch('addGroup', payload);
+    methods: {
+      createGroup() {
+        const payload = {
+          groupInfo: this.groupInfo,
+          onSuccess: res => {
+            this.$notify({
+              title: 'Group Created',
+              message: `Group '${res.data.name}' successfully created.`,
+              type: 'success',
+              duration: 2000,
+            });
+            this.$emit('close');
+          },
+          onError: () => {
+            this.$notify({
+              title: 'Unable To Create Group',
+              message: 'Unable to create group.',
+              type: 'error',
+              duration: 2000,
+            });
+            this.$emit('close');
+          },
+        };
+        this.$store.dispatch('addGroup', payload);
+      },
     },
   },
 };

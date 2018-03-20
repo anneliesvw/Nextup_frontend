@@ -13,16 +13,6 @@
   import ChatElement from './ChatElement.vue';
 
   export default {
-    sockets: {
-      connect() {
-        window.console.log('socket connected');
-        const groupsclone = this.getGroups;
-        window.console.log(groupsclone);
-      },
-      chatmessage(val) {
-        window.console.log(`received chatmessage event from socket ${val}`);
-      },
-    },
     data() {
       return {
         activechat: -1,
@@ -34,14 +24,6 @@
     methods: {
       setActiveChat(id) {
         this.activechat = id;
-      },
-    },
-    watch: {
-      getGroups(groups) {
-        groups.forEach(group => {
-          this.$socket.emit('joinroom', `${group.groupId}_${group.name}`);
-          window.console.log(`joined room ${group.groupId}_${group.name}`);
-        });
       },
     },
     components: {
