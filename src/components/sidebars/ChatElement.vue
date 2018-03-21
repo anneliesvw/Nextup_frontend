@@ -18,13 +18,10 @@
         </div>
       </div>
       <div class="message-box">
-        <!-- TODO: add attribute type="textarea" if v-bind attribute meets character threshold -->
-        <!--input type="textarea" class="message-input" v-model="text" @keyup.enter="submitMessage"-->
         <el-input type="textarea" class="message-input" v-model="text" 
           @keyup.enter.native="submitMessage"
           :placeholder='$t("chat.input.enterMessage")'
           :rows="2">
-
         </el-input>
       </div>
     </div>
@@ -78,20 +75,10 @@ export default {
       return this.activechat === this.group.groupId;
     },
     avatarUrl() {
-      return this.group.avatarUrl ? `${process.env.OBJECT_STORE}/${this.group.avatarUrl}` : 'https://i.imgur.com/iO1VTVZ.png';
+      return this.group.avatarUrl ? `${process.env.OBJECT_STORE}/${this.group.avatarUrl}` : 'https://rosecdc.org/wp-content/uploads/2014/01/faceholder-group.png';
     },
   },
   methods: {
-    // submitMessage() {
-    //   this.$socket.emit('chatmessage', {
-    //     room: `${this.group.groupId}_${this.group.name}`,
-    //     message: {
-    //       from: this.getUserDetails.userId,
-    //       text: this.text,
-    //     },
-    //   });
-    //   this.text = '';
-    // },
     submitMessage() {
       const txt = this.text.trim();
       if (!txt || txt.length === 0) {
