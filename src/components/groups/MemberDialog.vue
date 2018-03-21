@@ -78,6 +78,7 @@ export default {
           });
         },
       };
+      this.username = null;
       this.$store.dispatch('addUserToGroup', payload);
     },
     removeUser(user) {

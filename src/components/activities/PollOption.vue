@@ -29,7 +29,7 @@
     },
     computed: {
       percentage() {
-        return (this.option.voters.length / this.totalVoters) * 100;
+        return this.totalVoters > 0 ? (this.option.voters.length / this.totalVoters) * 100 : 0;
       },
     },
   };

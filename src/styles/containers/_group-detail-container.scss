@@ -6,6 +6,14 @@
   }
   .group-info-panel {
     width: 100%;
+    .activity-wrapper {
+      min-width: 300px;
+      flex: 1;
+      max-width: 100%;
+    }
+    .group-wrapper {
+      flex: 1;
+    }
   }
   .group-wall {
     background: white;
@@ -28,7 +36,7 @@
     min-width: 100%;
     @include flexrow;
     .activity-wrapper {
-      max-width: 33%;
+      //max-width: 33%;
     }
     &:nth-of-type(2n + 1) {
       padding-left: 0;
