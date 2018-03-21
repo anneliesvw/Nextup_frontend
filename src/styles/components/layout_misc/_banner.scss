@@ -4,7 +4,8 @@
   background: $brand-blue-4;
   border-radius: 4px;
   position: relative;
-  background-size: cover;
+  background-size: 120%;
+  background-position: center;
   .banner-overlay {
     background: rgba($brand-blue-1,0.8);
     position: absolute;

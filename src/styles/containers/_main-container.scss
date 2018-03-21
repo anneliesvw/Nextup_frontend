@@ -22,10 +22,12 @@
   .dashboard-activity {
     min-width: 33%;
     max-width: 33%;
+    min-width: 400px;
   }
   .event-wrapper {
     max-width: 33%;
-    min-width: 33%;
+    //min-width: 33%;
+    min-width: 300px;
     padding: 12px;
     background: transparent;
     cursor: pointer;
@@ -36,7 +38,7 @@
       border-radius: 4px;
       border-style: dashed;
       border: 1px dashed $brand-blue-2;
-      height: 265px;
+      min-height: 265px;
       justify-content: center;
       align-items: center;
       font-size: 2em;

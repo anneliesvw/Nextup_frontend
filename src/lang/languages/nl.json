@@ -1,7 +1,7 @@
 {
   "navigation": {
     "activities": "Mijn Activiteiten",
-    "groups": "Mijn Groupen",
+    "groups": "Mijn Groepen",
     "discover": "Ontdek Activiteiten"
   },
   "settings": {
@@ -33,5 +33,41 @@
   "polls": {
     "title": "Polls",
     "create": "Maak poll"
-  }
+  },
+  "discoverFilter": {
+    "category": "Categorie",
+    "location": "Locatie",
+    "enterLocation": "Geef een locatie in",
+    "date": "Tussen datums",
+    "earliestDate": "Vroegste datums",
+    "latestDate": "Uiterste datum",
+    "clear": "wis",
+    "maxDistance": "Maximumafstand",
+    "filterButton": "Zoek",
+    "emptystate": {
+      "title": "Geen evenementen",
+      "body": "Geef hierboven criteria in waaraan het event moet voldoen en klik daarna op de knop om te zoeken"
+    }
+  },
+  "chat": {
+    "input": {
+      "enterMessage": "Geef een bericht in en druk op enter om het te versturen"
+    }
+  },
+  "eventPage": {
+    "buttons": {
+      "attend": "Ga",
+      "edit": "Bewerk",
+      "delete": "Verwijder"
+    },
+    "titles": {
+      "general": "Algemene Info",
+      "location": "Evenementlocatie",
+      "description": "Beschrijving",
+      "attending": "Leden die gaan"
+    },
+    "noTags": "Geen Tags",
+    "isPublic": "Publiek Event",
+    "isPrivate": "Geheim Event"
+  }  
 }
