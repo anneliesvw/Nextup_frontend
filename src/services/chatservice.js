@@ -14,7 +14,10 @@ const subscribeToEvents = (groupId, savedMessages, chatmessage) => {
     }
   });
   socket.on('chatMessage', dbEntry => {
-    chatmessage(dbEntry);
+    window.console.log(dbEntry);
+    if (dbEntry && groupId === dbEntry.roomname) {
+      chatmessage(dbEntry);
+    }
   });
 };
 

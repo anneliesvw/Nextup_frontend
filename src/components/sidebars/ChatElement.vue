@@ -17,7 +17,6 @@
         </div>
       </div>
       <div class="message-box">
-        <!-- TODO: add attribute type="textarea" if v-bind attribute meets character threshold -->
         <input type="text" class="message-input" v-model="text" @keyup.enter="submitMessage">
       </div>
     </div>
