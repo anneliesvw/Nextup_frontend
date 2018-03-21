@@ -1,9 +1,12 @@
 import io from 'socket.io-client';
 
 const CHAT_URL = process.env.CHAT_ENDPOINT;
-const socket = io(CHAT_URL, { query: { token: localStorage.getItem('NEXTUP_TOKEN') } });
+let socket = {};
 
-socket.on('connect', () => window.console.log('connected to chat socket'));
+const init = () => {
+  socket = io(CHAT_URL, { query: { token: localStorage.getItem('NEXTUP_TOKEN') } });
+  socket.on('connect', () => window.console.log('connected to chat socket'));
+};
 
 const subscribeToEvents = (groupId, savedMessages, chatmessage) => {
   socket.emit('getMyMessages', groupId);
@@ -29,5 +32,6 @@ const sendMessage = messageObject => {
 export default {
   subscribeToEvents,
   sendMessage,
+  init,
 };
 

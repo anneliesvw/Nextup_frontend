@@ -17,6 +17,7 @@ import Navigation from './components/header/Navigation.vue';
 import AuthService from './services/authservice';
 import ChatMenu from './components/sidebars/ChatMenu.vue';
 import LocationService from './services/locationsharingservice';
+import ChatService from './services/chatservice';
 
 export default {
   data() {
@@ -58,6 +59,7 @@ export default {
         d => {
           localStorage.setItem('NEXTUP_TOKEN', d.data.access_token);
           this.$router.push('/');
+          ChatService.init();
           this.loggedIn = true;
           this.setLoginAttempt('success');
         },
@@ -74,6 +76,7 @@ export default {
       window.console.log('token verified');
       this.loggedIn = true;
       this.$store.dispatch('loadGroups');
+      ChatService.init();
       that.loadingDone = true;
     }).catch(() => {
       that.logout();
