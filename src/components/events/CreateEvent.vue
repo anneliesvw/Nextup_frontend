@@ -124,7 +124,7 @@
           onSuccess: res => {
             this.$notify({
               title: 'Event Created',
-              message: `Event '${res.data.id}' successfully created.`,
+              message: `Event '${res.data.name}' successfully created.`,
               type: 'success',
               duration: 2000,
             });
