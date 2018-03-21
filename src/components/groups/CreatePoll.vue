@@ -25,7 +25,7 @@
               <el-switch v-model="isClosed" active-color="#ff4949" inactive-color="#13ce66" active-text="No" inactive-text="Yes">
               </el-switch>
             </el-form-item>
-            <el-button type="primary" @click="savePoll">Create poll</el-button>
+            <el-button class="create-poll-btn" type="primary" @click="savePoll">Create poll</el-button>
         </div>
       </el-form>
     </div>
@@ -33,7 +33,6 @@
 </template>
 
 <script>
-
 export default {
   props: ['isVisible', 'activeGroup'],
   data() {
@@ -99,7 +98,6 @@ export default {
       this.$emit('close');
     },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>

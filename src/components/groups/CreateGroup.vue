@@ -26,46 +26,45 @@
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="$emit('close')">Cancel</el-button>
-      <el-button type="primary" @click="createGroup">Create group</el-button>
+      <el-button class="create-group-btn" type="primary" @click="createGroup">Create group</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
-  import PatternGenerator from '../../services/patterngenerator';
-  import ImageUploader from '../ImageUploader.vue';
+import PatternGenerator from '../../services/patterngenerator';
+import ImageUploader from '../ImageUploader.vue';
 
-  export default {
-    sockets: {},
-    components: {
-      ImageUploader,
-    },
-    props: ['isVisible'],
-    data() {
-      return {
-        groupInfo: {
-          avatarUrl: null,
-          name: '',
-          description: '',
-        },
-        friends: [],
-        members: [],
-        memberToAdd: '',
-      };
-    },
-    computed: {
-      backgroundImage() {
-        return PatternGenerator.generateImage(this.groupInfo.name || '');
+export default {
+  sockets: {},
+  components: {
+    ImageUploader,
+  },
+  props: ['isVisible'],
+  data() {
+    return {
+      groupInfo: {
+        avatarUrl: null,
+        name: '',
+        description: '',
       },
-      dialogVisible: {
-        get() {
-          return this.isVisible;
-        },
-        set(newValue) {
-          if (!newValue) {
-            this.$emit('close');
-          }
-        },
+      friends: [],
+      members: [],
+      memberToAdd: '',
+    };
+  },
+  computed: {
+    backgroundImage() {
+      return PatternGenerator.generateImage(this.groupInfo.name || '');
+    },
+    dialogVisible: {
+      get() {
+        return this.isVisible;
+      },
+      set(newValue) {
+        if (!newValue) {
+          this.$emit('close');
+        }
       },
     },
     methods: {
@@ -94,5 +93,6 @@
         this.$store.dispatch('addGroup', payload);
       },
     },
-  };
+  },
+};
 </script>
