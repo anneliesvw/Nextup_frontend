@@ -75,8 +75,9 @@
       showTitle(e, u) {
         const dialog = this.$refs.titledialog;
         this.currentUser = u;
-        dialog.style.top = `${e.Ga.clientY}px`;
-        dialog.style.left = `${e.Ga.clientX}px`;
+        window.console.log('mouseOverEvent', e);
+        dialog.style.top = `${e.Fa.clientY}px`;
+        dialog.style.left = `${e.Fa.clientX}px`;
       },
       hideTitle() {
         this.currentUser = null;

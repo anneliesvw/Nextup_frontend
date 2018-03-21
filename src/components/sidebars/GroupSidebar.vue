@@ -34,8 +34,5 @@
         this.$emit('groupSelected', group);
       },
     },
-    beforeDestroy() {
-      window.console.log('ciao ze');
-    },
   };
 </script>

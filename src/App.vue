@@ -1,22 +1,36 @@
 <template>
-  <div class="site-wrapper" v-if="loadingDone">
+<div class="app-wrapper">
+  <div class="site-wrapper" v-if="loadingDone && !getGroupsLoading">
     <Navigation v-if="userdetailsLoaded != null && loggedIn"></Navigation>
     <div class="site-main">
-      <div class="site-content">
+      <div class="site-content" >
         <router-view v-if="loadingDone"></router-view>
       </div>
       <chat-menu v-if="loggedIn"></chat-menu>
     </div>
   </div>
+  <div class="apploading" v-else>
+    <div class="loading-info">
+      <div class="icon">
+        <i class="fas fa-circle-notch fa-spin"></i>
+      </div>
+      <div class="content">
+        Loading: Please wait ...
+      </div>
+    </div>
+  </div>
+</div>
+  
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import LoginEvents from './events/loginevents';
 import Navigation from './components/header/Navigation.vue';
 import AuthService from './services/authservice';
 import ChatMenu from './components/sidebars/ChatMenu.vue';
 import LocationService from './services/locationsharingservice';
+import ChatService from './services/chatservice';
 
 export default {
   data() {
@@ -30,6 +44,7 @@ export default {
     ChatMenu,
   },
   computed: {
+    ...mapGetters(['getGroupsLoading']),
     userdetailsLoaded() {
       return this.$store.getters.getUserDetails;
     },
@@ -58,6 +73,7 @@ export default {
         d => {
           localStorage.setItem('NEXTUP_TOKEN', d.data.access_token);
           this.$router.push('/');
+          ChatService.init();
           this.loggedIn = true;
           this.setLoginAttempt('success');
         },
@@ -74,6 +90,7 @@ export default {
       window.console.log('token verified');
       this.loggedIn = true;
       this.$store.dispatch('loadGroups');
+      ChatService.init();
       that.loadingDone = true;
     }).catch(() => {
       that.logout();

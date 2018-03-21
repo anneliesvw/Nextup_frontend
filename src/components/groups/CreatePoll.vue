@@ -9,8 +9,6 @@
             <el-form-item label="Poll Options">
               <div class="polloption-add">
                 <el-input placeholder="Enter option here" v-model="newOption" class="polloption-name"></el-input>
-                <!-- <el-date-picker v-model="dateValue" class="polloption-name" type="datetimerange" start-placeholder="Start Date" end-placeholder="End date" :default-time="['12:00:00']" format="hh:mm dd/MM/yyyy">
-                </el-date-picker> -->
                 <el-button type="primary" @click="addOption">Add option</el-button>
               </div>
             </el-form-item>

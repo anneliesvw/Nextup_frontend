@@ -7,7 +7,7 @@
         <router-link to="/Activities">{{ $t("navigation.discover")}}</router-link>
       </div>
 
-      <div class="invitation-info">
+      <div class="invitation-info" v-if="invitations.length > 0">
         <el-dropdown trigger="click" :hide-on-click="false">
           <div class="content-container">
             <div class="el-dropdown-link name">
@@ -44,20 +44,14 @@
       <div class="user-info">
         <el-dropdown trigger="click">
           <div class="content-container">
-            <div class="avatar"></div>
+            <div class="avatar-circle" :style="{
+              backgroundImage: userAvatarImage
+              }"></div>
             <div class="el-dropdown-link name">
               {{this.user.person.firstName + " " + this.user.person.lastName}} <i class="el-icon-arrow-down el-icon--right"></i>
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <!--div class="language-picker">
-              <div class="change-language" @click="changeLanguage('nl')">
-                <i class="fab fa-pied-piper"></i>
-              </div>
-              <div class="change-language" @click="changeLanguage('en')">
-                <i class="fab fa-pied-piper-alt"></i>
-              </div>
-            </div-->
             <el-select v-model="locale" class="language-picker" @change="changeLanguage">
               <el-option
                 v-for="item in languages"
@@ -154,6 +148,9 @@ export default {
   computed: {
     user() {
       return this.$store.getters.getUserDetails;
+    },
+    userAvatarImage() {
+      return this.user.person.avatarUrl ? `url(${process.env.OBJECT_STORE}/${this.user.person.avatarUrl})` : 'url(http://www.pieglobal.com/wp-content/uploads/2015/10/placeholder-user.png)';
     },
     invitations() {
       return this.$store.getters.getInvitations;

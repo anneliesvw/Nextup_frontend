@@ -50,7 +50,6 @@
 </template>
 
 <script>
-
   import ImageUploader from '../ImageUploader.vue';
   import PatternGenerator from '../../services/patterngenerator';
   import TagApi from '../../services/tagservice';
@@ -94,7 +93,6 @@
       };
     },
     computed: {
-      // ...mapGetters(['getEventById']),
       eventData() {
         return this.$store.getters.getEventById(parseInt(this.$route.params.id, 10));
       },

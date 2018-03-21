@@ -67,6 +67,7 @@ import PatternGenerator from '../../services/patterngenerator';
 import UserCard from '../users/UserCard.vue';
 import CreateEvent from '../events/CreateEvent.vue';
 import LocationTracker from './LocationTracker.vue';
+import EventService from './../../services/eventservice';
 
 export default {
   components: {
@@ -79,13 +80,18 @@ export default {
   data() {
     return {
       editing: false,
+      eventData: null,
+      public: false,
     };
+  },
+  mounted() {
+    this.eventData = this.getEventById(parseInt(this.$route.params.id, 10)) ||
+    EventService.getEvent(parseInt(this.$route.params.id, 10), g => {
+      this.eventData = g.data; this.public = true;
+    });
   },
   computed: {
     ...mapGetters(['getEventById', 'getUserDetails', 'getGroupById']),
-    eventData() {
-      return this.getEventById(parseInt(this.$route.params.id, 10));
-    },
     backgroundImage() {
       return this.eventData.avatarUrl ? `url(${process.env.OBJECT_STORE}/${this.eventData.avatarUrl})` : PatternGenerator.generateImage(`${Math.random() * 2345}`);
     },
@@ -102,6 +108,7 @@ export default {
     },
     isAdmin() {
       if (!this.eventData.groupOwner) return true;
+      if (!this.getGroupById(this.eventData.groupOwner.groupId)) return false;
       return this.getUserDetails && this.eventData.groupOwner ?
         this.getUserDetails.userId === this.getGroupById(this.eventData.groupOwner.groupId)
           .owner.userId
@@ -120,7 +127,12 @@ export default {
       this.addAttendingUserToEvent({
         eventId: this.eventData.eventId,
         userInfo: this.getUserDetails,
-        onSuccess: () => window.console.log('added user to event'),
+        onSuccess: () => {
+          window.console.log('added user to event');
+          if (this.public) {
+            this.eventData.users.push(this.getUserDetails);
+          }
+        },
         onError: () => window.console.log('error adding user to event'),
       });
     },
@@ -128,7 +140,14 @@ export default {
       this.removeAttendingUserFromEvent({
         eventId: this.eventData.eventId,
         userInfo: this.getUserDetails,
-        onSuccess: () => window.console.log('removed user from event'),
+        onSuccess: () => {
+          window.console.log('removed user from event');
+          if (this.public) {
+            const userIndex = this.eventData.users
+              .findIndex(u => u.userId === this.getUserDetails.userId);
+            this.eventData.users.splice(userIndex, 1);
+          }
+        },
         onError: () => window.console.log('error removing user from event'),
       });
     },
