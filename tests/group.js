@@ -9,7 +9,7 @@ module.exports = {
     browser
       .url(`${url}/register`)
       .waitForElementVisible('div#pane-login button[type="button"]', 5000)
-      .setValue('div#pane-login div:nth-child(1) > div > div > input', 'anneliesvanwallendael@hotmail.com')
+      .setValue('div#pane-login div:nth-child(1) > div > div > input', 'test@nextuptest.com')
       .setValue('div#pane-login div:nth-child(2) > div > div > input', 'adminpassword')
       .pause(3000)
       .click('div#pane-login button[type="button"]')
@@ -33,7 +33,7 @@ module.exports = {
           elements.value.forEach(e => {
             const p = new Promise(resolve => {
               browser.elementIdText(e.ELEMENT, result => {
-                if (result.value === 'GROUP') {
+                if (result.value === 'group') {
                   success = true;
                 }
                 resolve();
@@ -62,7 +62,7 @@ module.exports = {
           elements.value.forEach(e => {
             const p = new Promise(resolve => {
               browser.elementIdText(e.ELEMENT, result => {
-                if (result.value === 'GROUP') {
+                if (result.value === 'group') {
                   child = tel;
                 }
                 tel += 1;
@@ -72,7 +72,6 @@ module.exports = {
             promises.push(p);
           });
           Promise.all(promises).then(() => {
-            console.log(child);
             browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
             done();
           });
@@ -95,7 +94,7 @@ module.exports = {
           elements.value.forEach(e => {
             const p = new Promise(resolve => {
               browser.elementIdText(e.ELEMENT, result => {
-                if (result.value === 'GROUPIE') {
+                if (result.value === 'groupie') {
                   success = true;
                 }
                 resolve();
@@ -113,6 +112,7 @@ module.exports = {
   createEvent(browser) {
     let child = 2;
     let tel = 2;
+    let success = false;
     browser
       .url(`${url}/MyGroups`)
       .waitForElementVisible('div.site-content > div > div', 5000)
@@ -124,8 +124,7 @@ module.exports = {
           elements.value.forEach(e => {
             const p = new Promise(resolve => {
               browser.elementIdText(e.ELEMENT, result => {
-                if (result.value === 'GROUPIE') {
-                  console.log('click');
+                if (result.value === 'groupie') {
                   child = tel;
                 }
                 tel += 1;
@@ -135,7 +134,6 @@ module.exports = {
             promises.push(p);
           });
           Promise.all(promises).then(() => {
-            console.log(child);
             browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
             done();
           });
@@ -169,8 +167,87 @@ module.exports = {
       .setValue('div > textarea', 'description')
       .pause(1000)
       .click('span > button[type="button"].el-button.el-button--primary')
-      .waitForElementVisible('div:nth-child(2) > div > div.activity-bottom > div.activity-details > div.activity-owner', 5000)
-      .assert.containsText('div:nth-child(2) > div > div.activity-bottom > div.activity-details > div.activity-owner', 'event');
+      .waitForElementVisible('div.activity-title > div', 5000)
+      .assert.containsText('div.activity-title > div', 'event')
+      // activity in homepage
+      .url(`${url}/`)
+      .waitForElementVisible('div.dashboard-container > div.generic-title', 5000)
+      .pause(2000)
+      .perform(done => {
+        child = 1;
+        tel = 1;
+        browser.elements('css selector', '.el-checkbox__label', elements => {
+          const promises = [];
+          elements.value.forEach(e => {
+            const p = new Promise(resolve => {
+              browser.elementIdText(e.ELEMENT, result => {
+                if (result.value === 'groupie') {
+                  child = tel;
+                }
+                tel += 1;
+                resolve();
+              });
+            });
+            promises.push(p);
+          });
+          Promise.all(promises).then(() => {
+            browser.click(`label:nth-child(${child}) > span.el-checkbox__label`);
+            done();
+          });
+        });
+      })
+      .pause(2000)
+      .perform(done => {
+        browser.elements('css selector', '.activity-name', elements => {
+          const promises = [];
+          elements.value.forEach(e => {
+            const p = new Promise(resolve => {
+              browser.elementIdText(e.ELEMENT, result => {
+                if (result.value === 'event') {
+                  success = true;
+                }
+                resolve();
+              });
+            });
+            promises.push(p);
+          });
+          Promise.all(promises).then(() => {
+            browser.assert.ok(success);
+            done();
+          });
+        });
+      });
+  },
+  checkEventDiscoverpage(browser) {
+    let success = false;
+    browser
+      .url(`${url}/Activities`)
+      .waitForElementVisible('.google-maps-autocomplete', 5000)
+      .setValue('.google-maps-autocomplete', ['Antwerpen, Belg', browser.Keys.ARROW_DOWN])
+      .pause(2000)
+      .setValue('.google-maps-autocomplete', [browser.Keys.ARROW_DOWN])
+      .click('div.discover-filters > div > button[type="button"]')
+      .pause(2000)
+      .perform(done => {
+        browser.elements('css selector', '.activity-name', elements => {
+          const promises = [];
+          elements.value.forEach(e => {
+            const p = new Promise(resolve => {
+              browser.elementIdText(e.ELEMENT, result => {
+                if (result.value === 'event') {
+                  success = true;
+                }
+                resolve();
+              });
+            });
+            promises.push(p);
+          });
+          Promise.all(promises).then(() => {
+            browser.assert.ok(success);
+            done();
+          });
+        });
+      });
   },
   updateEvent(browser) {
     let child = 2;
@@ -185,8 +262,7 @@ module.exports = {
           elements.value.forEach(e => {
             const p = new Promise(resolve => {
               browser.elementIdText(e.ELEMENT, result => {
-                if (result.value === 'GROUPIE') {
-                  console.log('click');
+                if (result.value === 'groupie') {
                   child = tel;
                 }
                 tel += 1;
@@ -196,7 +272,6 @@ module.exports = {
             promises.push(p);
           });
           Promise.all(promises).then(() => {
-            console.log(child);
             browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
             done();
           });
@@ -225,8 +300,7 @@ module.exports = {
           elements.value.forEach(e => {
             const p = new Promise(resolve => {
               browser.elementIdText(e.ELEMENT, result => {
-                if (result.value === 'GROUPIE') {
-                  console.log('click');
+                if (result.value === 'groupie') {
                   child = tel;
                 }
                 tel += 1;
@@ -236,7 +310,6 @@ module.exports = {
             promises.push(p);
           });
           Promise.all(promises).then(() => {
-            console.log(child);
             browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
             done();
           });
@@ -262,8 +335,7 @@ module.exports = {
           elements.value.forEach(e => {
             const p = new Promise(resolve => {
               browser.elementIdText(e.ELEMENT, result => {
-                if (result.value === 'GROUPIE') {
-                  console.log('click');
+                if (result.value === 'groupie') {
                   child = tel;
                 }
                 tel += 1;
@@ -273,7 +345,6 @@ module.exports = {
             promises.push(p);
           });
           Promise.all(promises).then(() => {
-            console.log(child);
             browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
             done();
           });
@@ -300,8 +371,7 @@ module.exports = {
           elements.value.forEach(e => {
             const p = new Promise(resolve => {
               browser.elementIdText(e.ELEMENT, result => {
-                if (result.value === 'GROUPIE') {
-                  console.log('click');
+                if (result.value === 'groupie') {
                   child = tel;
                 }
                 tel += 1;
@@ -311,7 +381,6 @@ module.exports = {
             promises.push(p);
           });
           Promise.all(promises).then(() => {
-            console.log(child);
             browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
             done();
           });
@@ -340,8 +409,7 @@ module.exports = {
           elements.value.forEach(e => {
             const p = new Promise(resolve => {
               browser.elementIdText(e.ELEMENT, result => {
-                if (result.value === 'GROUPIE') {
-                  console.log('click');
+                if (result.value === 'groupie') {
                   child = tel;
                 }
                 tel += 1;
@@ -351,7 +419,6 @@ module.exports = {
             promises.push(p);
           });
           Promise.all(promises).then(() => {
-            console.log(child);
             browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
             done();
           });
@@ -375,7 +442,7 @@ module.exports = {
           elements.value.forEach(e => {
             const p = new Promise(resolve => {
               browser.elementIdText(e.ELEMENT, result => {
-                if (result.value === 'GROUPIE') {
+                if (result.value === 'groupie') {
                   console.log('click');
                   child = tel;
                 }
@@ -386,7 +453,6 @@ module.exports = {
             promises.push(p);
           });
           Promise.all(promises).then(() => {
-            console.log(child);
             browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
             done();
           });

@@ -11,7 +11,7 @@ module.exports = {
     browser
       .url(`${url}/register`)
       .waitForElementVisible('.el-form', 5000)
-      .setValue('div#pane-login div:nth-child(1) > div > div > input', 'anneliesvanwallendael@hotmail.com')
+      .setValue('div#pane-login div:nth-child(1) > div > div > input', 'test@nextuptest.com')
       .setValue('div#pane-login div:nth-child(2) > div > div > input', 'adminpassword')
       .pause(3000)
       .click('div#pane-login button[type="button"]')
@@ -39,6 +39,7 @@ module.exports = {
       .setValue('div.el-input.el-input--mini.el-input--suffix > input', [browser.Keys.ENTER])
       .click('span > button[type="button"].el-button.el-button--primary')
       .waitForElementVisible('div > div:nth-child(11)', 5000)
+      .pause(2000)
       .assert.containsText('div > div:nth-child(11)', 'Amsterdam, Nederland');
   },
   updatePassword(browser) {
@@ -59,7 +60,7 @@ module.exports = {
       .url(`${url}/register`)
       .waitForElementVisible('div#pane-login div:nth-child(1) > div > div > input', 5000)
       .clearValue('div#pane-login div:nth-child(1) > div > div > input')
-      .setValue('div#pane-login div:nth-child(1) > div > div > input', 'anneliesvanwallendael@hotmail.com')
+      .setValue('div#pane-login div:nth-child(1) > div > div > input', 'test@nextuptest.com')
       .clearValue('div#pane-login div:nth-child(2) > div > div > input')
       .setValue('div#pane-login div:nth-child(2) > div > div > input', 'admin')
       .pause(3000)
