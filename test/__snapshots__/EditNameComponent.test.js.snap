@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditNameComp should match snapshot 1`] = `
+<el-dialog
+  title="Edit name"
+>
+  <div
+    class="edit-name-form"
+  >
+    <el-form
+      class="edit-name-form"
+      label-position="top"
+    >
+      <el-form-item
+        label="Firstname"
+      >
+        <el-input
+          class="edit-name-input"
+        />
+      </el-form-item>
+       
+      <el-form-item
+        label="Lastname"
+      >
+        <el-input
+          class="edit-name-input"
+        />
+      </el-form-item>
+       
+      <el-form-item
+        label="Name"
+      >
+        <el-input
+          class="edit-name-input"
+          disabled="disabled"
+        />
+      </el-form-item>
+    </el-form>
+  </div>
+   
+  <span
+    class="dialog-footer"
+    slot="footer"
+  >
+    <el-button>
+      Cancel
+    </el-button>
+     
+    <el-button
+      class="update-user-btn"
+      type="primary"
+    >
+      Save
+    </el-button>
+  </span>
+</el-dialog>
+`;
