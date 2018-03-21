@@ -47,8 +47,10 @@
     background-color: $brand-blue-5;
     // background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/3d/London_Bridge_%289691084663%29.jpg');
     width: 100%;
+    min-height: 100%;
     height: 250px;
     min-width: 250px;
+    //flex: 1;
     //border-top-right-radius: 3px;
     //border-top-left-radius: 3px;
     //background-size: cover;
