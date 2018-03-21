@@ -11,7 +11,8 @@ const getHeader = () => ({
 });
 
 const getEvent = (eventId, onSuccess, onError) => {
-  axios.get(`${EVENTS_URL}/${eventId}`, null, getHeader()).then(onSuccess, onError);
+  window.console.log('in service', eventId);
+  axios.get(`${EVENTS_URL}/${eventId}`, getHeader()).then(onSuccess, onError);
 };
 
 const addAttendingUserToEvent = (eventId, onSuccess, onError) => {
