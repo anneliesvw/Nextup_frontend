@@ -7,6 +7,7 @@
     <div class="chat-group-name">{{group.name}}</div>
     <div class="chat-arrow" v-if="active" />
     <div class="chat-window" v-if="active">
+      <div class="window-title">{{group.name}}</div>
       <div id="messagebox" class="messages">
         <!-- TODO: use unique key -->
         <div v-for="(message, i) in messages" 
@@ -17,7 +18,11 @@
         </div>
       </div>
       <div class="message-box">
-        <input type="text" class="message-input" v-model="text" @keyup.enter="submitMessage">
+        <el-input type="textarea" class="message-input" v-model="text" 
+          @keyup.enter.native="submitMessage"
+          :placeholder='$t("chat.input.enterMessage")'
+          :rows="2">
+        </el-input>
       </div>
     </div>
   </div>
@@ -75,6 +80,11 @@ export default {
   },
   methods: {
     submitMessage() {
+      const txt = this.text.trim();
+      if (!txt || txt.length === 0) {
+        this.text = '';
+        return;
+      }
       window.console.log('sending chat message', this.text);
       ChatService.sendMessage({
         roomname: this.group.groupId,

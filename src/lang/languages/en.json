@@ -33,5 +33,41 @@
   "polls": {
     "title": "Polls",
     "create": "Create poll"
+  },
+  "discoverFilter": {
+    "category": "Category",
+    "location": "Location",
+    "date": "Date Between",
+    "enterLocation": "Enter a location",
+    "earliestDate": "Earliest date",
+    "latestDate": "Latest date",
+    "clear": "Clear",
+    "maxDistance": "Max Distance",
+    "filterButton": "Search",
+    "emptystate": {
+      "title": "No Events",
+      "body": "Please enter some criteria above to start looking for events"
+    }
+  },
+  "chat": {
+    "input": {
+      "enterMessage": "Type a message and press enter to send it..."
+    }
+  },
+  "eventPage": {
+    "buttons": {
+      "attend": "Attend",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "titles": {
+      "general": "General Info",
+      "location": "Event Location",
+      "description": "Description",
+      "attending": "Attending Members"
+    },
+    "noTags": "No Tags",
+    "isPublic": "Public Event",
+    "isPrivate": "Private Event"
   }
 }

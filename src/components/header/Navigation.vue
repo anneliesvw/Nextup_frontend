@@ -50,14 +50,22 @@
             </div>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <div class="language-picker">
+            <!--div class="language-picker">
               <div class="change-language" @click="changeLanguage('nl')">
                 <i class="fab fa-pied-piper"></i>
               </div>
               <div class="change-language" @click="changeLanguage('en')">
                 <i class="fab fa-pied-piper-alt"></i>
               </div>
-            </div>
+            </div-->
+            <el-select v-model="locale" class="language-picker" @change="changeLanguage">
+              <el-option
+                v-for="item in languages"
+                :key="item.short"
+                :label="item.long"
+                :value="item.short">
+              </el-option>
+            </el-select>
             <router-link class="app-header-nav" to="/Settings"><el-dropdown-item>{{$t("settings.profile")}}</el-dropdown-item></router-link>
             <el-dropdown-item>{{$t("settings.preferences")}}</el-dropdown-item>
             <el-dropdown-item>{{$t("settings.help")}}</el-dropdown-item>
@@ -74,6 +82,21 @@
 import LoginEvents from '../../events/loginevents';
 
 export default {
+  data() {
+    return {
+      locale: this.$i18n.locale,
+      languages: [
+        {
+          short: 'en',
+          long: 'English',
+        },
+        {
+          short: 'nl',
+          long: 'Nederlands',
+        },
+      ],
+    };
+  },
   methods: {
     doLogout() {
       window.console.log('doLogout');
@@ -124,6 +147,7 @@ export default {
       this.$store.dispatch('ignoreInvite', payload);
     },
     changeLanguage(lang) {
+      window.console.log(lang);
       this.$store.dispatch('changeLanguage', lang);
     },
   },

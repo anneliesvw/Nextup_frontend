@@ -7,15 +7,15 @@
           <el-button type="success" @click="removeAttendance" v-if="isUserAttending && this.eventData.groupOwner">Attending</el-button>
           <el-button type="info" class="admin-edit" v-if="isAdmin" @click="editing = !editing">
             <i class="fas fa-edit"></i>
-            Edit
+            {{$t("eventPage.buttons.edit")}}
           </el-button>
           <el-button type="danger" class="admin-edit" v-if="isAdmin" @click="removeActivity()">
             <i class="fas fa-trash"></i>
-            Delete
+            {{$t("eventPage.buttons.delete")}}
           </el-button>
         </div>
       </banner>
-      <generic-title>General Info</generic-title>
+      <generic-title>{{$t("eventPage.titles.general")}}</generic-title>
       <div class="event-general-info event-generic">
         <i class="far fa-calendar-alt fa-1x"></i>
         <div class="event-startDate">
@@ -30,25 +30,25 @@
           {{ eventData.location.name}}
         </div>
         <i class="fas fa-bullhorn" v-if="!eventData.private"></i>
-        <div v-if="!eventData.private">Public event</div>
+        <div v-if="!eventData.private">{{$t("eventPage.isPublic")}}</div>
         <i class="fas fa-user-secret" v-if="eventData.private"></i>
-        <div v-if="eventData.private">Private event</div>
+        <div v-if="eventData.private">{{$t("eventPage.isPrivate")}}</div>
         <i class="fas fa-tags"></i>
         <div v-if="eventData.tags.length > 0">
           <el-tag v-for="tag in eventData.tags" :key="tag.tagname">{{tag.tagname}}</el-tag>
         </div>
-        <span v-else>No tags</span>
+        <span v-else>{{$t("eventPage.noTags")}}</span>
       </div>
-      <generic-title>Event Location</generic-title>
+      <generic-title>{{$t("eventPage.titles.location")}}</generic-title>
       <div class="event-generic event-location-tracker">
         <location-tracker :event="eventData"></location-tracker>
       </div>
-      <generic-title>Description</generic-title>
+      <generic-title>{{$t("eventPage.titles.description")}}</generic-title>
       <div class="event-description event-generic">
         {{ eventData.description }}
       </div>
       <div v-if="this.eventData.groupOwner">
-        <generic-title>Attending members</generic-title>
+        <generic-title>{{$t("eventPage.titles.attending")}}</generic-title>
         <div class="event-members event-generic">
           <user-card v-for="user in eventData.users" :key="user.userId" :user="user"></user-card>
         </div>
@@ -94,7 +94,7 @@ export default {
     //   EventService.getEventById(parseInt(this.$route.params.id, 10), g => return g);
     // },
     backgroundImage() {
-      return PatternGenerator.generateImage(`${Math.random() * 2345}`);
+      return this.eventData.avatarUrl ? `url(${process.env.OBJECT_STORE}/${this.eventData.avatarUrl})` : PatternGenerator.generateImage(`${Math.random() * 2345}`);
     },
     startDate() {
       return moment(this.eventData.startDate).format('DD/MM/YYYY HH:mm');
