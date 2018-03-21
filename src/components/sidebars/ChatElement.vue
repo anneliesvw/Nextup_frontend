@@ -75,7 +75,7 @@ export default {
       return this.activechat === this.group.groupId;
     },
     avatarUrl() {
-      return this.group.avatarUrl ? `${process.env.OBJECT_STORE}/${this.group.avatarUrl}` : 'https://rosecdc.org/wp-content/uploads/2014/01/faceholder-group.png';
+      return this.group.avatarUrl ? `${process.env.OBJECT_STORE}/${this.group.avatarUrl}` : 'http://www.pieglobal.com/wp-content/uploads/2015/10/placeholder-user.png';
     },
   },
   methods: {

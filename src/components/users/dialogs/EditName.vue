@@ -11,38 +11,6 @@
         <el-form-item label="Name">
           <el-input class="edit-name-input" v-model="userInfo.username" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item label="Location">
-          <gmap-autocomplete class="google-maps-autocomplete" @place_changed="onSetLocation" v-model="userInfo.person.location.name">
-          </gmap-autocomplete>
-        </el-form-item>
-        <el-form-item label="Preferences">
-          <el-tag
-            :key="tag.tagname"
-            v-for="tag in userInfo.tags"
-            closable
-            :disable-transitions="false"
-            @close="handleClose(tag)">
-            {{tag.tagname}}
-          </el-tag>
-          <el-autocomplete
-            class="input-new-tag"
-            v-if="inputVisible"
-            v-model="inputValue.tagname"
-            :fetch-suggestions="querySearch"
-            :trigger-on-focus="false"
-            ref="saveTagInput"
-            size="mini"
-            @keyup.enter.native="handleInputConfirm"
-            @select="handleSelect"
-          >
-            <i
-              class="el-icon-close el-input__icon"
-              slot="suffix"
-              @click="handleCloseEdit">
-            </i>
-          </el-autocomplete>
-          <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-        </el-form-item>
       </el-form>
     </div>
     <span slot="footer" class="dialog-footer">
@@ -53,10 +21,6 @@
 </template>
 
 <script>
-import TagApi from '../../../services/tagservice';
-
-const logger = window.console;
-
 export default {
   props: ['isENVisible', 'userDetails'],
   data() {
@@ -64,10 +28,6 @@ export default {
       originalState: this.userDetails,
       userInfo: { ...this.userDetails },
       inputVisible: false,
-      inputValue: {
-        tagId: null,
-        tagname: '',
-      },
     };
   },
   computed: {
@@ -87,11 +47,6 @@ export default {
     close() {
       this.userInfo = Object.assign({}, this.originalState);
       this.$emit('close');
-    },
-    onSetLocation(place) {
-      this.userInfo.person.location.longitude = place.geometry.location.lng();
-      this.userInfo.person.location.latitude = place.geometry.location.lat();
-      this.userInfo.person.location.name = place.formatted_address;
     },
     updateUser() {
       const payload = {
@@ -125,38 +80,6 @@ export default {
       this.$nextTick(() => {
         this.$refs.saveTagInput.$refs.input.focus();
       });
-    },
-
-    handleInputConfirm() {
-      const { inputValue } = this;
-      if (inputValue.tagname) {
-        this.userInfo.tags.push(inputValue);
-      }
-      this.inputVisible = false;
-      this.inputValue = {};
-    },
-    querySearch(queryString, cb) {
-      TagApi.getTags(
-        queryString,
-        res => {
-          logger.log('Similar tags succesfully loaded.');
-          logger.log(res.data);
-          const results = [];
-          if (res.data !== '') res.data.forEach(e => results.push({ id: e.tagId, value: e.tagname }));
-          cb(results);
-        },
-        err => {
-          logger.log('Unable to load similar tags', err);
-        },
-      );
-    },
-    handleSelect(item) {
-      this.inputValue = { tagId: item.id, tagname: item.value };
-      this.handleInputConfirm();
-    },
-    handleCloseEdit() {
-      this.inputVisible = false;
-      this.inputValue = {};
     },
   },
 };
