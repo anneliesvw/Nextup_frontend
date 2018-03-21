@@ -2,6 +2,8 @@ import axios from 'axios';
 
 const API_URL = process.env.API_ENDPOINT;
 const EVENTS_URL = `${API_URL}/api/events`;
+const USERS_URL = `${API_URL}/api/users`;
+
 
 const getBearer = () => `Bearer ${localStorage.getItem('NEXTUP_TOKEN')}`;
 const getHeader = () => ({
@@ -52,6 +54,10 @@ const getByFilterObject = (filterObject, onSuccess, onError) => {
   ).then(onSuccess, onError);
 };
 
+const getEventsForUser = (userId, onSuccess, onError) => {
+  axios.get(`${USERS_URL}/${userId}/events`, getHeader()).then(onSuccess, onError);
+};
+
 export default {
   getEvent,
   addAttendingUserToEvent,
@@ -61,4 +67,5 @@ export default {
   deleteEventFromUser,
   updateUserEvent,
   getByFilterObject,
+  getEventsForUser,
 };
