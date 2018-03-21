@@ -1,4 +1,4 @@
-import { mutations } from '../src/store/store';
+import Mutations from '../src/store/mutations';
 
 describe('Test suite for Vuex store mutations', () => {
   it('setLoginAttempt verandert loginAttempt', () => {
@@ -7,9 +7,9 @@ describe('Test suite for Vuex store mutations', () => {
       loginAttempt: '',
       groups: [],
     };
-    mutations.setLoginAttempt(state, 'test');
+    Mutations.setLoginAttempt(state, 'test');
     expect(state.loginAttempt).toEqual('test');
-    mutations.setLoginAttempt(state, 'login');
+    Mutations.setLoginAttempt(state, 'login');
     expect(state.loginAttempt).toEqual('login');
   });
 
@@ -19,9 +19,9 @@ describe('Test suite for Vuex store mutations', () => {
       loginAttempt: '',
       groups: [],
     };
-    mutations.addGroup(state, { groupId: '1', groupName: 'group1' });
+    Mutations.addGroup(state, { groupId: '1', groupName: 'group1' });
     expect(state.groups).toEqual([{ groupId: '1', groupName: 'group1' }]);
-    mutations.addGroup(state, { groupId: '2', groupName: 'group2' });
+    Mutations.addGroup(state, { groupId: '2', groupName: 'group2' });
     expect(state.groups).toEqual([
       { groupId: '1', groupName: 'group1' },
       { groupId: '2', groupName: 'group2' },
@@ -39,7 +39,7 @@ describe('Test suite for Vuex store mutations', () => {
       { groupId: '1', groupName: 'hello' },
       { groupId: '2', groupName: 'there' },
     ]);
-    mutations.setGroups(state, groups);
+    Mutations.setGroups(state, groups);
     expect(state.groups).toEqual([
       { groupId: '1', groupName: 'general' },
       { groupId: '2', groupName: 'kenobi' },
@@ -52,12 +52,12 @@ describe('Test suite for Vuex store mutations', () => {
       loginAttempt: '',
       groups: [{ groupId: '1', groupName: 'hello' }, { groupId: '2', groupName: 'there' }],
     };
-    mutations.updateGroup(state, { groupId: '1', groupName: 'Darth Plagueis' });
+    Mutations.updateGroup(state, { groupId: '1', groupName: 'Darth Plagueis' });
     expect(state.groups).toEqual([
       { groupId: '1', groupName: 'Darth Plagueis' },
       { groupId: '2', groupName: 'there' },
     ]);
-    mutations.updateGroup(state, { groupId: '2', groupName: 'the wise' });
+    Mutations.updateGroup(state, { groupId: '2', groupName: 'the wise' });
     expect(state.groups).toEqual([
       { groupId: '1', groupName: 'Darth Plagueis' },
       { groupId: '2', groupName: 'the wise' },
