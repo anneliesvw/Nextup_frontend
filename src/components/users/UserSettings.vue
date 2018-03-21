@@ -121,55 +121,6 @@ export default {
       this.preferences.push(this.newPreferenceText);
       this.newPreferenceText = '';
     },
-    saveTag() {
-      const payload = {
-        tag: {
-          tagname: this.newPreferenceText,
-        },
-        userId: this.getUserDetails.userId,
-        onSuccess: () => {
-          this.$notify({
-            title: 'Preference Added',
-            message: 'Preference successfully added.',
-            type: 'success',
-            duration: 2000,
-          });
-        },
-        onError: () => {
-          this.$notify({
-            title: 'Unable To Add preference',
-            message: 'Unable to add preference.',
-            type: 'error',
-            duration: 2000,
-          });
-        },
-      };
-      this.$store.dispatch('addTag', payload);
-      this.newPreferenceText = '';
-    },
-    removePreference(pref) {
-      const payload = {
-        userId: this.getUserDetails.userId,
-        tagId: pref.tagId,
-        onSuccess: () => {
-          this.$notify({
-            title: 'Preference Deleted',
-            message: 'Preference successfully deleted.',
-            type: 'success',
-            duration: 2000,
-          });
-        },
-        onError: () => {
-          this.$notify({
-            title: 'Unable To delete preference',
-            message: 'Unable to delete preference.',
-            type: 'error',
-            duration: 2000,
-          });
-        },
-      };
-      this.$store.dispatch('deleteTagFromUser', payload);
-    },
   },
   computed: {
     ...mapGetters(['getUserDetails', 'getGroups']),

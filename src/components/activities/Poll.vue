@@ -76,16 +76,16 @@
           pollOptionId: optionId,
           onSuccess: () => {
             this.$notify({
-              title: 'You Voted',
-              message: 'Your vote was registered!',
+              title: this.$t('notify.poll.onSucces.title'),
+              message: this.$t('notify.poll.onSucces.message'),
               type: 'success',
               duration: 2000,
             });
           },
           onError: () => {
             this.$notify({
-              title: 'Oops!',
-              message: 'Unable to register your vote.',
+              title: this.$t('notify.poll.onError.title'),
+              message: this.$t('notify.poll.onError.message'),
               type: 'error',
               duration: 2000,
             });

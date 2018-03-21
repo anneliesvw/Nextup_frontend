@@ -142,15 +142,16 @@ export default {
           logger.log('Similar tags succesfully loaded.');
           logger.log(res.data);
           const results = [];
-          if (res.data !== '')
-            res.data.forEach(e =>
-              results.push({ id: e.tagId, value: e.tagname })
-            );
+          if (res.data !== '') {
+            res.data.forEach(e => {
+              results.push({ id: e.tagId, value: e.tagname });
+            });
+          }
           cb(results);
         },
         err => {
           logger.log('Unable to load similar tags', err);
-        }
+        },
       );
     },
     handleSelect(item) {
