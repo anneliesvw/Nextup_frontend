@@ -47,7 +47,7 @@
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="close">Cancel</el-button>
-      <el-button type="primary" @click="updateUser">Save</el-button>
+      <el-button class="update-user-btn" type="primary" @click="updateUser">Save</el-button>
     </span>
   </el-dialog>
 </template>
@@ -142,12 +142,15 @@ export default {
           logger.log('Similar tags succesfully loaded.');
           logger.log(res.data);
           const results = [];
-          if (res.data !== '') res.data.forEach(e => results.push({ id: e.tagId, value: e.tagname }));
+          if (res.data !== '')
+            res.data.forEach(e =>
+              results.push({ id: e.tagId, value: e.tagname })
+            );
           cb(results);
         },
         err => {
           logger.log('Unable to load similar tags', err);
-        },
+        }
       );
     },
     handleSelect(item) {
