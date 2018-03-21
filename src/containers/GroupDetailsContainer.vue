@@ -15,6 +15,7 @@
     <GroupDialog
       v-if="groupDialogVisible"
       :isVisible="true"
+      :updateForGroupId="groupIdToUpdate"
       @close="closeGroupDialog">
     </GroupDialog>
     <CreatePoll
@@ -50,7 +51,7 @@
         <div class="banner-buttons">
             <el-button type="primary" @click="dialogVisible = true">{{$t("groups.invite")}}</el-button> 
             <el-button type="danger" @click="deleteGroup" v-if="editing">{{$t("groups.delete")}}</el-button>
-            <el-button type="info" class="admin-edit" v-if="isAdmin && !editing" @click="editing = !editing">
+            <el-button type="info" class="admin-edit" v-if="isAdmin && !editing" @click="openUpdateGroupDialog">
               <i class="fas fa-edit"></i>
                 Edit Group
             </el-button>
@@ -147,10 +148,15 @@ export default {
       pollDetail: '',
       editing: false,
       newTitle: '',
+      groupIdToUpdate: '',
     };
   },
   methods: {
     ...mapActions(['updateGroup']),
+    openUpdateGroupDialog() {
+      this.groupIdToUpdate = this.activeGroup.groupId;
+      this.groupDialogVisible = true;
+    },
     closeDialog() {
       this.dialogVisible = false;
     },

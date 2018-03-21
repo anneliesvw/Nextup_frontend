@@ -26,12 +26,14 @@
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="$emit('close')">Cancel</el-button>
-      <el-button class="create-group-btn" type="primary" @click="createGroup">Create group</el-button>
+      <el-button class="create-group-btn" type="primary" @click="updateGroupMethod" v-if="updateForGroupId">Update group</el-button>
+      <el-button class="create-group-btn" type="primary" @click="createGroup" v-if="!updateForGroupId">Create group</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import PatternGenerator from '../../services/patterngenerator';
 import ImageUploader from '../ImageUploader.vue';
 
@@ -40,7 +42,12 @@ export default {
   components: {
     ImageUploader,
   },
-  props: ['isVisible'],
+  props: ['isVisible', 'updateForGroupId'],
+  mounted() {
+    if (this.updateForGroupId) {
+      this.groupInfo = { ...this.getGroupById(this.updateForGroupId) };
+    }
+  },
   data() {
     return {
       groupInfo: {
@@ -48,12 +55,14 @@ export default {
         name: '',
         description: '',
       },
+      tempChanges: {},
       friends: [],
       members: [],
       memberToAdd: '',
     };
   },
   computed: {
+    ...mapGetters(['getGroupById']),
     backgroundImage() {
       return PatternGenerator.generateImage(this.groupInfo.name || '');
     },
@@ -69,6 +78,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['updateGroup']),
     createGroup() {
       const payload = {
         groupInfo: this.groupInfo,
@@ -92,6 +102,30 @@ export default {
         },
       };
       this.$store.dispatch('addGroup', payload);
+    },
+    updateGroupMethod() {
+      const payload = {
+        groupInfo: this.groupInfo,
+        onSuccess: () => {
+          this.$notify({
+            title: 'Group Updated',
+            message: `Group '${this.groupInfo.name}' successfully updated.`,
+            type: 'success',
+            duration: 2000,
+          });
+          this.$emit('close');
+        },
+        onError: () => {
+          this.$notify({
+            title: 'Unable To Update Group',
+            message: 'Unable to update group.',
+            type: 'error',
+            duration: 2000,
+          });
+          this.$emit('close');
+        },
+      };
+      this.updateGroup(payload);
     },
   },
 };
