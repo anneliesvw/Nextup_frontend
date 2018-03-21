@@ -107,7 +107,6 @@ export default {
         : false;
     },
     isAdmin() {
-      if (!this.eventData.userOwner) return false;
       if (!this.eventData.groupOwner) return true;
       return this.getUserDetails && this.eventData.groupOwner ?
         this.getUserDetails.userId === this.getGroupById(this.eventData.groupOwner.groupId)
