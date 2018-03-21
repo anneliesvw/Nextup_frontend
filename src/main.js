@@ -1,7 +1,7 @@
 import * as VueGoogleMaps from 'vue2-google-maps';
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI from 'element-ui';
-import VueSocketio from 'vue-socket.io';
+// import VueSocketio from 'vue-socket.io';
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import locale from 'element-ui/lib/locale/lang/en';
@@ -11,10 +11,6 @@ import App from './App.vue';
 import './styles/index.scss';
 import lang from './lang/lang';
 
-// TODO: change URL
-// Vue.use(VueSocketio, 'https://nextup-chat.herokuapp.com');
-// Vue.use(VueSocketio, 'http://localhost:3001');
-Vue.use(VueSocketio, process.env.CHAT_ENDPOINT);
 Vue.use(ElementUI, { locale });
 Vue.use(VueI18n);
 const i18n = new VueI18n(lang);

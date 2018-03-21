@@ -57,7 +57,7 @@
 	align-items: center;
 	min-height: 100vh;
 	background: #5f2c82; /* fallback for old browsers */
-	background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/0c/GoldenGateBridge-001.jpg');
+	background-image: url('https://images.unsplash.com/photo-1486025402772-bc179c8dfb0e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ede5306633e66e36d6ce5bfc5d5a059e&dpr=1&auto=format');
 	background-size: cover;
 	background-position: center;
 	&:before {
@@ -69,12 +69,12 @@
 		left: 0;
 		background: -webkit-linear-gradient(
 			45deg,
-			rgba(73, 160, 157, 1),
+			rgba($brand-blue-7, 1),
 			rgba(95, 44, 130, 0.9)
 		);
 		background: linear-gradient(
 			45deg,
-			rgba(73, 160, 157, 1),
+			rgba($brand-blue-7, 1),
 			rgba(95, 44, 130, 0.9)
 		);
 		//opacity: 0.9;

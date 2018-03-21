@@ -184,10 +184,6 @@ export default {
       const payload = {
         groupInfo: this.activeGroup.groupId,
         onSuccess: () => {
-          this.$socket.emit(
-            'deleteroom',
-            `${infoclone.groupId}_${infoclone.name}`,
-          );
           this.$notify({
             title: 'Group Deleted',
             message: `Group '${infoclone.name}' successfully deleted.`,
