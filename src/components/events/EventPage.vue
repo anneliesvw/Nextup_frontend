@@ -67,6 +67,7 @@ import PatternGenerator from '../../services/patterngenerator';
 import UserCard from '../users/UserCard.vue';
 import CreateEvent from '../events/CreateEvent.vue';
 import LocationTracker from './LocationTracker.vue';
+import EventService from './../../services/eventservice';
 
 export default {
   components: {
@@ -79,13 +80,19 @@ export default {
   data() {
     return {
       editing: false,
+      eventData: null,
     };
+  },
+  mounted() {
+    this.eventData = this.getEventById(parseInt(this.$route.params.id, 10)) ||
+    EventService.getEvent(parseInt(this.$route.params.id, 10), g => { this.eventData = g; });
   },
   computed: {
     ...mapGetters(['getEventById', 'getUserDetails', 'getGroupById']),
-    eventData() {
-      return this.getEventById(parseInt(this.$route.params.id, 10));
-    },
+    // eventData() {
+    //   return this.getEventById(parseInt(this.$route.params.id, 10)) ||
+    //   EventService.getEventById(parseInt(this.$route.params.id, 10), g => return g);
+    // },
     backgroundImage() {
       return PatternGenerator.generateImage(`${Math.random() * 2345}`);
     },
