@@ -69,5 +69,77 @@
     "noTags": "No Tags",
     "isPublic": "Public Event",
     "isPrivate": "Private Event"
+  }, 
+  "notify": {
+    "poll": {
+      "onSucces": {
+        "title" :"You Voted",
+        "message" : "Your vote was registered!"
+      },
+      "onError": {
+        "title" :"Oops!",
+        "message" : "Unable to register your vote."
+      }
+    },
+    "createEvent":{
+      "onSucces": {
+        "title" :"Event Created",
+        "message" : "Event {id} successfully created."
+      },
+      "onError": {
+        "title" :"Unable To Create Event",
+        "message" : "Failed to created event."
+      }
+    },
+    "createGroup":{
+      "onSucces": {
+        "title" :"Group Created",
+        "message" : "Group {name} successfully created."
+      },
+      "onError": {
+        "title" :"Unable To Create Group",
+        "message" : "Unable to create group."
+      }
+    },
+    "createPoll":{
+      "onSucces": {
+        "title" :"Poll Added",
+        "message" : "Poll successfully added."
+      },
+      "onError": {
+        "title" :"Unable To Add Poll",
+        "message" : "Unable to add poll."
+      }
+    },
+    "addUser":{
+      "onSucces": {
+        "title" :"User Added",
+        "message" : "User successfully added."
+      },
+      "onError": {
+        "title" :"Unable To Add User",
+        "message" : "Unable to add user."
+      }
+    },
+    "removeUser":{
+      "onSucces": {
+        "title" :"User Removed",
+        "message" : "User successfully removed."
+      },
+      "onError": {
+        "title" :"Unable To Remove User",
+        "message" : "Unable to remove user."
+      }
+    },
+    "deletePoll":{
+      "onSucces": {
+        "title" :"Poll Removed",
+        "message" : "Poll successfully removed."
+      },
+      "onError": {
+        "title" :"Unable To Remove Poll",
+        "message" : "Unable to remove poll."
+      }
+    } 
   }
 }

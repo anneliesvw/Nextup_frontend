@@ -140,8 +140,8 @@ export default {
           groupInfo: this.updateForGroupId,
           onSuccess: () => {
             this.$notify({
-              title: 'Group Deleted',
-              message: 'Group successfully deleted.',
+              title: this.$t('notify.createGroup.onSucces.title'),
+              message: this.$t('notify.createGroup.onSucces.message', { name: res.data.name }),
               type: 'success',
               duration: 2000,
             });
@@ -150,8 +150,8 @@ export default {
           },
           onError: () => {
             this.$notify({
-              title: 'Unable To Delete Group',
-              message: 'Unable to delete group.',
+              title: this.$t('notify.createGroup.onError.title'),
+              message: this.$t('notify.createGroup.onError.message'),
               type: 'error',
               duration: 2000,
             });

@@ -50,23 +50,24 @@ export default {
         pollId: this.poll.pollId,
         onSuccess: () => {
           this.$notify({
-            title: 'Poll Removed',
-            message: 'Poll successfully removed.',
+            title: this.$t('notify.deletePoll.onSucces.title'),
+            message: this.$t('notify.deletePoll.onSucces.title'),
             type: 'success',
             duration: 2000,
           });
+          this.$emit('close');
         },
         onError: () => {
           this.$notify({
-            title: 'Unable To Remove Poll',
-            message: 'Unable to remove poll.',
+            title: this.$t('notify.onError.onSucces.title'),
+            message: this.$t('notify.onError.onSucces.title'),
             type: 'error',
             duration: 2000,
           });
+          this.$emit('close');
         },
       };
       this.$store.dispatch('removePoll', payload);
-      this.$emit('close');
     },
     updatePoll() {
       this.dataPoll.pollOptions = this.options;

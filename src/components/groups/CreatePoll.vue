@@ -70,6 +70,7 @@ export default {
       this.options.splice(index, 1);
     },
     savePoll() {
+      const that = this;
       const payload = {
         poll: {
           groupId: this.activeGroup.groupId,
@@ -79,23 +80,24 @@ export default {
         },
         onSuccess: () => {
           this.$notify({
-            title: 'Poll Added',
-            message: 'Poll successfully added.',
+            title: that.$t('notify.createPoll.onSucces.title'),
+            message: that.$t('notify.createPoll.onSucces.message'),
             type: 'success',
             duration: 2000,
           });
+          this.$emit('close');
         },
         onError: () => {
           this.$notify({
-            title: 'Unable To Add Poll',
-            message: 'Unable to add poll.',
+            title: that.$t('notify.createPoll.onError.title'),
+            message: that.$t('notify.createPoll.onError.message'),
             type: 'error',
             duration: 2000,
           });
+          this.$emit('close');
         },
       };
       this.$store.dispatch('addPoll', payload);
-      this.$emit('close');
     },
   },
   mounted() {},

@@ -119,12 +119,12 @@
     methods: {
       onCreateEvent() {
         const payload = {
-          // groupId: this.activeGroup.groupId,
+          // groupId: this.activeGroup.groupId,  //import { mapGetters} from 'vuex';
           eventInfo: this.eventInfo,
           onSuccess: res => {
             this.$notify({
-              title: 'Event Created',
-              message: `Event '${res.data.name}' successfully created.`,
+              title: this.$t('notify.createEvent.onSucces.title'),
+              message: this.$t('notify.createEvent.onSucces.message', { id: res.data.id }),
               type: 'success',
               duration: 2000,
             });
@@ -132,8 +132,8 @@
           },
           onError: () => {
             this.$notify({
-              title: 'Unable To Create Event',
-              message: 'Failed to created event',
+              title: this.$t('notify.createEvent.onError.title'),
+              message: this.$t('notify.createEvent.onError.message'),
               type: 'error',
               duration: 2000,
             });
