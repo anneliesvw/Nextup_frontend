@@ -75,6 +75,7 @@
       showTitle(e, u) {
         const dialog = this.$refs.titledialog;
         this.currentUser = u;
+        window.console.log('stting position to:', e.Ga.clientY, e.Ga.clientX);
         dialog.style.top = `${e.Ga.clientY}px`;
         dialog.style.left = `${e.Ga.clientX}px`;
       },
