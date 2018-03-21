@@ -138,7 +138,7 @@ export default {
       }).then(() => {
         const payload = {
           groupInfo: this.updateForGroupId,
-          onSuccess: () => {
+          onSuccess: res => {
             this.$notify({
               title: this.$t('notify.createGroup.onSucces.title'),
               message: this.$t('notify.createGroup.onSucces.message', { name: res.data.name }),
