@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
             failures="0"
-            tests="6">
+            tests="10">
 
   <testsuite name="group"
     errors="0" failures="0" hostname="" id="" package="group" skipped="0"
-    tests="6" time="25.18" timestamp="Mon, 19 Mar 2018 18:35:25 GMT">
+    tests="10" time="63.61" timestamp="Wed, 21 Mar 2018 09:11:04 GMT">
   
-    <testcase name="login" classname="group" time="10.52" assertions="4">
+    <testcase name="login" classname="group" time="12.52" assertions="4">
 
     
 
@@ -18,20 +18,7 @@
     
     </testcase>
   
-    <testcase name="createGroup" classname="group" time="4.418" assertions="3">
-
-    
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="updateGroup" classname="group" time="2.270" assertions="6">
-
-    
-
-    
+    <testcase name="createGroup" classname="group" time="5.695" assertions="4">
 
     
 
@@ -42,13 +29,7 @@
     
     </testcase>
   
-    <testcase name="createEvent" classname="group" time="5.354" assertions="9">
-
-    
-
-    
-
-    
+    <testcase name="updateGroup" classname="group" time="6.777" assertions="6">
 
     
 
@@ -63,7 +44,17 @@
     
     </testcase>
   
-    <testcase name="deleteEvent" classname="group" time="1.115" assertions="4">
+    <testcase name="createEvent" classname="group" time="10.86" assertions="9">
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 
@@ -74,7 +65,62 @@
     
     </testcase>
   
-    <testcase name="deleteGroup" classname="group" time="1.503" assertions="4">
+    <testcase name="updateEvent" classname="group" time="6.687" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="deleteEvent" classname="group" time="3.853" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="addPoll" classname="group" time="4.707" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="updatePoll" classname="group" time="4.844" assertions="5">
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="deletePoll" classname="group" time="3.810" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="deleteGroup" classname="group" time="3.862" assertions="4">
 
     
 

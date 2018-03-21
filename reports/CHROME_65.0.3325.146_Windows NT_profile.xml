@@ -5,9 +5,9 @@
 
   <testsuite name="profile"
     errors="0" failures="0" hostname="" id="" package="profile" skipped="0"
-    tests="3" time="22.77" timestamp="Mon, 19 Mar 2018 18:35:50 GMT">
+    tests="3" time="28.11" timestamp="Wed, 21 Mar 2018 09:12:08 GMT">
   
-    <testcase name="login" classname="profile" time="12.71" assertions="4">
+    <testcase name="login" classname="profile" time="13.44" assertions="4">
 
     
 
@@ -18,7 +18,7 @@
     
     </testcase>
   
-    <testcase name="updateProfile" classname="profile" time="3.909" assertions="5">
+    <testcase name="updateProfile" classname="profile" time="4.327" assertions="5">
 
     
 
@@ -31,7 +31,13 @@
     
     </testcase>
   
-    <testcase name="updatePassword" classname="profile" time="6.148" assertions="5">
+    <testcase name="updatePassword" classname="profile" time="10.34" assertions="8">
+
+    
+
+    
+
+    
 
     
 

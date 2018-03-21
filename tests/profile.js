@@ -1,4 +1,5 @@
 
+
 const url = 'http://localhost:8081';
 module.exports = {
   login(browser) {
@@ -63,7 +64,20 @@ module.exports = {
       .setValue('div#pane-login div:nth-child(2) > div > div > input', 'admin')
       .pause(3000)
       .click('div#pane-login button[type="button"]')
-      .waitForElementVisible('div > div.dashboard-container', 5000);
+      .waitForElementVisible('div > div.dashboard-container', 5000)
+      .url(`${url}/Settings`)
+      .pause(2000)
+      .waitForElementVisible('div > button[type="button"]:nth-child(21)', 5000)
+      // get editpassword dialog
+      .click('div > button[type="button"]:nth-child(21)')
+      .waitForElementVisible('form > div:nth-child(1) > div > div > div > input', 5000)
+      // set old password
+      .setValue('form > div:nth-child(1) > div > div > div > input', 'admin')
+      // set new password
+      .setValue('div:nth-child(2) > div > div > div > input', 'adminpassword')
+      .setValue('div:nth-child(3) > div > div > div > input', 'adminpassword')
+      .click('span > button[type="button"].el-button.el-button--primary')
+      .waitForElementVisible('div > div:nth-child(20)', 5000);
   },
 };
 

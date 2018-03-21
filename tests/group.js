@@ -16,6 +16,7 @@ module.exports = {
       .waitForElementVisible('div > div.dashboard-container', 20000);
   },
   createGroup(browser) {
+    let success = false;
     browser
       .url(`${url}/MyGroups`)
       .waitForElementVisible('div.site-content > div > div', 5000)
@@ -25,66 +26,60 @@ module.exports = {
       .setValue('div > textarea', 'description')
       .click('span > button[type="button"].el-button.el-button--primary')
       .waitForElementVisible('div.site-content > div > div > div > div:nth-child(2)', 5000)
-      .pause(3000);
-    // .click('div.site-content > div > div > div > div:nth-child(2)')
-    // .waitForElementVisible('div > div.banner-title', 5000)
-    /*
-      .execute(() => {
-        console.log('did it');
-        const childNodes = [];
-        childNodes.push(document.getElementsByClassName('content-container').childNodes);
-        let success = false;
-        console.log(childNodes);
-        for (let i = 0; (i < childNodes.length) && (success === false); i += 1) {
-          if (childNodes.value[i].ELEMENT.value === 'group') {
-            success = true;
-          }
-        }
-        browser.assert.ok(success);
+      .pause(3000)
+      .perform(done => {
+        browser.elements('css selector', '.group-name', elements => {
+          const promises = [];
+          elements.value.forEach(e => {
+            const p = new Promise(resolve => {
+              browser.elementIdText(e.ELEMENT, result => {
+                if (result.value === 'GROUP') {
+                  success = true;
+                }
+                resolve();
+              });
+            });
+            promises.push(p);
+          });
+          Promise.all(promises).then(() => {
+            browser.assert.ok(success);
+            done();
+          });
+        });
       });
-      */
-    /*
-      .elements('css selector', 'div.site-content > div > div > div', elements => {
-        let success = false;
-        const childNodes = [];
-        childNodes.push(elements);
-        console.log(childNodes.childNodes);
-        for (let i = 0; (i < childNodes.length) && (success === false); i += 1) {
-          console.log(childNodes[i]);
-          if (childNodes[i].value.ELEMENT === 'group') {
-            success = true;
-          }
-        }
-        browser.assert.ok(success);
-      });
-      */
-    /*
-      .elements('css selector', 'div.site-content > div > div > div.content-container',
-      elements => {
-        let success = false;
-        console.log(elements.value.length);
-        for (let i = 0; (i < elements.value.length) && (success === false); i += 1) {
-          console.log(elements.value[i]);
-          if (elements.value[i].ELEMENT.value === 'group') {
-            success = true;
-          }
-        }
-        browser.assert.ok(success);
-      });
-      */
-    // browser.expect.element('div > div.banner-title').to.be.present;
-    // browser.expect.element('div > div.banner-title').value.text.to.equal('group');
-    // .querySelector('div > div.banner-title').innerText.text.to.equal('group');
-    // .verify.textContains('div > div.banner-title'.value, 'group');
-    // .expect.element('div > div.banner-title').text.to.contain('group');
-    // .assert.containsText('div.group-details > div', 'GROUP');
   },
   updateGroup(browser) {
+    let child = 2;
+    let success = false;
+    let tel = 2;
     browser
       .url(`${url}/MyGroups`)
       .waitForElementVisible('div.site-content > div > div', 5000)
-      .click('div.site-content > div > div > div > div:last-child')
-      .waitForElementVisible('div.site-content > div', 5000)
+      .pause(2000)
+      .perform(done => {
+        browser.elements('css selector', '.group-name', elements => {
+          const promises = [];
+          elements.value.forEach(e => {
+            const p = new Promise(resolve => {
+              browser.elementIdText(e.ELEMENT, result => {
+                if (result.value === 'GROUP') {
+                  child = tel;
+                }
+                tel += 1;
+                resolve();
+              });
+            });
+            promises.push(p);
+          });
+          Promise.all(promises).then(() => {
+            console.log(child);
+            browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
+            done();
+          });
+        });
+      })
+      // .click('div.site-content > div > div > div > div:last-child')
+      .waitForElementVisible('div.site-content > div.group-detail-container', 5000)
       .click('div.banner-buttons > button[type="button"].el-button.admin-edit.el-button--info')
       .waitForElementVisible('div.banner-buttons > button[type="button"].el-button.el-button--danger', 5000)
       .clearValue('div.banner-title > input')
@@ -93,15 +88,59 @@ module.exports = {
       .waitForElementVisible('div.banner-buttons > button[type="button"].el-button.admin-edit.el-button--info', 5000)
       .url(`${url}/MyGroups`)
       .waitForElementVisible('div.site-content > div > div > div > div:nth-child(2)', 5000)
-      .assert.containsText('div.group-details > div', 'GROUPIE');
-    // .assert.containsText('div > div.banner-title', 'groupie');
+      .pause(2000)
+      .perform(done => {
+        browser.elements('css selector', '.group-name', elements => {
+          const promises = [];
+          elements.value.forEach(e => {
+            const p = new Promise(resolve => {
+              browser.elementIdText(e.ELEMENT, result => {
+                if (result.value === 'GROUPIE') {
+                  success = true;
+                }
+                resolve();
+              });
+            });
+            promises.push(p);
+          });
+          Promise.all(promises).then(() => {
+            browser.assert.ok(success);
+            done();
+          });
+        });
+      });
   },
   createEvent(browser) {
+    let child = 2;
+    let tel = 2;
     browser
       .url(`${url}/MyGroups`)
       .waitForElementVisible('div.site-content > div > div', 5000)
       // click group
-      .click('div.site-content > div > div > div > div:last-child')
+      .pause(2000)
+      .perform(done => {
+        browser.elements('css selector', '.group-name', elements => {
+          const promises = [];
+          elements.value.forEach(e => {
+            const p = new Promise(resolve => {
+              browser.elementIdText(e.ELEMENT, result => {
+                if (result.value === 'GROUPIE') {
+                  console.log('click');
+                  child = tel;
+                }
+                tel += 1;
+                resolve();
+              });
+            });
+            promises.push(p);
+          });
+          Promise.all(promises).then(() => {
+            console.log(child);
+            browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
+            done();
+          });
+        });
+      })
       .waitForElementVisible('div.site-content > div', 5000)
       // click create event
       .click('div:nth-child(1) > div > div.panel-body > div > div')
@@ -128,15 +167,81 @@ module.exports = {
       .setValue('div:nth-child(5) > div > input', [browser.Keys.ARROW_DOWN])
       // set description
       .setValue('div > textarea', 'description')
+      .pause(1000)
       .click('span > button[type="button"].el-button.el-button--primary')
       .waitForElementVisible('div:nth-child(2) > div > div.activity-bottom > div.activity-details > div.activity-owner', 5000)
       .assert.containsText('div:nth-child(2) > div > div.activity-bottom > div.activity-details > div.activity-owner', 'event');
   },
-  deleteEvent(browser) {
+  updateEvent(browser) {
+    let child = 2;
+    let tel = 2;
     browser
       .url(`${url}/MyGroups`)
       .waitForElementVisible('div.site-content > div > div', 5000)
-      .click('div.site-content > div > div > div > div:last-child')
+      .pause(2000)
+      .perform(done => {
+        browser.elements('css selector', '.group-name', elements => {
+          const promises = [];
+          elements.value.forEach(e => {
+            const p = new Promise(resolve => {
+              browser.elementIdText(e.ELEMENT, result => {
+                if (result.value === 'GROUPIE') {
+                  console.log('click');
+                  child = tel;
+                }
+                tel += 1;
+                resolve();
+              });
+            });
+            promises.push(p);
+          });
+          Promise.all(promises).then(() => {
+            console.log(child);
+            browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
+            done();
+          });
+        });
+      })
+      .click('div.panel-body > div.activity-wrapper')
+      .waitForElementVisible('div:nth-child(2) > button[type="button"].el-button.admin-edit.el-button--info', 5000)
+      .click('div:nth-child(2) > button[type="button"].el-button.admin-edit.el-button--info')
+      .waitForElementVisible('div > textarea', 5000)
+      .clearValue('div > textarea')
+      .setValue('div > textarea', 'new description')
+      .click('span > button[type="button"].el-button.el-button--primary')
+      .pause(2000)
+      .assert.containsText('div > div.event-description.event-generic', 'new description');
+  },
+  deleteEvent(browser) {
+    let child = 2;
+    let tel = 2;
+    browser
+      .url(`${url}/MyGroups`)
+      .waitForElementVisible('div.site-content > div > div', 5000)
+      .pause(2000)
+      .perform(done => {
+        browser.elements('css selector', '.group-name', elements => {
+          const promises = [];
+          elements.value.forEach(e => {
+            const p = new Promise(resolve => {
+              browser.elementIdText(e.ELEMENT, result => {
+                if (result.value === 'GROUPIE') {
+                  console.log('click');
+                  child = tel;
+                }
+                tel += 1;
+                resolve();
+              });
+            });
+            promises.push(p);
+          });
+          Promise.all(promises).then(() => {
+            console.log(child);
+            browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
+            done();
+          });
+        });
+      })
       .waitForElementVisible('div.site-content > div', 5000)
       .click('div.panel-body > div:nth-child(2) > div')
       .waitForElementVisible('div:nth-child(2) > button[type="button"].el-button.admin-edit.el-button--danger', 5000)
@@ -144,11 +249,149 @@ module.exports = {
       .waitForElementVisible('div.el-message-box__btns > button[type="button"].el-button.el-button--default.el-button--small.el-button--primary', 5000)
       .click('div.el-message-box__btns > button[type="button"].el-button.el-button--default.el-button--small.el-button--primary');
   },
-  deleteGroup(browser) {
+  addPoll(browser) {
+    let child = 2;
+    let tel = 2;
     browser
       .url(`${url}/MyGroups`)
       .waitForElementVisible('div.site-content > div > div', 5000)
-      .click('div.site-content > div > div > div > div:last-child')
+      .pause(2000)
+      .perform(done => {
+        browser.elements('css selector', '.group-name', elements => {
+          const promises = [];
+          elements.value.forEach(e => {
+            const p = new Promise(resolve => {
+              browser.elementIdText(e.ELEMENT, result => {
+                if (result.value === 'GROUPIE') {
+                  console.log('click');
+                  child = tel;
+                }
+                tel += 1;
+                resolve();
+              });
+            });
+            promises.push(p);
+          });
+          Promise.all(promises).then(() => {
+            console.log(child);
+            browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
+            done();
+          });
+        });
+      })
+      .waitForElementVisible('div:nth-child(2) > div > div.panel-body > div.group-wrapper', 5000)
+      .click('div:nth-child(2) > div > div.panel-body > div.group-wrapper')
+      .waitForElementVisible('div > div.el-dialog__body', 5000)
+      .setValue('form > div > div:nth-child(1) > div > div > input', 'title')
+      .setValue('form > div > div:nth-child(2) > div > div > div > input', 'option')
+      .click('form > div > button[type="button"]')
+      .waitForElementVisible('div:nth-child(2) > div > div.panel-body > div.activity-wrapper', 5000);
+  },
+  updatePoll(browser) {
+    let child = 2;
+    let tel = 2;
+    browser
+      .url(`${url}/MyGroups`)
+      .waitForElementVisible('div.site-content > div > div', 5000)
+      .pause(2000)
+      .perform(done => {
+        browser.elements('css selector', '.group-name', elements => {
+          const promises = [];
+          elements.value.forEach(e => {
+            const p = new Promise(resolve => {
+              browser.elementIdText(e.ELEMENT, result => {
+                if (result.value === 'GROUPIE') {
+                  console.log('click');
+                  child = tel;
+                }
+                tel += 1;
+                resolve();
+              });
+            });
+            promises.push(p);
+          });
+          Promise.all(promises).then(() => {
+            console.log(child);
+            browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
+            done();
+          });
+        });
+      })
+      .waitForElementVisible('div:nth-child(2) > div > div.panel-body > div.group-wrapper', 5000)
+      .click('div:nth-child(2) > div > div.panel-body > div.activity-wrapper > div > div.activity-bottom > div')
+      .waitForElementVisible('div > div.el-dialog__body', 5000)
+      .clearValue('form > div:nth-child(1) > div > div > input')
+      .setValue('form > div:nth-child(1) > div > div > input', 'title2')
+      .click('form > button[type="button"]')
+      .pause(1000)
+      .waitForElementVisible('div.poll-graphic > div.poll-title', 5000)
+      .assert.containsText('div.poll-graphic > div.poll-title', 'title2');
+  },
+  deletePoll(browser) {
+    let child = 2;
+    let tel = 2;
+    browser
+      .url(`${url}/MyGroups`)
+      .waitForElementVisible('div.site-content > div > div', 5000)
+      .pause(2000)
+      .perform(done => {
+        browser.elements('css selector', '.group-name', elements => {
+          const promises = [];
+          elements.value.forEach(e => {
+            const p = new Promise(resolve => {
+              browser.elementIdText(e.ELEMENT, result => {
+                if (result.value === 'GROUPIE') {
+                  console.log('click');
+                  child = tel;
+                }
+                tel += 1;
+                resolve();
+              });
+            });
+            promises.push(p);
+          });
+          Promise.all(promises).then(() => {
+            console.log(child);
+            browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
+            done();
+          });
+        });
+      })
+      .waitForElementVisible('div:nth-child(2) > div > div.panel-body > div.group-wrapper', 5000)
+      .click('div:nth-child(2) > div > div.panel-body > div.activity-wrapper > div > div.activity-bottom > div')
+      .waitForElementVisible('div.el-dialog__body > div > button[type="button"]', 5000)
+      .click('div.el-dialog__body > div > button[type="button"]');
+  },
+  deleteGroup(browser) {
+    let child = 2;
+    let tel = 2;
+    browser
+      .url(`${url}/MyGroups`)
+      .waitForElementVisible('div.site-content > div > div', 5000)
+      .pause(2000)
+      .perform(done => {
+        browser.elements('css selector', '.group-name', elements => {
+          const promises = [];
+          elements.value.forEach(e => {
+            const p = new Promise(resolve => {
+              browser.elementIdText(e.ELEMENT, result => {
+                if (result.value === 'GROUPIE') {
+                  console.log('click');
+                  child = tel;
+                }
+                tel += 1;
+                resolve();
+              });
+            });
+            promises.push(p);
+          });
+          Promise.all(promises).then(() => {
+            console.log(child);
+            browser.click(`div.site-content > div > div > div > div:nth-child(${child})`);
+            done();
+          });
+        });
+      })
       .waitForElementVisible('div.site-content > div', 5000)
       .click('div.banner-buttons > button[type="button"].el-button.admin-edit.el-button--info')
       .waitForElementVisible('div.banner-buttons > button[type="button"].el-button.el-button--danger', 5000)
