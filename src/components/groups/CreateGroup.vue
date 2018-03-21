@@ -28,6 +28,9 @@
       <el-button @click="$emit('close')">Cancel</el-button>
       <el-button class="create-group-btn" type="primary" @click="updateGroupMethod" v-if="updateForGroupId">Update group</el-button>
       <el-button class="create-group-btn" type="primary" @click="createGroup" v-if="!updateForGroupId">Create group</el-button>
+      <el-button class="delete-group-btn" type="danger" @click="deleteGroupMethod" v-if="updateForGroupId">
+        <i class="fas fa-trash"></i>
+      </el-button>
     </span>
   </el-dialog>
 </template>
@@ -78,7 +81,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['updateGroup']),
+    ...mapActions(['updateGroup', 'deleteGroup']),
     createGroup() {
       const payload = {
         groupInfo: this.groupInfo,
@@ -126,6 +129,37 @@ export default {
         },
       };
       this.updateGroup(payload);
+    },
+    deleteGroupMethod() {
+      this.$confirm("This will permanently delete the group and all it's events. Continue?", 'Warning', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      }).then(() => {
+        const payload = {
+          groupInfo: this.updateForGroupId,
+          onSuccess: () => {
+            this.$notify({
+              title: 'Group Deleted',
+              message: 'Group successfully deleted.',
+              type: 'success',
+              duration: 2000,
+            });
+            this.$emit('close');
+            this.$router.push('/mygroups');
+          },
+          onError: () => {
+            this.$notify({
+              title: 'Unable To Delete Group',
+              message: 'Unable to delete group.',
+              type: 'error',
+              duration: 2000,
+            });
+            this.$emit('close');
+          },
+        };
+        this.deleteGroup(payload);
+      });
     },
   },
 };
