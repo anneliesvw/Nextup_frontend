@@ -69,5 +69,77 @@
     "noTags": "Geen Tags",
     "isPublic": "Publiek Event",
     "isPrivate": "Geheim Event"
-  }  
+  },
+  "notify": {
+    "poll": {
+      "onSucces": {
+        "title" :"Je stemde",
+        "message" : "Je keuze is geregistreerd"
+      },
+      "onError": {
+        "title" :"Oeps!",
+        "message" : "We konden je keuze niet registreren."
+      }
+    },
+    "createEvent":{
+      "onSucces": {
+        "title" :"Event Aangemaakt",
+        "message" : "Event {id} succesvol aangemaakt."
+      },
+      "onError": {
+        "title" :"Niet mogelijk om event te maken",
+        "message" : "Het aanmaken van het event is mislukt."
+      }
+    },
+    "createGroup":{
+      "onSucces": {
+        "title" :"Groep Aangemaakt",
+        "message" : "Groep {name} succesvol aangemaakt."
+      },
+      "onError": {
+        "title" :"Niet mogelijk om groep te maken",
+        "message" : "Het aanmaken van de groep is mislukt."
+      }
+    },
+    "createPoll":{
+      "onSucces": {
+        "title" :"Poll aangemaakt",
+        "message" : "Poll succesvol aangemaakt."
+      },
+      "onError": {
+        "title" :"Poll is niet aangemaakt",
+        "message" : "We konden de poll niet aanmaken"
+      }
+    },
+    "addUser":{
+      "onSucces": {
+        "title" :"User Toegevoegd",
+        "message" : "User zit mee in je groep."
+      },
+      "onError": {
+        "title" :"User Niet Toegevoegd",
+        "message" : "User zit niet in je groep."
+      }
+    },
+    "removeUser":{
+      "onSucces": {
+        "title" :"User Verwijderd",
+        "message" : "User is succescvol verwijderd"
+      },
+      "onError": {
+        "title" :"User niet Verwijderd",
+        "message" : "User is niet verwijderd"
+      }
+    },
+    "deletePoll":{
+      "onSucces": {
+        "title" :"Poll verwijderd",
+        "message" : "Poll succesvol verwijderd."
+      },
+      "onError": {
+        "title" :"Poll niet Verwijderd",
+        "message" : "Kan poll niet verwijderen."
+      }
+    }
+  }
 }

@@ -9,8 +9,6 @@
             <el-form-item label="Poll Options">
               <div class="polloption-add">
                 <el-input placeholder="Enter option here" v-model="newOption" class="polloption-name"></el-input>
-                <!-- <el-date-picker v-model="dateValue" class="polloption-name" type="datetimerange" start-placeholder="Start Date" end-placeholder="End date" :default-time="['12:00:00']" format="hh:mm dd/MM/yyyy">
-                </el-date-picker> -->
                 <el-button type="primary" @click="addOption">Add option</el-button>
               </div>
             </el-form-item>
@@ -27,7 +25,7 @@
               <el-switch v-model="isClosed" active-color="#ff4949" inactive-color="#13ce66" active-text="No" inactive-text="Yes">
               </el-switch>
             </el-form-item>
-            <el-button type="primary" @click="savePoll">Create poll</el-button>
+            <el-button class="create-poll-btn" type="primary" @click="savePoll">Create poll</el-button>
         </div>
       </el-form>
     </div>
@@ -35,7 +33,6 @@
 </template>
 
 <script>
-
 export default {
   props: ['isVisible', 'activeGroup'],
   data() {
@@ -73,6 +70,7 @@ export default {
       this.options.splice(index, 1);
     },
     savePoll() {
+      const that = this;
       const payload = {
         poll: {
           groupId: this.activeGroup.groupId,
@@ -82,26 +80,26 @@ export default {
         },
         onSuccess: () => {
           this.$notify({
-            title: 'Poll Added',
-            message: 'Poll successfully added.',
+            title: that.$t('notify.createPoll.onSucces.title'),
+            message: that.$t('notify.createPoll.onSucces.message'),
             type: 'success',
             duration: 2000,
           });
+          this.$emit('close');
         },
         onError: () => {
           this.$notify({
-            title: 'Unable To Add Poll',
-            message: 'Unable to add poll.',
+            title: that.$t('notify.createPoll.onError.title'),
+            message: that.$t('notify.createPoll.onError.message'),
             type: 'error',
             duration: 2000,
           });
+          this.$emit('close');
         },
       };
       this.$store.dispatch('addPoll', payload);
-      this.$emit('close');
     },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>

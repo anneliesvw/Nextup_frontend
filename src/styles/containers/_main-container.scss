@@ -17,17 +17,21 @@
 .dashboard-activities {
   @include flexrow;
   flex-wrap: wrap;
+  justify-content: center;
   width: 100%;
   margin-top: 10px;
   .dashboard-activity {
     min-width: 33%;
-    max-width: 33%;
+    flex: 1;
+    //max-width: 33%;
     min-width: 400px;
+    max-width: 550px;
   }
   .event-wrapper {
-    max-width: 33%;
+    //max-width: 33%;
     //min-width: 33%;
     min-width: 300px;
+    flex: 1;
     padding: 12px;
     background: transparent;
     cursor: pointer;

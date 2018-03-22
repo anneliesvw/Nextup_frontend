@@ -66,10 +66,13 @@
       @include flexcol;
       flex: 1;
       overflow-y: scroll;
-      padding: 0px 7px;
+      padding: 10px 7px;
       .message {
         margin: 2px;
         max-width: 60%;
+        &:last-of-type{
+          padding-bottom: 10px;
+        }
         .message-name {
           //font-weight: bold;
           font-family: $title-font-family;
@@ -102,12 +105,15 @@
     .message-box {
       @include flexrow;
       justify-content: center;
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
       
       position: relative;
       background: $brand-blue-1;
       border-top: solid 1px $brand-gray-2;
       .message-input {
         .el-textarea__inner {
+          margin:0px;
           border: none;
           font-size: 12px;
         }
@@ -137,7 +143,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: $brand-gray-5;
+  background-color: $brand-gray-1;
   @include flexrow;
   @include defaultshadow;
   justify-content: center;

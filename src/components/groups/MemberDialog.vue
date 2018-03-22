@@ -63,21 +63,22 @@ export default {
         username: this.username,
         onSuccess: () => {
           this.$notify({
-            title: 'User Added',
-            message: 'User successfully added.',
+            title: this.$t('notify.addUser.onSucces.title'),
+            message: this.$t('notify.addUser.onSucces.message'),
             type: 'success',
             duration: 2000,
           });
         },
         onError: () => {
           this.$notify({
-            title: 'Unable To Add User',
-            message: 'Unable to add user.',
+            title: this.$t('notify.addUser.onError.title'),
+            message: this.$t('notify.addUser.onError.message'),
             type: 'error',
             duration: 2000,
           });
         },
       };
+      this.username = null;
       this.$store.dispatch('addUserToGroup', payload);
     },
     removeUser(user) {
@@ -86,16 +87,16 @@ export default {
         groupId: this.activeGroup.groupId,
         onSuccess: () => {
           this.$notify({
-            title: 'User Removed',
-            message: 'User successfully removed.',
+            title: this.$t('notify.removeUser.onSucces.title'),
+            message: this.$t('notify.removeUser.onSucces.message'),
             type: 'success',
             duration: 2000,
           });
         },
         onError: () => {
           this.$notify({
-            title: 'Unable To Remove User',
-            message: 'Unable to remove user.',
+            title: this.$t('notify.removeUser.OnError.title'),
+            message: this.$t('notify.removeUser.OnError.message'),
             type: 'error',
             duration: 2000,
           });

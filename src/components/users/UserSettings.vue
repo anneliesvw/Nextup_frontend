@@ -33,13 +33,7 @@
         <div class="usersettings-text">{{getUserDetails.username}}</div>
         <div></div>
         <!-- <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button> -->
-        <div class="usersettings-label">Location</div>
-        <div class="usersettings-text">{{getUserDetails.person.location.name}}</div>
-        <div></div>
 
-        <div class="usersettings-label">Preferences</div>
-        <div class="usersettings-text"><el-tag v-for="tag in getUserDetails.tags" :key="tag.tagname">{{tag.tagname}}</el-tag></div>
-        <div></div>
         <!-- <el-button class="usersettings-button" type="text" @click="openDialogName">edit</el-button> -->
         <div class="usersettings-line usersettings-password-line" v-for="i in 3" :key="i"></div>
         <div class="usersettings-label">password</div>
@@ -120,55 +114,6 @@ export default {
     addNewPreference() {
       this.preferences.push(this.newPreferenceText);
       this.newPreferenceText = '';
-    },
-    saveTag() {
-      const payload = {
-        tag: {
-          tagname: this.newPreferenceText,
-        },
-        userId: this.getUserDetails.userId,
-        onSuccess: () => {
-          this.$notify({
-            title: 'Preference Added',
-            message: 'Preference successfully added.',
-            type: 'success',
-            duration: 2000,
-          });
-        },
-        onError: () => {
-          this.$notify({
-            title: 'Unable To Add preference',
-            message: 'Unable to add preference.',
-            type: 'error',
-            duration: 2000,
-          });
-        },
-      };
-      this.$store.dispatch('addTag', payload);
-      this.newPreferenceText = '';
-    },
-    removePreference(pref) {
-      const payload = {
-        userId: this.getUserDetails.userId,
-        tagId: pref.tagId,
-        onSuccess: () => {
-          this.$notify({
-            title: 'Preference Deleted',
-            message: 'Preference successfully deleted.',
-            type: 'success',
-            duration: 2000,
-          });
-        },
-        onError: () => {
-          this.$notify({
-            title: 'Unable To delete preference',
-            message: 'Unable to delete preference.',
-            type: 'error',
-            duration: 2000,
-          });
-        },
-      };
-      this.$store.dispatch('deleteTagFromUser', payload);
     },
   },
   computed: {

@@ -26,73 +26,141 @@
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="$emit('close')">Cancel</el-button>
-      <el-button type="primary" @click="createGroup">Create group</el-button>
+      <el-button class="create-group-btn" type="primary" @click="updateGroupMethod" v-if="updateForGroupId">Update group</el-button>
+      <el-button class="create-group-btn" type="primary" @click="createGroup" v-if="!updateForGroupId">Create group</el-button>
+      <el-button class="delete-group-btn" type="danger" @click="deleteGroupMethod" v-if="updateForGroupId">
+        <i class="fas fa-trash"></i>
+      </el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
-  import PatternGenerator from '../../services/patterngenerator';
-  import ImageUploader from '../ImageUploader.vue';
+import { mapGetters, mapActions } from 'vuex';
+import PatternGenerator from '../../services/patterngenerator';
+import ImageUploader from '../ImageUploader.vue';
 
-  export default {
-    sockets: {},
-    components: {
-      ImageUploader,
+export default {
+  sockets: {},
+  components: {
+    ImageUploader,
+  },
+  props: ['isVisible', 'updateForGroupId'],
+  mounted() {
+    if (this.updateForGroupId) {
+      this.groupInfo = { ...this.getGroupById(this.updateForGroupId) };
+    }
+  },
+  data() {
+    return {
+      groupInfo: {
+        avatarUrl: null,
+        name: '',
+        description: '',
+      },
+      tempChanges: {},
+      friends: [],
+      members: [],
+      memberToAdd: '',
+    };
+  },
+  computed: {
+    ...mapGetters(['getGroupById']),
+    backgroundImage() {
+      return PatternGenerator.generateImage(this.groupInfo.name || '');
     },
-    props: ['isVisible'],
-    data() {
-      return {
-        groupInfo: {
-          avatarUrl: null,
-          name: '',
-          description: '',
+    dialogVisible: {
+      get() {
+        return this.isVisible;
+      },
+      set(newValue) {
+        if (!newValue) {
+          this.$emit('close');
+        }
+      },
+    },
+  },
+  methods: {
+    ...mapActions(['updateGroup', 'deleteGroup']),
+    createGroup() {
+      const payload = {
+        groupInfo: this.groupInfo,
+        onSuccess: res => {
+          this.$notify({
+            title: 'Group Created',
+            message: `Group '${res.data.name}' successfully created.`,
+            type: 'success',
+            duration: 2000,
+          });
+          this.$emit('close');
         },
-        friends: [],
-        members: [],
-        memberToAdd: '',
+        onError: () => {
+          this.$notify({
+            title: 'Unable To Create Group',
+            message: 'Unable to create group.',
+            type: 'error',
+            duration: 2000,
+          });
+          this.$emit('close');
+        },
       };
+      this.$store.dispatch('addGroup', payload);
     },
-    computed: {
-      backgroundImage() {
-        return PatternGenerator.generateImage(this.groupInfo.name || '');
-      },
-      dialogVisible: {
-        get() {
-          return this.isVisible;
+    updateGroupMethod() {
+      const payload = {
+        groupInfo: this.groupInfo,
+        onSuccess: () => {
+          this.$notify({
+            title: 'Group Updated',
+            message: `Group '${this.groupInfo.name}' successfully updated.`,
+            type: 'success',
+            duration: 2000,
+          });
+          this.$emit('close');
         },
-        set(newValue) {
-          if (!newValue) {
-            this.$emit('close');
-          }
+        onError: () => {
+          this.$notify({
+            title: 'Unable To Update Group',
+            message: 'Unable to update group.',
+            type: 'error',
+            duration: 2000,
+          });
+          this.$emit('close');
         },
-      },
+      };
+      this.updateGroup(payload);
     },
-    methods: {
-      createGroup() {
+    deleteGroupMethod() {
+      this.$confirm("This will permanently delete the group and all it's events. Continue?", 'Warning', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      }).then(() => {
         const payload = {
-          groupInfo: this.groupInfo,
+          groupInfo: this.updateForGroupId,
           onSuccess: res => {
             this.$notify({
-              title: 'Group Created',
-              message: `Group '${res.data.name}' successfully created.`,
+              title: this.$t('notify.createGroup.onSucces.title'),
+              message: this.$t('notify.createGroup.onSucces.message', { name: res.data.name }),
               type: 'success',
               duration: 2000,
             });
             this.$emit('close');
+            this.$router.push('/mygroups');
           },
           onError: () => {
             this.$notify({
-              title: 'Unable To Create Group',
-              message: 'Unable to create group.',
+              title: this.$t('notify.createGroup.onError.title'),
+              message: this.$t('notify.createGroup.onError.message'),
               type: 'error',
               duration: 2000,
             });
             this.$emit('close');
           },
         };
-        this.$store.dispatch('addGroup', payload);
-      },
+        this.deleteGroup(payload);
+      });
     },
-  };
+  },
+};
 </script>

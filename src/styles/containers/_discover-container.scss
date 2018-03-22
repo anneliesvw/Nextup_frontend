@@ -81,6 +81,7 @@
     
   }
   .discover-results {
+    padding: 10px;
     flex: 1;
     @include flexcol;
     align-items: center;
@@ -89,8 +90,13 @@
     .results-wrapper {
       @include flexrow;
       flex-wrap: wrap;
+      justify-content: center;
       //align-items: center;
       //justify-content: center;
+      .activity-wrapper {
+        flex: 1;
+        //max-width: 450px;
+      }
     }
   }
 }

@@ -13,6 +13,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     debug: true,
+    groupsLoading: true,
+    invitationsLoading: false,
     loginAttempt: '',
     groups: [],
     personalEvents: [],
@@ -27,6 +29,7 @@ export default new Vuex.Store({
     getGroupById: state => id => state.groups.find(g => g.groupId === id),
     getUserDetails: state => state.userDetails,
     getInvitations: state => state.invitations,
+    getGroupsLoading: state => state.groupsLoading,
     getAllEvents: state => {
       const events = [];
       state.groups.map(g => g.events.map(e => events.push(e)));
@@ -56,6 +59,10 @@ export default new Vuex.Store({
     ,
   },
   mutations: {
+    setGroupsLoading: (state, payload) => {
+      window.console.log('setGrLoaded');
+      state.groupsLoading = payload;
+    },
     setLoginAttempt: (state, payload) => {
       state.loginAttempt = payload;
     },
@@ -185,12 +192,17 @@ export default new Vuex.Store({
       commit('setLoginAttempt', payload);
     },
     loadGroups: ({ commit, state }) => {
+      state.groupsLoading = true;
       GroupsApi.getGroups(
         state.userDetails.userId,
         res => {
           commit('setGroups', res.data);
+          state.groupsLoading = false;
         },
-        err => logger.log('failed to load groups.', err),
+        err => {
+          logger.log('failed to load groups.', err);
+          state.groupsLoading = false;
+        },
       );
     },
     addGroup: ({ commit }, payload) => {
@@ -449,6 +461,7 @@ export default new Vuex.Store({
         dispatch('loadGroups');
       },
       err => {
+        // commit('setGroupsLoading', false);
         logger.log('Unable to load current user details', err);
       },
     ),
