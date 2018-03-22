@@ -79,6 +79,7 @@ export default {
         },
         e => {
           this.setLoginAttempt('failed');
+          this.$store.commit('setGroupsLoading', false);
           window.console.log('failed to login.', e);
         },
       );
@@ -95,17 +96,8 @@ export default {
     }).catch(() => {
       that.logout();
       that.loadingDone = true;
+      this.$store.commit('setGroupsLoading', false);
     });
-    /*
-    AuthService.getUserDetails(() => {
-      window.console.log('token verified');
-      this.loggedIn = true;
-      this.$store.dispatch('loadGroups');
-      this.$store.dispatch('loadUserDetails');
-    }, () => {
-      this.logout();
-    });
-    */
   },
   beforeDestroy() {
     LoginEvents.bus.$off(LoginEvents.TRY_LOGIN, this.tryLogin);

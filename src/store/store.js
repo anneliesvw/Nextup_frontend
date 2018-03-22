@@ -59,6 +59,10 @@ export default new Vuex.Store({
     ,
   },
   mutations: {
+    setGroupsLoading: (state, payload) => {
+      window.console.log('setGrLoaded');
+      state.groupsLoading = payload;
+    },
     setLoginAttempt: (state, payload) => {
       state.loginAttempt = payload;
     },
@@ -457,6 +461,7 @@ export default new Vuex.Store({
         dispatch('loadGroups');
       },
       err => {
+        // commit('setGroupsLoading', false);
         logger.log('Unable to load current user details', err);
       },
     ),
