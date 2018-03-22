@@ -3,7 +3,7 @@
     <div class="chat-bubble" @click="setMyselfActive">
       <img :src="avatarUrl" :alt="group.name">
     </div>
-    <div class="notification" v-if="notifications>0">1</div>
+    <div class="notification" v-if="notification"></div>
     <div class="chat-group-name">{{group.name}}</div>
     <div class="chat-arrow" v-if="active" />
     <div class="chat-window" v-if="active">
@@ -43,6 +43,9 @@ export default {
       msg => {
         window.console.log('received chat message', msg);
         this.addMessage(msg.message);
+        if (!this.active) {
+          this.notification = true;
+        }
       },
     );
   },
@@ -67,11 +70,13 @@ export default {
       messages: [],
       text: '',
       notifications: 0,
+      notification: false,
     };
   },
   computed: {
     ...mapGetters(['getUserDetails']),
     active() {
+      if (this.activechat === this.group.groupId) this.notification = false;
       return this.activechat === this.group.groupId;
     },
     avatarUrl() {
@@ -99,6 +104,7 @@ export default {
       this.active = !this.active;
       if (this.active) {
         this.notifications = 0;
+        this.notification = false;
       }
     },
     getUserById(id) {
