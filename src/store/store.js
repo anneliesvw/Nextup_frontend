@@ -9,6 +9,7 @@ import { app } from '../main';
 
 const logger = window.console;
 Vue.use(Vuex);
+
 export const mutations = {
   setLoginAttempt: (state, payload) => {
     state.loginAttempt = payload;
@@ -62,7 +63,9 @@ export const mutations = {
   },
   removeEventFromGroup: (state, payload) => {
     const groupIndex = state.groups.findIndex(g => payload.groupId === g.groupId);
-    const eventIndex = state.groups[groupIndex].events.findIndex(e => e.eventId === payload.eventId);
+    const eventIndex = state.groups[groupIndex]
+      .events
+      .findIndex(e => e.eventId === payload.eventId);
     if (eventIndex >= 0) state.groups[groupIndex].events.splice(eventIndex, 1);
   },
   removeEventFromUser: (state, payload) => {
