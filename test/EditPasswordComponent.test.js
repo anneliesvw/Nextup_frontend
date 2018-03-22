@@ -31,4 +31,18 @@ describe('EditPasswordComp', () => {
     wrapper.find('.update-password-btn').trigger('click');
     expect(actions.updatePassword.mock.calls).toHaveLength(1);
   });
+
+  it('should match snapshot', () => {
+    const wrapper = shallow(EditPasswordComp, {
+      store,
+      localVue,
+      data: {
+        userInfo: {
+          person: { firstName: 'Jef', lastName: 'Test', location: { name: 'TestLocation' } },
+          username: 'TestUser',
+        },
+      },
+    });
+    expect(wrapper.vm.$el).toMatchSnapshot();
+  });
 });

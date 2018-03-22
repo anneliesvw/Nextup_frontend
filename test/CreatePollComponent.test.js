@@ -77,17 +77,24 @@ describe('CreatePollComp', () => {
     expect(wrapper.vm.dateValue).toBe('');
   });
 
+  it('should match snapshot', () => {
+    const wrapper = shallow(CreatePollComp, {
+      store,
+      localVue,
+      i18n,
+    });
+    expect(wrapper.vm.$el).toMatchSnapshot();
+  });
+
   // it('addOption voegt newOption toe aan options', () => {
   //   const wrapper = shallow(CreatePollComp, {
   //     store,
   //     localVue,
   //     i18n,
   //   });
-  //   wrapper.setProps({ newOption: 'new option test' });
-  //   localVue.nextTick(() => {
-  //     expect(wrapper.vm.newOption).toEqual('new option test');
-  //     // wrapper.vm.addOption();
-  //     // expect(wrapper.vm.options).toEqual([{ description: 'new option test' }]);
-  //   });
+  //   // wrapper.setProps({ newOption: { option: 'new option test' } });
+  //   // expect(wrapper.vm.newOption).toEqual({ option: 'new option test' });
+  //   // wrapper.vm.addOption();
+  //   // expect(wrapper.vm.options).toEqual([{ description: 'new option test' }]);
   // });
 });

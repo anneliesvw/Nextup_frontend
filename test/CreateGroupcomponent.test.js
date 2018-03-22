@@ -60,13 +60,11 @@ describe('CreateGroupComp', () => {
     expect(wrapper.vm.memberToAdd).toBe('');
   });
 
-  // it('calls createroom from socket when group created', () => {
-  //   const wrapper = shallow(CreateGroupComp, {
-  //     store,
-  //     localVue,
-  //   });
-
-  //   wrapper.find('.create-group-btn').trigger('click');
-  //   expect(actions.createroom.mock.calls).toHaveLength(1);
-  // });
+  it('should match snapshot', () => {
+    const wrapper = shallow(CreateGroupComp, {
+      store,
+      localVue,
+    });
+    expect(wrapper.vm.$el).toMatchSnapshot();
+  });
 });

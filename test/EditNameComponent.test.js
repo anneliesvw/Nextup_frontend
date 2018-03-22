@@ -31,4 +31,18 @@ describe('EditNameComp', () => {
     wrapper.find('.update-user-btn').trigger('click');
     expect(actions.updateUser.mock.calls).toHaveLength(1);
   });
+
+  it('should match snapshot', () => {
+    const wrapper = shallow(EditNameComp, {
+      store,
+      localVue,
+      data: {
+        userInfo: {
+          person: { firstName: 'Jef', lastName: 'Test', location: { name: 'TestLocation' } },
+          username: 'TestUser',
+        },
+      },
+    });
+    expect(wrapper.vm.$el).toMatchSnapshot();
+  });
 });

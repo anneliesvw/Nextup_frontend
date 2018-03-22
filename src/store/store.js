@@ -10,55 +10,7 @@ import { app } from '../main';
 const logger = window.console;
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {
-    debug: true,
-    groupsLoading: true,
-    invitationsLoading: false,
-    loginAttempt: '',
-    groups: [],
-    personalEvents: [],
-    suggestedEvents: [],
-    userDetails: null,
-    invitations: [],
-    language: 'en',
-  },
-  getters: {
-    getLoginAttempt: state => state.loginAttempt,
-    getGroups: state => state.groups,
-    getGroupById: state => id => state.groups.find(g => g.groupId === id),
-    getUserDetails: state => state.userDetails,
-    getInvitations: state => state.invitations,
-    getGroupsLoading: state => state.groupsLoading,
-    getAllEvents: state => {
-      const events = [];
-      state.groups.map(g => g.events.map(e => events.push(e)));
-      if (state.userDetails.ownedEvents) {
-        state.userDetails.ownedEvents.forEach(e => events.push(e));
-      }
-      return events;
-    },
-    getUserEvents: state => {
-      const events = [];
-      state.userDetails.ownedEvents.map(e => events.push(e));
-      return events;
-    },
-    getGroupEvents: state => {
-      const events = [];
-      state.groups.map(g => g.events.map(e => events.push(e)));
-      return events;
-    },
-    getEventById: (state, getters) => id => {
-      const events = state.personalEvents
-        .concat(state.suggestedEvents)
-        .concat(getters.getGroupEvents)
-        .concat(state.userDetails ? state.userDetails.ownedEvents : []);
-      logger.log(events);
-      return events.find(e => parseInt(e.eventId, 10) === parseInt(id, 10));
-    }
-    ,
-  },
-  mutations: {
+export const mutations = {
     setGroupsLoading: (state, payload) => {
       window.console.log('setGrLoaded');
       state.groupsLoading = payload;
@@ -186,7 +138,57 @@ export default new Vuex.Store({
       const index = state.userDetails.ownedEvents.findIndex(e => payload.eventId === e.eventId);
       if (index >= 0) state.userDetails.ownedEvents[index] = payload;
     },
+  };
+
+export default new Vuex.Store({
+  state: {
+    debug: true,
+    groupsLoading: true,
+    invitationsLoading: false,
+    loginAttempt: '',
+    groups: [],
+    personalEvents: [],
+    suggestedEvents: [],
+    userDetails: null,
+    invitations: [],
+    language: 'en',
   },
+  getters: {
+    getLoginAttempt: state => state.loginAttempt,
+    getGroups: state => state.groups,
+    getGroupById: state => id => state.groups.find(g => g.groupId === id),
+    getUserDetails: state => state.userDetails,
+    getInvitations: state => state.invitations,
+    getGroupsLoading: state => state.groupsLoading,
+    getAllEvents: state => {
+      const events = [];
+      state.groups.map(g => g.events.map(e => events.push(e)));
+      if (state.userDetails.ownedEvents) {
+        state.userDetails.ownedEvents.forEach(e => events.push(e));
+      }
+      return events;
+    },
+    getUserEvents: state => {
+      const events = [];
+      state.userDetails.ownedEvents.map(e => events.push(e));
+      return events;
+    },
+    getGroupEvents: state => {
+      const events = [];
+      state.groups.map(g => g.events.map(e => events.push(e)));
+      return events;
+    },
+    getEventById: (state, getters) => id => {
+      const events = state.personalEvents
+        .concat(state.suggestedEvents)
+        .concat(getters.getGroupEvents)
+        .concat(state.userDetails ? state.userDetails.ownedEvents : []);
+      logger.log(events);
+      return events.find(e => parseInt(e.eventId, 10) === parseInt(id, 10));
+    }
+    ,
+  },
+  mutations,
   actions: {
     setLoginAttempt: ({ commit }, payload) => {
       commit('setLoginAttempt', payload);

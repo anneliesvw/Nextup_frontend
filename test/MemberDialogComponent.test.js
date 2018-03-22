@@ -24,10 +24,19 @@ describe('MemberDialogComp', () => {
       localVue,
     });
     wrapper.setProps({ activeGroup: { groupId: 1, users: [{ userId: 1 }] } });
+    expect(wrapper.vm.activeGroup).toEqual({ groupId: 1, users: [{ userId: 1 }] });
     wrapper.find('.appended-input').trigger('click');
     wrapper.find('.appended-input').trigger('click');
     expect(actions.addUserToGroup.mock.calls).toHaveLength(2);
     wrapper.find('.member-remove').trigger('click');
     expect(actions.deleteUserFromGroup.mock.calls).toHaveLength(1);
+  });
+
+  it('should match snapshot', () => {
+    const wrapper = shallow(MemberDialogComp, {
+      store,
+      localVue,
+    });
+    expect(wrapper.vm.$el).toMatchSnapshot();
   });
 });
