@@ -1,17 +1,30 @@
 <template>
-  <div class="site-wrapper" v-if="loadingDone">
+<div class="app-wrapper">
+  <div class="site-wrapper" v-if="loadingDone && !getGroupsLoading">
     <Navigation v-if="userdetailsLoaded != null && loggedIn"></Navigation>
     <div class="site-main">
-      <div class="site-content">
+      <div class="site-content" >
         <router-view v-if="loadingDone"></router-view>
       </div>
       <chat-menu v-if="loggedIn"></chat-menu>
     </div>
   </div>
+  <div class="apploading" v-else>
+    <div class="loading-info">
+      <div class="icon">
+        <i class="fas fa-circle-notch fa-spin"></i>
+      </div>
+      <div class="content">
+        Loading: Please wait ...
+      </div>
+    </div>
+  </div>
+</div>
+  
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import LoginEvents from './events/loginevents';
 import Navigation from './components/header/Navigation.vue';
 import AuthService from './services/authservice';
@@ -31,6 +44,7 @@ export default {
     ChatMenu,
   },
   computed: {
+    ...mapGetters(['getGroupsLoading']),
     userdetailsLoaded() {
       return this.$store.getters.getUserDetails;
     },
@@ -65,6 +79,7 @@ export default {
         },
         e => {
           this.setLoginAttempt('failed');
+          this.$store.commit('setGroupsLoading', false);
           window.console.log('failed to login.', e);
         },
       );
@@ -81,17 +96,8 @@ export default {
     }).catch(() => {
       that.logout();
       that.loadingDone = true;
+      this.$store.commit('setGroupsLoading', false);
     });
-    /*
-    AuthService.getUserDetails(() => {
-      window.console.log('token verified');
-      this.loggedIn = true;
-      this.$store.dispatch('loadGroups');
-      this.$store.dispatch('loadUserDetails');
-    }, () => {
-      this.logout();
-    });
-    */
   },
   beforeDestroy() {
     LoginEvents.bus.$off(LoginEvents.TRY_LOGIN, this.tryLogin);
