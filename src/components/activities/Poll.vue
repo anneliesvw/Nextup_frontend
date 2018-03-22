@@ -17,7 +17,7 @@
             </poll-option>
           </el-radio-group>
         </div>
-        <div class="activity-bottom">
+        <div class="activity-bottom" v-if="admin">
           <div class="edit-button" @click.stop @click="() => this.$emit('showPollDetail', this.poll)">
             <i class="fas fa-pencil-alt"></i>
           </div>
@@ -36,7 +36,7 @@
   import PollOption from './PollOption.vue';
 
   export default {
-    props: ['poll', 'groupId'],
+    props: ['poll', 'groupId', 'admin'],
     components: {
       PollOption,
     },

@@ -12,7 +12,8 @@
           </div>
         </div>
         <Poll v-for="poll in this.polls" 
-          :poll="poll" :key="poll.pollId" 
+          :poll="poll" :key="poll.pollId"
+          :admin="admin"
           @showPollDetail="showPollDetail($event)" 
           @showVotePoll="showVotePoll($event)"
           :groupId="groupDetails.groupId">

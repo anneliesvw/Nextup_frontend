@@ -11,7 +11,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "test-nightwatch": "nightwatch",
     "e2e-setup": "selenium-standalone install",
-    "test": "jest",
+    "test": "jest"
   },
   "dependencies": {
     "axios": "^0.17.1",
