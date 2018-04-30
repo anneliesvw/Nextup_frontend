@@ -1,0 +1,145 @@
+{
+  "navigation": {
+    "activities": "Mijn Activiteiten",
+    "groups": "Mijn Groepen",
+    "discover": "Ontdek Activiteiten"
+  },
+  "settings": {
+    "profile": "Profiel instellingen",
+    "preferences": "Voorkeuren",
+    "help": "Help & Feedback",
+    "logout": "Afmelden"
+  },
+  "discover": {
+    "main": "Ontdek activiteiten",
+    "location": "Locatie",
+    "interests": "Interesses"
+  },
+  "sidebar": {
+    "title": "Groepen"
+  },
+  "groups": {
+    "create": "Maak groep",
+    "invite": "Nodig anderen uit",
+    "delete": "Verwijder groep",
+    "sidebar": {
+      "title": "Mijn groepen"
+    }
+  },
+  "events": {
+    "title": "Evenementen",
+    "create": "Maak evenement"
+  },
+  "polls": {
+    "title": "Polls",
+    "create": "Maak poll"
+  },
+  "discoverFilter": {
+    "category": "Categorie",
+    "location": "Locatie",
+    "enterLocation": "Geef een locatie in",
+    "date": "Tussen datums",
+    "earliestDate": "Vroegste datums",
+    "latestDate": "Uiterste datum",
+    "clear": "wis",
+    "maxDistance": "Maximumafstand",
+    "filterButton": "Zoek",
+    "emptystate": {
+      "title": "Geen evenementen",
+      "body": "Geef hierboven criteria in waaraan het event moet voldoen en klik daarna op de knop om te zoeken"
+    }
+  },
+  "chat": {
+    "input": {
+      "enterMessage": "Geef een bericht in en druk op enter om het te versturen"
+    }
+  },
+  "eventPage": {
+    "buttons": {
+      "attend": "Ga",
+      "edit": "Bewerk",
+      "delete": "Verwijder"
+    },
+    "titles": {
+      "general": "Algemene Info",
+      "location": "Evenementlocatie",
+      "description": "Beschrijving",
+      "attending": "Leden die gaan"
+    },
+    "noTags": "Geen Tags",
+    "isPublic": "Publiek Event",
+    "isPrivate": "Geheim Event"
+  },
+  "notify": {
+    "poll": {
+      "onSucces": {
+        "title" :"Je stemde",
+        "message" : "Je keuze is geregistreerd"
+      },
+      "onError": {
+        "title" :"Oeps!",
+        "message" : "We konden je keuze niet registreren."
+      }
+    },
+    "createEvent":{
+      "onSucces": {
+        "title" :"Event Aangemaakt",
+        "message" : "Event {id} succesvol aangemaakt."
+      },
+      "onError": {
+        "title" :"Niet mogelijk om event te maken",
+        "message" : "Het aanmaken van het event is mislukt."
+      }
+    },
+    "createGroup":{
+      "onSucces": {
+        "title" :"Groep Aangemaakt",
+        "message" : "Groep {name} succesvol aangemaakt."
+      },
+      "onError": {
+        "title" :"Niet mogelijk om groep te maken",
+        "message" : "Het aanmaken van de groep is mislukt."
+      }
+    },
+    "createPoll":{
+      "onSucces": {
+        "title" :"Poll aangemaakt",
+        "message" : "Poll succesvol aangemaakt."
+      },
+      "onError": {
+        "title" :"Poll is niet aangemaakt",
+        "message" : "We konden de poll niet aanmaken"
+      }
+    },
+    "addUser":{
+      "onSucces": {
+        "title" :"User Toegevoegd",
+        "message" : "User zit mee in je groep."
+      },
+      "onError": {
+        "title" :"User Niet Toegevoegd",
+        "message" : "User zit niet in je groep."
+      }
+    },
+    "removeUser":{
+      "onSucces": {
+        "title" :"User Verwijderd",
+        "message" : "User is succescvol verwijderd"
+      },
+      "onError": {
+        "title" :"User niet Verwijderd",
+        "message" : "User is niet verwijderd"
+      }
+    },
+    "deletePoll":{
+      "onSucces": {
+        "title" :"Poll verwijderd",
+        "message" : "Poll succesvol verwijderd."
+      },
+      "onError": {
+        "title" :"Poll niet Verwijderd",
+        "message" : "Kan poll niet verwijderen."
+      }
+    }
+  }
+}

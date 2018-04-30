@@ -1,0 +1,40 @@
+.emptystate {
+  @include flexcol;
+  justify-content: center;
+  align-items: center;
+  flex: auto;
+  color: $brand-gray-4;
+  .emptystate-icon {
+    font-size: 4em;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  .emptystate-title {
+    font-family: $title-font-family;
+    font-weight: bold;
+    text-transform: uppercase;
+    //margin-bottom: 7px;
+    //color: $brand-blue-3;
+    text-align: center;
+  }
+  .emptystate-text {
+    font-size: 0.5em;
+    color: $brand-gray-8;
+    width: 100%;
+    text-align: center;
+    padding: 15px 20%;
+    margin-bottom: 10px;
+  }
+}
+
+.emptystate-sm {
+  font-size: 1em;
+}
+
+.emptystate-md {
+  font-size: 1.5em;
+}
+
+.emptystate-lg {
+  font-size: 2em;
+}

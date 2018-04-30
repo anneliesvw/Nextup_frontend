@@ -1,0 +1,138 @@
+.usersettings-container {
+  min-width: 100%;
+  @include flexcol;
+  align-items: center;
+}
+.usersettings-wrapper {
+  padding-top: 40px;
+  width: 100%;
+  max-width: 700px;
+  @include flexcol;
+  justify-content: center;
+  align-items: center;
+  .image-uploader {
+    width: 100%;
+    margin-bottom: 10px;
+    @include defaultshadow;
+    //padding: 20px;
+  }
+}
+
+.usersettings-profilepic {
+  height: 250px;
+  min-width: 100%;
+  border-radius: 50%;
+  border: 3px solid white;
+  background-color: $brand-gray-4;
+  margin-bottom: 20px;
+}
+.usersettings-column {
+  border-radius: 3px;
+  background: white;
+  @include defaultshadow;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(9, 30px);
+  align-items: center;
+  padding: 20px;
+}
+.usersettings-label {
+  font-weight: 300;
+  color: $brand-blue-7;
+}
+.usersettings-line {
+  /* border-bottom: 1px solid $brand-blue-3; */
+}
+.usersettings-password-line {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid $brand-blue-7;
+}
+
+.usersettings-wrap-tab {
+  @include flexrow;
+  align-content: center;
+  justify-content: center;
+}
+.usersettings-tab {
+  margin: 130px 50px 20px 50px;
+  width: 60%;
+}
+
+.edit-password-monkey1 {
+  background-size: cover;
+  background-position: center;
+  height: 25px;
+  width: 25px;
+  background-image: url('https://cdn.thinglink.me/api/image/1010252198820446210/1240/10/scaletowidth');
+}
+.edit-password-monkey2 {
+  background-size: cover;
+  background-position: center;
+  width: 25px;
+  height: 25px;
+  background-image: url('https://cdn.shopify.com/s/files/1/1061/1924/products/Monkey_Face_Emoji_large.png?v=1480481036');
+}
+.edit-password-group {
+  @include flexrow;
+  justify-content: center;
+  align-items: center;
+  .el-input__inner {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  .edit-password-btn {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background-color: $brand-gray-1;
+    border: none;
+  }
+}
+.usersettings-pref-input {
+  max-width: 250px;
+}
+.edit-name-form {
+  .google-maps-autocomplete {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid rgb(220, 223, 230);
+    font-size: 1em;
+    padding: 10px;
+  }
+}
+.usersettings-preference-container {
+  @include flexrow;
+  flex-wrap: wrap;
+  .usersettings-preference {
+    border: 1px solid $brand-gray-7;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 5px;
+    @include flexrow;
+    .usersettings-pref {
+      padding-right: 10px;
+    }
+    .usersettings-remove {
+      cursor: pointer;
+    }
+  }
+}
+.edit-password-btn {
+  padding: 6px 10px !important;
+}
+
+.el-tag + .el-tag {
+  margin-left: 10px;
+}
+.button-new-tag {
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 90px;
+  margin-left: 10px;
+  vertical-align: bottom;
+}

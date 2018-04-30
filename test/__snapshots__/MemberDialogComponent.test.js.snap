@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MemberDialogComp should match snapshot 1`] = `
+<el-dialog
+  class="invite-member-dialog"
+  title="Invite Others"
+>
+  <div
+    class="invite-member-body"
+  >
+    <div
+      class="invite-member-input"
+    >
+      <el-input
+        placeholder="invite others by entering their email"
+      >
+        <el-button
+          class="appended-input"
+          slot="append"
+          type="primary"
+        >
+          Invite
+        </el-button>
+      </el-input>
+    </div>
+     
+    <div
+      class="no-members-message"
+    >
+      
+      
+      
+      <!---->
+    </div>
+  </div>
+</el-dialog>
+`;

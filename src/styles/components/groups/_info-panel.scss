@@ -1,0 +1,7 @@
+.group-info-panel {
+  border-radius: 4px;
+  .panel-body {
+    @include flexrow;
+    flex-wrap: wrap;
+  }
+}
